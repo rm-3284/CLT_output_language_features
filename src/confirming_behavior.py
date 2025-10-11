@@ -32,14 +32,14 @@ def code_switching_histogram(
                 rest = 1
                 tmp = []
                 for ans in ans_dict[l]:
-                    token_idx = model.to_tokens(ans)[1]
+                    token_idx = model.to_tokens(ans)[0,1]
                     tmp.append(probability[token_idx])
                 result_dict[l][l2]['wlca'].append(sum(tmp))
                 rest -= sum(tmp)
 
                 tmp = []
                 for ans in ans_dict[l2]:
-                    token_idx = model.to_tokens(ans)[1]
+                    token_idx = model.to_tokens(ans)[0,1]
                     tmp.append(probability[token_idx])
                 result_dict[l][l2]['clca'].append(sum(tmp))
                 if l != l2:
@@ -47,22 +47,22 @@ def code_switching_histogram(
 
                 tmp = []
                 for ans in ans_dict['en']:
-                    token_idx = model.to_tokens(ans)[1]
+                    token_idx = model.to_tokens(ans)[0,1]
                     tmp.append(probability[token_idx])
                 result_dict[l][l2]['enca'].append(sum(tmp))
                 if l != 'en' and l2 != 'en':
                     rest -= sum(tmp)
 
-                token_idx = model.to_tokens(adj_dict[l])[1]
+                token_idx = model.to_tokens(adj_dict[l])[0,1]
                 result_dict[l][l2]['wlsa'].append(probability[token_idx])
                 rest -= probability[token_idx]
 
-                token_idx = model.to_tokens(adj_dict[l2])[1]
+                token_idx = model.to_tokens(adj_dict[l2])[0,1]
                 result_dict[l][l2]['clsa'].append(probability[token_idx])
                 if l != l2:
                     rest -= probability[token_idx]
 
-                token_idx = model.to_tokens(adj_dict['en'])[1]
+                token_idx = model.to_tokens(adj_dict['en'])[0,1]
                 result_dict[l][l2]['ensa'].append(probability[token_idx])
                 if l != 'en' and l2 != 'en':
                     rest -= probability[token_idx]
