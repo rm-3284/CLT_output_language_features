@@ -6,6 +6,12 @@ import regex
 import torch
 from typing import Callable
 
+from pathlib import Path
+import sys
+current_file_path = Path(__file__).resolve()
+three_levels_up = current_file_path.parents[2]
+sys.path.insert(0, str(three_levels_up))
+
 from template import ReplacementModel
 
 # character-checks
