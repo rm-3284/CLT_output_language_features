@@ -8,7 +8,7 @@ from template import base_strings, langs_big, lang_dict
 
 def get_logits(input: str, model: HookedTransformer):
     res = model(input, return_type='logits')
-    logits = res.logits[0][-1].detach().clone()
+    logits = res[0][-1].detach().clone()
     return logits
 
 def code_switching_histogram(
