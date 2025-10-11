@@ -118,7 +118,7 @@ if __name__ == "__main__":
     from device_setup import device
     model = HookedTransformer.from_pretrained("gemma-2-2b", device=device)
 
-    from data.adjectives.adjectives import small_data
+    from data.adjectives import small_data
     avg_dict = code_switching_histogram(small_data, model)
 
     current_file_path = __file__
