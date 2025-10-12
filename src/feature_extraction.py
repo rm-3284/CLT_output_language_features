@@ -339,7 +339,7 @@ if __name__ == '__main__':
     feature_dict = dict()
     for lang in langs:
         features = iterate_through_data(train_data, model, lang)
-        file_name = "{lang}_features.json"
+        file_name = lang + "_features.json"
         file_path = os.path.join(data_directory, file_name)
         with open(file_path, 'w') as f:
             json.dump(features, f)
