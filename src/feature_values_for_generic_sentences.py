@@ -21,7 +21,7 @@ def feature_find(graph: Graph, feature: Feature, device) -> Optional[int]:
     return matching_indices.item()
 
 def get_feature_activation_from_prompt(
-        prompt: str, feature_list: list[Feature],
+        prompt: str, feature_list: list[list[int]],
         model: ReplacementModel, device,
         max_n_logits:int=5, desired_logit_prob:float=0.95,
         max_feature_nodes=None, batch_size:int=256,
@@ -39,7 +39,9 @@ def get_feature_activation_from_prompt(
     )
     activation_list = []
     for feature in feature_list:
-        idx = feature_find(graph, feature, device)
+        layer, feature_idx = feature
+        f = Feature(layer=layer, pos=-1, feature_idx = feature_idx)
+        idx = feature_find(graph, f, device)
         if idx == None:
             activation_list.append(float('nan'))
         else:
@@ -50,26 +52,20 @@ def get_feature_activation_from_prompt(
     return activation_list
 
 def iterate_over_sentences(
-        prompts: list[str], feature_list: list[Feature], 
+        prompts: list[str], feature_list: list[list[int]], 
         model: ReplacementModel, device,
         ) -> dict[str, list[float]]:
-    
-    def feature_to_str(feature):
-        layer = feature.layer
-        pos = feature.pos
-        feature_idx = feature.feature_idx
-        feature_str = f"{layer}.{pos}.{feature_idx}"
-        return feature_str
-
 
     activation_values_dict = dict()
     for feature in feature_list:
-        key = feature_to_str(feature)
+        layer, idx = feature
+        key = str(layer) + '.' + str(idx)
         activation_values_dict[key] = []
     for prompt in prompts:
         activation_list = get_feature_activation_from_prompt(prompt, feature_list, model, device)
         for i, feature in enumerate(feature_list):
-            key = feature_to_str(feature)
+            layer, idx = feature
+            key = str(layer) + '.' + str(idx)
             activation_values_dict[key].append(activation_list[i])
     return activation_values_dict
 
