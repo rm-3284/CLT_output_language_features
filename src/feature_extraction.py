@@ -6,7 +6,7 @@ import torch
 from typing import Optional
 
 from template import Graph, ReplacementModel, attribute, prune_graph
-from template import base_strings, langs
+from template import base_strings, langs, identifiers
 
 ## helper functions
 def token_to_idx(graph: Graph, token: int) -> int:
@@ -291,7 +291,7 @@ def iterate_through_data(
     features = []
     if lang not in langs:
         raise KeyError(f"{lang} is not a valid language for this experiment")
-    for adj, ans in train_data:
+    for adj, _ in train_data:
         prompt = base_prompt.format(adj=adj[lang])
         graph = attribute(
             prompt=prompt,
@@ -339,8 +339,9 @@ if __name__ == '__main__':
     feature_dict = dict()
     for lang in langs:
         features = iterate_through_data(train_data, model, lang)
+        lang_features = choose_language_features(features, identifiers[lang])
         file_name = lang + "_features.json"
         file_path = os.path.join(data_directory, file_name)
         with open(file_path, 'w') as f:
-            json.dump(features, f)
+            json.dump(lang_features, f)
         

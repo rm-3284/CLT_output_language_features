@@ -45,3 +45,11 @@ lang_dict = {
     'ko': {'en': '영어', 'fr': '프랑스어', 'es': '스페인어', 'de': '독일어', 
            'zh': '중국어', 'ja': '일본어', 'ko': '한국어'},
     }
+
+identifiers = {
+    'fr': ['French', 'french', 'France', 'france'],
+    'de': ['German', 'german', 'Germany', 'germany'],
+    'ja': ['Japanese', 'japanese', 'Japan', 'japan'],
+    'zh': ['Chinese', 'chinese', 'China', 'china'],
+    'en': ['English', 'english']
+}
