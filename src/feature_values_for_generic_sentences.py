@@ -58,15 +58,11 @@ def iterate_over_sentences(
 
     activation_values_dict = dict()
     for feature in feature_list:
-        layer, idx = feature
-        key = str(layer) + '.' + str(idx)
-        activation_values_dict[key] = []
+        activation_values_dict[feature] = []
     for prompt in prompts:
         activation_list = get_feature_activation_from_prompt(prompt, feature_list, model, device)
         for i, feature in enumerate(feature_list):
-            layer, idx = feature
-            key = str(layer) + '.' + str(idx)
-            activation_values_dict[key].append(activation_list[i])
+            activation_values_dict[feature].append(activation_list[i])
     return activation_values_dict
 
 if __name__ == "__main__":
@@ -107,7 +103,7 @@ if __name__ == "__main__":
     def flatten(xss):
         return [x for xs in xss for x in xs]
 
-    features = flatten([en_features, de_features, fr_features, ja_features, zh_features])
+    features = flatten([list(en_features.keys()), list(de_features.keys()), list(fr_features.keys()), list(ja_features.keys()), list(zh_features.keys())])
     
     en_values = iterate_over_sentences(en_sentences, features, model, device)
     de_values = iterate_over_sentences(de_sentences, features, model, device)
