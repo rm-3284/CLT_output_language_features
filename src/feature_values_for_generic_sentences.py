@@ -21,7 +21,7 @@ def feature_find(graph: Graph, feature: Feature, device) -> Optional[int]:
     return matching_indices.item()
 
 def get_feature_activation_from_prompt(
-        prompt: str, feature_list: list[list[int]],
+        prompt: str, feature_list: list[str],
         model: ReplacementModel, device,
         max_n_logits:int=5, desired_logit_prob:float=0.95,
         max_feature_nodes=None, batch_size:int=256,
@@ -39,7 +39,7 @@ def get_feature_activation_from_prompt(
     )
     activation_list = []
     for feature in feature_list:
-        layer, feature_idx = feature
+        layer, feature_idx = feature.split('.')
         f = Feature(layer=layer, pos=-1, feature_idx = feature_idx)
         idx = feature_find(graph, f, device)
         if idx == None:
@@ -52,7 +52,7 @@ def get_feature_activation_from_prompt(
     return activation_list
 
 def iterate_over_sentences(
-        prompts: list[str], feature_list: list[list[int]], 
+        prompts: list[str], feature_list: list[str], 
         model: ReplacementModel, device,
         ) -> dict[str, list[float]]:
 
