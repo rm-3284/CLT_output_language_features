@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import os
 import torch
 
 from intervention import get_top_outputs
@@ -166,10 +167,10 @@ def threshold_prune(lang_features: dict[str, int]) -> list[int]:
 
 def threshold_determine(
         lang_features: dict[str, int], 
-        adj_langs: list[str], 
         model: ReplacementModel,
         data: list[tuple[dict[str, str], dict[str, list[str]]]],
         prompt_lang: str = 'en',
+        adj_langs: list[str] = list(langs), 
     ) -> tuple[list[int], list[float], list[float], list[float], list[float], list[float]]:
     if prompt_lang not in langs:
         raise KeyError('Invalid prompt language')
@@ -210,7 +211,15 @@ def threshold_determine(
     t = return_lists['t']
     return threshold_options, p, r, l, b, t
 
-def prob_rank_logit_visualize(x: list[int], probs: list[float], ranks: list[float], logits: list[float]) -> None:
+def prob_rank_logit_visualize(
+        x: list[int], 
+        probs: list[float], 
+        ranks: list[float], 
+        logits: list[float],
+        interactive: bool,
+        data_directory: str = '',
+        file_name: str = '',
+        ) -> None:
     fig, ax1 = plt.subplots(figsize=(10, 6)) # Create the main plot and first axis
     # Plot on the first Y-axis (left)
     ax1.plot(x, probs, color='blue', label='Prob Diff')
@@ -238,12 +247,23 @@ def prob_rank_logit_visualize(x: list[int], probs: list[float], ranks: list[floa
     lines2, labels2 = ax2.get_legend_handles_labels()
     lines3, labels3 = ax3.get_legend_handles_labels()
     ax3.legend(lines + lines2 + lines3, labels + labels2 + labels3, loc='upper left')
-
     plt.tight_layout() # Adjust layout to prevent labels from overlapping
-    plt.show()
+    if interactive:
+        plt.show()
+    else:
+        plt_path = os.path.join(data_directory, file_name)
+        plt.savefig(plt_path)
+        plt.close()
     return
 
-def best_rank_visualize(x: list[int], base_ranks: list[float], target_ranks: list[float]) -> None:
+def best_rank_visualize(
+        x: list[int], 
+        base_ranks: list[float], 
+        target_ranks: list[float],
+        interactive: bool,
+        data_directory: str = '',
+        file_name: str = '',
+        ) -> None:
     # Create the main plot and the first (left) axis
     fig, ax1 = plt.subplots(figsize=(10, 6))
     # Plot on the first Y-axis (left side)
@@ -266,6 +286,59 @@ def best_rank_visualize(x: list[int], base_ranks: list[float], target_ranks: lis
     ax2.legend(lines + lines2, labels + labels2, loc='upper left')
     # Ensure layout is tight to prevent labels from overlapping
     fig.tight_layout()
-    # Display the plot
-    plt.show()
+    if interactive:
+        plt.show()
+    else:
+        plt_path = os.path.join(data_directory, file_name)
+        plt.savefig(plt_path)
+        plt.close()
     return
+
+def iterate_threshold_options(lang_features: dict[str, int], 
+        model: ReplacementModel,
+        data: list[tuple[dict[str, str], dict[str, list[str]]]],
+        adjective_lang: str,
+        interactive: bool=True,
+        data_directory: str = '',
+        prompt_lang = 'en',
+        ) -> None:
+    threshold_options, p, r, l, b, t = threshold_determine(lang_features, model, data, prompt_lang)
+    file_name1 = f'prob_rank_logit_{prompt_lang}_{adjective_lang}'
+    prob_rank_logit_visualize(threshold_options, p, r, l, interactive, data_directory, file_name1)
+    file_name2 = f'best_rank_{prompt_lang}_{adjective_lang}'
+    best_rank_visualize(threshold_options, b, t, interactive, data_directory, file_name2)
+    return
+
+if __name__ == '__main__':
+    from device_setup import device
+    model_name = 'google/gemma-2-2b'
+    transcoder_name = 'gemma'
+    model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16)
+
+    import json
+    current_file_path = __file__
+    current_directory = os.path.dirname(current_file_path)
+    absolute_directory = os.path.abspath(current_directory)
+    data_directory = os.path.join(absolute_directory, "plot/supernode_threshold")
+    if not os.path.exists(data_directory):
+        os.makedirs(data_directory)
+
+    feature_directory = os.path.join(absolute_directory, "data/features")
+    with open(os.path.join(feature_directory, 'en_features.json'), 'r') as f:
+        en_features = json.load(f)
+    with open(os.path.join(feature_directory, 'de_features.json'), 'r') as f:
+        de_features = json.load(f)
+    with open(os.path.join(feature_directory, 'fr_features.json'), 'r') as f:
+        fr_features = json.load(f)
+    with open(os.path.join(feature_directory, 'ja_features.json'), 'r') as f:
+        ja_features = json.load(f)
+    with open(os.path.join(feature_directory, 'zh_features.json'), 'r') as f:
+        zh_features = json.load(f)
+
+    from data.adjectives import train_data
+    iterate_threshold_options(en_features, model, train_data, 'en', False, data_directory)
+    iterate_threshold_options(de_features, model, train_data, 'de', False, data_directory)
+    iterate_threshold_options(fr_features, model, train_data, 'fr', False, data_directory)
+    iterate_threshold_options(ja_features, model, train_data, 'ja', False, data_directory)
+    iterate_threshold_options(zh_features, model, train_data, 'zh', False, data_directory)
+
