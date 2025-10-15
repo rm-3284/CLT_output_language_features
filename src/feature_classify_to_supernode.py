@@ -14,6 +14,7 @@ def count_NaN(lst: list[float]) -> tuple[int, list[float]]:
     return count, n_lst
 
 def classify_feature(lang_values: dict[str, tuple[int, float, float]]) -> list[str]:
+    # input is dict[lang, [nan_count, median, mean]]
     lst = []
     for key, value in lang_values.items():
         if value[0] == 0:
@@ -33,9 +34,10 @@ def classify_feature(lang_values: dict[str, tuple[int, float, float]]) -> list[s
         n_lst = []
         for idx in idx_lst:
             n_lst.append(lst[idx])
+        # returns which language it should belong to
         return n_lst
 
-def classify_features_with_values(features: list[Feature], values_dict: dict[str, dict[Feature, list[float]]]) -> dict[str, list[tuple[Feature, float]]]:
+def classify_features_with_values(features: list[str], values_dict: dict[str, dict[str, list[float]]]) -> dict[str, list[tuple[str, float]]]:
     # return type is dictionary with key of language and the value of Feature, the value for amplification (ablation is just 0)
     feature_dict = dict()
     for feature in features:
@@ -58,4 +60,51 @@ def classify_features_with_values(features: list[Feature], values_dict: dict[str
         which_supernode = classify_feature(feature_dict[feature])
         for lang in which_supernode:
             return_dict[lang].append((feature, feature_dict[feature][lang][1]))
+    # median is the amplification value
     return return_dict
+
+if __name__ == "__main__":
+    import os, json
+    current_file_path = __file__
+    current_directory = os.path.dirname(current_file_path)
+    absolute_directory = os.path.abspath(current_directory)
+
+    feature_directory = os.path.join(absolute_directory, "data/features")
+    with open(os.path.join(feature_directory, 'en_features.json'), 'r') as f:
+        en_features = json.load(f)
+    with open(os.path.join(feature_directory, 'de_features.json'), 'r') as f:
+        de_features = json.load(f)
+    with open(os.path.join(feature_directory, 'fr_features.json'), 'r') as f:
+        fr_features = json.load(f)
+    with open(os.path.join(feature_directory, 'ja_features.json'), 'r') as f:
+        ja_features = json.load(f)
+    with open(os.path.join(feature_directory, 'zh_features.json'), 'r') as f:
+        zh_features = json.load(f)
+
+    def flatten(xss):
+        return [x for xs in xss for x in xs]
+
+    features = flatten([list(en_features.keys()), list(de_features.keys()), list(fr_features.keys()), list(ja_features.keys()), list(zh_features.keys())])
+
+    value_directory = os.path.join(absolute_directory, "data/values")
+    with open(os.path.join(value_directory, 'en_values.json'), 'r') as f:
+        en_values = json.load(f)
+    with open(os.path.join(value_directory, 'de_values.json'), 'r') as f:
+        de_values = json.load(f)
+    with open(os.path.join(value_directory, 'fr_values.json'), 'r') as f:
+        fr_values = json.load(f)
+    with open(os.path.join(value_directory, 'ja_values.json'), 'r') as f:
+        ja_values = json.load(f)
+    with open(os.path.join(value_directory, 'zh_values.json'), 'r') as f:
+        zh_values = json.load(f)
+    values_dict = {'en': en_values, 'de': de_values, 'fr': fr_values, 'ja': ja_values, 'zh': zh_values}
+
+    supernodes_dict = classify_features_with_values(features, values_dict)
+    supernode_directory = os.path.join(absolute_directory, "data/supernodes")
+    if not os.path.exists(supernode_directory):
+        os.makedirs(supernode_directory)
+    for key, val in supernodes_dict.items():
+        file_name = key + "_supernode.json"
+        with open(os.path.join(supernode_directory, file_name), 'w') as f:
+            json.dump(val, f)
+    
