@@ -40,6 +40,8 @@ def get_feature_activation_from_prompt(
     activation_list = []
     for feature in feature_list:
         layer, feature_idx = feature.split('.')
+        layer = int(layer)
+        feature_idx = int(feature_idx)
         f = Feature(layer=layer, pos=-1, feature_idx = feature_idx)
         idx = feature_find(graph, f, device)
         if idx == None:
