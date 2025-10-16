@@ -1,4 +1,6 @@
 from device_setup import device
+import os
+from sae_lens import SAE
 from template import load_transcoder_from_hub, TranscoderSet, CrossLayerTranscoder
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -17,6 +19,20 @@ because it writes on all the subsequent layers
 
 We could do ablation with AutoModelForCausalLM
 """
+
+def load_gemma(layer):
+    release = "gemma-scope-2b-pt-res"
+    root_dir = f'/alt/llms/majd/multilingual-llm-features/SAE/{release}/layer_{layer}/width_16k/'
+    file_names = list(os.listdir(root_dir))
+    file_names.sort(key=lambda x: int(x.split('_')[-1]))
+    file_name = file_names[2]
+    sae_id = os.path.join(root_dir, file_name).split(f'{release}/')[1]
+    sae, cfg_dict, sparsity = SAE.from_pretrained(
+        release=release,  # see other options in sae_lens/pretrained_saes.yaml
+        sae_id=sae_id,  # won't always be a hook point
+        device=device,
+        )
+    return sae
 
 class Model_Wrapper():
     def __init__(self, model_name='google/gemma-2-2b', transcoder_name='gemma', device=device, dtype=torch.float32):
@@ -53,7 +69,7 @@ class Model_Wrapper():
         return
     
     # Amplification hooks for transcoder
-    def add_hoooks_transcoder_amplification(self, layer, feature_idx, amplification_value):
+    def add_hooks_transcoder_amplification(self, layer, feature_idx, amplification_value):
         if type(self.transcoder) == TranscoderSet:
             singleLayerTranscoder = self.transcoder.transcoders[layer]
             feature_direction = singleLayerTranscoder.W_dec.T[:, feature_idx].clone()
@@ -81,13 +97,51 @@ class Model_Wrapper():
         self.hooks.append(handle)
         return
     
+    # In the original function, they have start_idx and topk_feature_num
+    # They choose the k most prominent features starting from start_idx-th most prominent feature
+    # I will set start_idx = 0, topk_feature_num = 2 to have the strongest ablation
+    def add_hooks_sae_ablation(self, target_layer, lang: str, model = 'gemma-2-2b'):
+        lan_list = ['en', 'es', 'fr', 'ja', 'ko', 'pt', 'th', 'vi', 'zh', 'ar']
+        ori_lan = lan_list.index(lang)
+        if ori_lan == -1:
+            raise KeyError(f'lang {lang} is not in the available language list')
+        start_idx = 0
+        topk_feature_num = 2
+
+        file_dir = f'/export/home/rmitsuhashi/multilingual-llm-features/SAE/sae_acts/{model}/layer_{target_layer}/'
+        top_index_per_lan = torch.load(os.path.join(file_dir, 'top_index_per_lan_magnitude.pth'), weights_only=True)
+        top_index_per_lan = top_index_per_lan[:, start_idx:start_idx+topk_feature_num]
+        sae = load_gemma(target_layer)
+        ori_lan_idx = top_index_per_lan[ori_lan]
+        if 'Llama' in model:
+            ori_feature_direction = sae.decoder.weight[:, ori_lan_idx].clone()
+        else:
+            ori_feature_direction = sae.W_dec.T[:, ori_lan_idx]
+        norm = torch.norm(ori_feature_direction, dim=0)**2
+        ori_feature_direction = ori_feature_direction / norm
+
+        def change_activation_hook(module, input, output):
+            act = output[0]
+            if 'Llama' in model:
+                sae_acts = act.to(torch.bfloat16) @ sae.decoder.weight
+            else:
+                sae_acts = act.to(torch.float32) @ sae.W_dec.T
+            coefficient = sae_acts[0, :, ori_lan_idx].to(act.device)
+            act = (act-coefficient@((ori_feature_direction).T)).to(act.dtype)
+
+            return (act, output[1])
+
+        handle = self.model.model.layers[target_layer].register_forward_hook(change_activation_hook)
+        self.hooks.append(handle)
+        return
+    
     def remove_all_hook(self):
         for handle in self.hooks:
             handle.remove()
         self.hooks = []
 
     
-def run_with_hooks(model: Model_Wrapper, prompt: str, ablation: list[str], amplification: list[tuple[str, float]]):
+def run_with_clt_hooks(model: Model_Wrapper, prompt: str, ablation: list[str], amplification: list[tuple[str, float]]):
     inputs = model.tokenizer(prompt, return_tensors="pt")
 
     for feature in ablation:
@@ -99,8 +153,19 @@ def run_with_hooks(model: Model_Wrapper, prompt: str, ablation: list[str], ampli
         layer, feature_idx = feature.split('.')
         layer = int(layer)
         feature_idx = int(feature_idx)
-        model.add_hoooks_transcoder_amplification(layer, feature_idx, amplification_value)
+        model.add_hooks_transcoder_amplification(layer, feature_idx, amplification_value)
 
+    with torch.no_grad():
+        output = model.model(**inputs)
+    logits = output.logits # (batch, seq len, vocab)
+
+    model.remove_all_hook()
+    return logits
+
+def run_with_sae_hooks(model: Model_Wrapper, prompt: str, ablation_lang: str):
+    inputs = model.tokenizer(prompt, return_tensor="pt")
+    # let us ablate in the last layer
+    model.add_hooks_sae_ablation(model.model.config.num_hidden_layers-1, ablation_lang)
     with torch.no_grad():
         output = model.model(**inputs)
     logits = output.logits # (batch, seq len, vocab)
