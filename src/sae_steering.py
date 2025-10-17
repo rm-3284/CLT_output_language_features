@@ -81,7 +81,6 @@ if __name__ == "__main__":
         for key, val in logit_dict.items():
             for k, v in val.items():
                 logit_dict[key][k] = sum(v) / len(v)
-                logit_dict[key] = sum(val) / len(val)
         visualize_bar_2ddict_outer_inter(logit_dict, False, os.path.join(plt_dir, 'new_logits_zh_' + lang))
         for ablation_lang in langs:
             create_multi_series_histogram(rank_dict[ablation_lang], interactive=False, plt_path=plt_dir, file_name=f'new_ranks_zh_{lang}_{ablation_lang}')
