@@ -13,7 +13,7 @@ from steering import (
     logit_diff, 
     check_valid_meaning
     )
-from template import langs, base_strings
+from template import base_strings
 from data.adjectives import big_data
 
 if __name__ == "__main__":
@@ -24,6 +24,8 @@ if __name__ == "__main__":
     plt_dir = os.path.join(absolute_directory, "plot/sae_steering")
     if not os.path.exists(plt_dir):
         os.makedirs(plt_dir)
+
+    langs = ['en', 'fr', 'ja', 'zh'] # no german
 
     model = Model_Wrapper()
 
