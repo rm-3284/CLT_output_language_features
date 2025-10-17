@@ -1,6 +1,7 @@
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 import torch
 
 from template import Feature, ReplacementModel
@@ -294,7 +295,7 @@ def create_histogram_0_to_10(data: dict[str, list[int]], bins: int = 10, title: 
         plt.savefig(plt_path)
         plt.close()
 
-def create_multi_series_histogram(data: dict[str, list[int]], bins: int = 30, title: str = "Histogram of Data Series", xlabel: str = "Value", ylabel: str = "Frequency", interactive=True, plt_path=''):
+def create_multi_series_histogram(data: dict[str, list[int]], bins: int = 30, title: str = "Histogram of Data Series", xlabel: str = "Value", ylabel: str = "Frequency", interactive=True, plt_path='', file_name = ''):
     """
     Creates a histogram from a dictionary of integer data, where each key represents a series.
     All series are plotted on a single histogram, distinguished by color.
@@ -343,11 +344,13 @@ def create_multi_series_histogram(data: dict[str, list[int]], bins: int = 30, ti
     if interactive:
         plt.show()
     else:
-        plt.savefig(plt_path)
+        file_path = os.path.join(plt_path, file_name + '_full_hist')
+        plt.savefig(file_path)
         plt.close()
 
     if max(map(max, all_data_for_plot)) > 30:
       new_title = title + ' between 0 and 10'
-      create_histogram_0_to_10(data, title=new_title)
+      file_path = os.path.join(plt_path, file_name + '_10_hist')
+      create_histogram_0_to_10(data, title=new_title, interactive=interactive, plt_path=file_path)
 
     return
