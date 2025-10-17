@@ -9,7 +9,7 @@ sys.path.insert(0, module_dir2)
 from circuit_tracer import ReplacementModel, attribute
 from circuit_tracer.graph import Graph, prune_graph
 from graph_visualization import Feature, Supernode, InterventionGraph
-# from circuit_tracer.utils.hf_utils import load_transcoder_from_hub
+from circuit_tracer.utils.hf_utils import load_transcoder_from_hub
 from circuit_tracer.transcoder import TranscoderSet
 from circuit_tracer.transcoder.cross_layer_transcoder import CrossLayerTranscoder
 
