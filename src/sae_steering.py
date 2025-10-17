@@ -76,11 +76,15 @@ if __name__ == "__main__":
                 for ans_lang in langs:
                     word, rank = get_best_word(logits, ans[ans_lang], model)
                     logit_dif = logit_diff(logits, word, answer, model)
-                    logit_dict[lang][ans_lang].append(logit_dif)
-                    rank_dict[lang][ans_lang].append(rank)
+                    logit_dict[ablation_lang][ans_lang].append(logit_dif)
+                    rank_dict[ablation_lang][ans_lang].append(rank)
         for key, val in logit_dict.items():
             for k, v in val.items():
-                logit_dict[key][k] = sum(v) / len(v)
+                if len(v) == 0:
+                    print(f"adj {lang}, ablation{key}, metric {k} zero")
+                    logit_dict[key][k] = 0
+                else:
+                    logit_dict[key][k] = sum(v) / len(v)
         visualize_bar_2ddict_outer_inter(logit_dict, False, os.path.join(plt_dir, 'new_logits_zh_' + lang))
         for ablation_lang in langs:
             create_multi_series_histogram(rank_dict[ablation_lang], interactive=False, plt_path=plt_dir, file_name=f'new_ranks_zh_{lang}_{ablation_lang}')
