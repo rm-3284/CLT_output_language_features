@@ -94,7 +94,7 @@ def check_valid_meaning(prompt: str, ans: dict[str, list[str]], model: Replaceme
     zh = get_best_rank(logits, ans['zh'], model)
     return en <= k or zh <= k
 
-def visualize_bar_2ddict_outer_inter(data: dict[str, dict[str, float]]):
+def visualize_bar_2ddict_outer_inter(data: dict[str, dict[str, float]], interactive=True, plt_path=''):
     # I will name the keys outer and inter
     
     outer_keys = list(data.keys())
@@ -150,10 +150,14 @@ def visualize_bar_2ddict_outer_inter(data: dict[str, dict[str, float]]):
     plt.legend(title='Output Language (lang2)', fontsize=10)
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     plt.tight_layout() # Adjust layout to prevent labels from overlapping
-    plt.show()
+    if interactive:
+        plt.show()
+    else:
+        plt.savefig(plt_path)
+        plt.close()
 
 
-def bar_graph_visualize(data: dict[str, dict[str, dict[str, float]]], name:str) -> None:
+def bar_graph_visualize(data: dict[str, dict[str, dict[str, float]]], name:str, interactive=True, plt_path='') -> None:
     # Get the outermost keys (lang1: e.g., 'English Prompt', 'Spanish Prompt')
     prompt_languages = sorted(list(data.keys()))
 
@@ -218,10 +222,13 @@ def bar_graph_visualize(data: dict[str, dict[str, dict[str, float]]], name:str) 
         fig.delaxes(axes[i])
 
     plt.tight_layout() # Adjust layout to prevent labels from overlapping
-    plt.show()
-    return
+    if interactive:
+        plt.show()
+    else:
+        plt.savefig(plt_path)
+        plt.close()
 
-def create_histogram_0_to_10(data: dict[str, list[int]], bins: int = 10, title: str = "Histogram of Data (0-10 Range)", xlabel: str = "Value", ylabel: str = "Frequency"):
+def create_histogram_0_to_10(data: dict[str, list[int]], bins: int = 10, title: str = "Histogram of Data (0-10 Range)", xlabel: str = "Value", ylabel: str = "Frequency", interactive=True, plt_path=''):
     """
     Creates a histogram from a dictionary of integer data, where each key represents a series.
     Only data points between 0 and 10 (inclusive) are plotted.
@@ -281,10 +288,13 @@ def create_histogram_0_to_10(data: dict[str, list[int]], bins: int = 10, title: 
     plt.xlim(min_plot_value, max_plot_value)
 
     plt.grid(axis='y', alpha=0.75) # Add a grid for better readability
-    plt.show()
-    return
+    if interactive:
+        plt.show()
+    else:
+        plt.savefig(plt_path)
+        plt.close()
 
-def create_multi_series_histogram(data: dict[str, list[int]], bins: int = 30, title: str = "Histogram of Data Series", xlabel: str = "Value", ylabel: str = "Frequency"):
+def create_multi_series_histogram(data: dict[str, list[int]], bins: int = 30, title: str = "Histogram of Data Series", xlabel: str = "Value", ylabel: str = "Frequency", interactive=True, plt_path=''):
     """
     Creates a histogram from a dictionary of integer data, where each key represents a series.
     All series are plotted on a single histogram, distinguished by color.
@@ -330,7 +340,11 @@ def create_multi_series_histogram(data: dict[str, list[int]], bins: int = 30, ti
     plt.legend(title="Data Series")
 
     plt.grid(axis='y', alpha=0.75) # Add a grid for better readability
-    plt.show()
+    if interactive:
+        plt.show()
+    else:
+        plt.savefig(plt_path)
+        plt.close()
 
     if max(map(max, all_data_for_plot)) > 30:
       new_title = title + ' between 0 and 10'
