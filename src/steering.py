@@ -140,8 +140,14 @@ class Model_Wrapper():
             handle.remove()
         self.hooks = []
 
-    
-def run_with_clt_hooks(model: Model_Wrapper, prompt: str, ablation: list[str], amplification: list[tuple[str, float]]):
+def run_without_hooks(model: Model_Wrapper, prompt: str) -> torch.Tensor:
+    inputs = model.tokenizer(prompt, return_tensor="pt")
+    with torch.no_grad():
+        output = model.model(**inputs)
+    logits = output.logits # (batch, seq len, vocab)
+    return logits
+
+def run_with_clt_hooks(model: Model_Wrapper, prompt: str, ablation: list[str], amplification: list[tuple[str, float]]) -> torch.Tensor:
     inputs = model.tokenizer(prompt, return_tensors="pt")
 
     for feature in ablation:
@@ -162,7 +168,7 @@ def run_with_clt_hooks(model: Model_Wrapper, prompt: str, ablation: list[str], a
     model.remove_all_hook()
     return logits
 
-def run_with_sae_hooks(model: Model_Wrapper, prompt: str, ablation_lang: str):
+def run_with_sae_hooks(model: Model_Wrapper, prompt: str, ablation_lang: str) -> torch.Tensor:
     inputs = model.tokenizer(prompt, return_tensor="pt")
     # let us ablate in the last layer
     model.add_hooks_sae_ablation(model.model.config.num_hidden_layers-1, ablation_lang)
@@ -193,26 +199,18 @@ def get_top_outputs(logits: torch.Tensor, model: Model_Wrapper, k: int=10):
     top_outputs = list(zip(top_tokens, top_probs.tolist()))
     return top_outputs
 
-def logit_diff(old_logits: torch.Tensor, new_logits: torch.Tensor, target: str, source: str, model: Model_Wrapper):
-    o_l = old_logits.squeeze(0)[-1]
-    n_l = new_logits.squeeze(0)[-1]
+def logit_diff(logits: torch.Tensor, target: str, source: str, model: Model_Wrapper):
+    l = logits.squeeze(0)[-1]
     s = model.tokenizer(source)['input_ids'][1]
     t = model.tokenizer(target)['input_ids'][1]
 
-    o_diff = o_l[t] - o_l[s]
-    n_diff = n_l[t] - n_l[s]
-    o_diff = o_diff.item() if isinstance(o_diff, torch.Tensor) else o_diff
-    n_diff = n_diff.item() if isinstance(n_diff, torch.Tensor) else n_diff
+    diff = l[t] - l[s]
+    diff = diff.item() if isinstance(diff, torch.Tensor) else diff
 
-    diff = n_diff - o_diff
-    print(f'Logit difference of "{target}" to "{source}": old {o_diff}, new {n_diff}, diff {diff}')
-    return o_diff, n_diff, diff
+    return diff
 
 def check_valid_meaning(prompt: str, ans: dict[str, list[str]], model: Model_Wrapper, k: int=10) -> bool:
-    inputs = model.tokenizer(prompt, return_tensors="pt")
-    with torch.no_grad():
-        output = model.model(**inputs)
-    logits = output.logits # (batch, seq len, vocab)
+    logits = run_without_hooks
 
     _, en = get_best_word(logits, ans['en'], model)
     _, zh = get_best_word(logits, ans['zh'], model)
