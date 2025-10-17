@@ -38,7 +38,7 @@ class Model_Wrapper():
     def __init__(self, model_name='google/gemma-2-2b', transcoder_name='gemma', device=device, dtype=torch.float32):
         self.model = AutoModelForCausalLM.from_pretrained(model_name, device_map=device, torch_dtype=dtype)
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.transcoder, _ = load_transcoder_from_hub(transcoder_name, device=device, dtype=dtype)
+        self.transcoder, _ = 0, 0#load_transcoder_from_hub(transcoder_name, device=device, dtype=dtype)
         self.hooks = []
 
     # Ablation hooks for transcoder
