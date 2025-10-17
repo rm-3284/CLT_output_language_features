@@ -55,14 +55,14 @@ def get_feature_activation_from_prompt(
 
 def iterate_over_sentences(
         prompts: list[str], feature_list: list[str], 
-        model: ReplacementModel, device,
+        model: ReplacementModel, device, max_n_feature_nodes = None
         ) -> dict[str, list[float]]:
 
     activation_values_dict = dict()
     for feature in feature_list:
         activation_values_dict[feature] = []
     for prompt in prompts:
-        activation_list = get_feature_activation_from_prompt(prompt, feature_list, model, device)
+        activation_list = get_feature_activation_from_prompt(prompt, feature_list, model, device, max_feature_nodes=max_n_feature_nodes)
         for i, feature in enumerate(feature_list):
             activation_values_dict[feature].append(activation_list[i])
     return activation_values_dict
