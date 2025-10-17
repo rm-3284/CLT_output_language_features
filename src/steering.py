@@ -141,14 +141,14 @@ class Model_Wrapper():
         self.hooks = []
 
 def run_without_hooks(model: Model_Wrapper, prompt: str) -> torch.Tensor:
-    inputs = model.tokenizer(prompt, return_tensors="pt")
+    inputs = model.tokenizer(prompt, return_tensors="pt").to(device)
     with torch.no_grad():
         output = model.model(**inputs)
     logits = output.logits # (batch, seq len, vocab)
     return logits
 
 def run_with_clt_hooks(model: Model_Wrapper, prompt: str, ablation: list[str], amplification: list[tuple[str, float]]) -> torch.Tensor:
-    inputs = model.tokenizer(prompt, return_tensors="pt")
+    inputs = model.tokenizer(prompt, return_tensors="pt").to(device)
 
     for feature in ablation:
         layer, feature_idx = feature.split('.')
@@ -169,7 +169,7 @@ def run_with_clt_hooks(model: Model_Wrapper, prompt: str, ablation: list[str], a
     return logits
 
 def run_with_sae_hooks(model: Model_Wrapper, prompt: str, ablation_lang: str) -> torch.Tensor:
-    inputs = model.tokenizer(prompt, return_tensors="pt")
+    inputs = model.tokenizer(prompt, return_tensors="pt").to(device)
     # let us ablate in the last layer
     model.add_hooks_sae_ablation(model.model.config.num_hidden_layers-1, ablation_lang)
     with torch.no_grad():
