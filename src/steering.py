@@ -172,3 +172,48 @@ def run_with_sae_hooks(model: Model_Wrapper, prompt: str, ablation_lang: str):
 
     model.remove_all_hook()
     return logits
+
+def get_best_word(logits: torch.Tensor, words: list[str], model: Model_Wrapper) -> tuple[str, int]:
+    last_logits = logits.squeeze(0)[-1]
+    _, indices = torch.sort(last_logits, dim=-1, descending=True)
+    ranks = []
+    for word in words:
+        token = model.tokenizer(word)['input_ids'][1]
+        mask = (indices == token)
+        rank = torch.argmax(mask.int(), dim=-1)
+        rank = rank.item() if isinstance(rank, torch.Tensor) else rank
+        ranks.append((word, rank))
+    ranks.sort(key=lambda x: x[1], reverse=False)
+    # word, rank
+    return ranks[0]
+
+def get_top_outputs(logits: torch.Tensor, model: Model_Wrapper, k: int=10):
+    top_probs, top_token_ids = logits.squeeze(0)[-1].softmax(-1).topk(k)
+    top_tokens = [model.tokenizer.decode(token_id) for token_id in top_token_ids]
+    top_outputs = list(zip(top_tokens, top_probs.tolist()))
+    return top_outputs
+
+def logit_diff(old_logits: torch.Tensor, new_logits: torch.Tensor, target: str, source: str, model: Model_Wrapper):
+    o_l = old_logits.squeeze(0)[-1]
+    n_l = new_logits.squeeze(0)[-1]
+    s = model.tokenizer(source)['input_ids'][1]
+    t = model.tokenizer(target)['input_ids'][1]
+
+    o_diff = o_l[t] - o_l[s]
+    n_diff = n_l[t] - n_l[s]
+    o_diff = o_diff.item() if isinstance(o_diff, torch.Tensor) else o_diff
+    n_diff = n_diff.item() if isinstance(n_diff, torch.Tensor) else n_diff
+
+    diff = n_diff - o_diff
+    print(f'Logit difference of "{target}" to "{source}": old {o_diff}, new {n_diff}, diff {diff}')
+    return o_diff, n_diff, diff
+
+def check_valid_meaning(prompt: str, ans: dict[str, list[str]], model: Model_Wrapper, k: int=10) -> bool:
+    inputs = model.tokenizer(prompt, return_tensors="pt")
+    with torch.no_grad():
+        output = model.model(**inputs)
+    logits = output.logits # (batch, seq len, vocab)
+
+    _, en = get_best_word(logits, ans['en'], model)
+    _, zh = get_best_word(logits, ans['zh'], model)
+    return en <= k or zh <= k
