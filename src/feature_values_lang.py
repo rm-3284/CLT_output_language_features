@@ -19,7 +19,7 @@ if __name__ == "__main__":
     absolute_directory = os.path.abspath(current_directory)
     data_directory = os.path.join(absolute_directory, "data/generic_sentences")
 
-    with open(os.path.join(data_directory, lang + 'sentences.json'), 'r') as f:
+    with open(os.path.join(data_directory, lang + '_sentences.json'), 'r') as f:
         sentences = json.load(f)
     
     feature_directory = os.path.join(absolute_directory, "data/features")
