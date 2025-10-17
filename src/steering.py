@@ -121,7 +121,12 @@ class Model_Wrapper():
         ori_feature_direction = ori_feature_direction / norm
 
         def change_activation_hook(module, input, output):
-            print(output)
+            if isinstance(output, tuple):
+                act = output[0]
+                aux_output = output[1:]
+            else:
+                act = output
+                aux_output = None
             act = output[0]
             if 'Llama' in model:
                 sae_acts = act.to(torch.bfloat16) @ sae.decoder.weight
@@ -129,8 +134,11 @@ class Model_Wrapper():
                 sae_acts = act.to(torch.float32) @ sae.W_dec.T
             coefficient = sae_acts[0, :, ori_lan_idx].to(act.device)
             act = (act-coefficient@((ori_feature_direction).T)).to(act.dtype)
-
-            return (act, output[1])
+            
+            if aux_output is not None:
+                return (act, output[1])
+            else:
+                return act
 
         handle = self.model.model.layers[target_layer].register_forward_hook(change_activation_hook)
         self.hooks.append(handle)
