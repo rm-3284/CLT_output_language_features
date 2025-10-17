@@ -121,6 +121,7 @@ class Model_Wrapper():
         ori_feature_direction = ori_feature_direction / norm
 
         def change_activation_hook(module, input, output):
+            print(output)
             act = output[0]
             if 'Llama' in model:
                 sae_acts = act.to(torch.bfloat16) @ sae.decoder.weight
