@@ -136,7 +136,7 @@ class Model_Wrapper():
             act = (act-coefficient@((ori_feature_direction).T)).to(act.dtype)
             
             if aux_output is not None:
-                return (act, output[1])
+                return (act, *aux_output)
             else:
                 return act
 
