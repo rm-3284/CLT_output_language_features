@@ -247,7 +247,7 @@ def check_valid_meaning(prompt: str, ans: dict[str, list[str]], model: Model_Wra
 if __name__ == "__main__":
     import json, requests
     # gemma-2-2b
-    langs = ['en', 'fr', 'ja', 'zh']
+    langs = ['en', 'es', 'fr', 'ja', 'ko', 'pt', 'th', 'vi', 'zh', 'ar']
     top_features_dict = dict()
     for lang in langs:
         top_features_dict[lang] = dict()
