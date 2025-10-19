@@ -255,6 +255,8 @@ if __name__ == "__main__":
         for i in range(26):
             top_features_dict[lang][i] = dict()
             for j in top_language_features(i, lang):
+                if isinstance(j, torch.Tensor):
+                    j = j.item()
                 response = requests.get(f"https://www.neuronpedia.org/api/feature/gemma-2-2b/{i}-gemmascope-mlp-16k/{j}")
                 explanations = response.json()['explanations']
                 description = explanations[0]['description']
