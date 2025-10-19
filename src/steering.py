@@ -149,6 +149,19 @@ class Model_Wrapper():
             handle.remove()
         self.hooks = []
 
+def top_language_features(target_layer, lang: str, model = 'gemma-2-2b'):
+    lan_list = ['en', 'es', 'fr', 'ja', 'ko', 'pt', 'th', 'vi', 'zh', 'ar']
+    ori_lan = lan_list.index(lang)
+    if ori_lan == -1:
+        raise KeyError(f'lang {lang} is not in the available language list')
+    start_idx = 0
+    topk_feature_num = 2
+
+    file_dir = f'/export/home/rmitsuhashi/multilingual-llm-features/SAE/sae_acts/{model}/layer_{target_layer}/'
+    top_index_per_lan = torch.load(os.path.join(file_dir, 'top_index_per_lan_magnitude.pth'), weights_only=True)
+    top_index = top_index_per_lan[ori_lan, start_idx:start_idx+topk_feature_num]
+    return top_index.detach().cpu()
+
 def run_without_hooks(model: Model_Wrapper, prompt: str) -> torch.Tensor:
     inputs = model.tokenizer(prompt, return_tensors="pt").to(device)
     with torch.no_grad():
@@ -230,3 +243,30 @@ def check_valid_meaning(prompt: str, ans: dict[str, list[str]], model: Model_Wra
     _, en = get_best_word(logits, ans['en'], model)
     _, zh = get_best_word(logits, ans['zh'], model)
     return en <= k or zh <= k
+
+if __name__ == "__main__":
+    import json, requests
+    # gemma-2-2b
+    langs = ['en', 'fr', 'ja', 'zh']
+    top_features_dict = dict()
+    for lang in langs:
+        top_features_dict[lang] = dict()
+    for lang in langs:
+        for i in range(26):
+            top_features_dict[lang][i] = dict()
+            for j in top_language_features(i, lang):
+                response = requests.get(f"https://www.neuronpedia.org/api/feature/gemma-2-2b/{i}-gemmascope-mlp-16k/{j}")
+                explanations = response.json()['explanations']
+                description = explanations[0]['description']
+                top_features_dict[lang][i][j] = description
+    
+    current_file_path = __file__
+    current_directory = os.path.dirname(current_file_path)
+    absolute_directory = os.path.abspath(current_directory)
+    data_directory = os.path.join(absolute_directory, "data/feature_descriptions")
+    if not os.path.exists(data_directory):
+        os.makedirs(data_directory)
+    for lang, v in top_features_dict.items():
+        file_name = f"gemmascope_16k_mlp_out_{lang}"
+        with open(os.path.join(data_directory, file_name), 'w') as f:
+            json.dump(top_features_dict[lang], f)
