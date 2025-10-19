@@ -177,10 +177,16 @@ def run_with_clt_hooks(model: Model_Wrapper, prompt: str, ablation: list[str], a
     model.remove_all_hook()
     return logits
 
-def run_with_sae_hooks(model: Model_Wrapper, prompt: str, ablation_lang: str) -> torch.Tensor:
+def run_with_sae_hooks(model: Model_Wrapper, prompt: str, ablation_lang: str, num_layers = None) -> torch.Tensor:
     inputs = model.tokenizer(prompt, return_tensors="pt").to(device)
     # let us ablate in the last layer
-    model.add_hooks_sae_ablation(model.model.config.num_hidden_layers-1, ablation_lang)
+    num_hidden_layers = model.model.config.num_hidden_layers
+    if num_layers is None:
+        for i in range(num_hidden_layers):
+            model.add_hooks_sae_ablation(i, ablation_lang)
+    else:
+        for i in range(num_hidden_layers - num_layers, num_hidden_layers):
+            model.add_hooks_sae_ablation(i, ablation_lang)
     with torch.no_grad():
         output = model.model(**inputs)
     logits = output.logits # (batch, seq len, vocab)

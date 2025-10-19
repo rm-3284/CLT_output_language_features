@@ -71,7 +71,7 @@ if __name__ == "__main__":
         for adj, ans in big_data:
             for ablation_lang in langs:
                 prompt = prompt_zh.format(adj=adj[ablation_lang])
-                logits = run_with_sae_hooks(model, prompt, ablation_lang)
+                logits = run_with_sae_hooks(model, prompt, ablation_lang, 1)
                 answer, _ = get_best_word(logits, ans[lang], model)
                 for ans_lang in langs:
                     word, rank = get_best_word(logits, ans[ans_lang], model)
@@ -85,6 +85,70 @@ if __name__ == "__main__":
                     logit_dict[key][k] = 0
                 else:
                     logit_dict[key][k] = sum(v) / len(v)
-        visualize_bar_2ddict_outer_inter(logit_dict, False, os.path.join(plt_dir, 'new_logits_zh_' + lang))
+        visualize_bar_2ddict_outer_inter(logit_dict, False, os.path.join(plt_dir, 'new_logits_zh_' + lang + "_1"))
         for ablation_lang in langs:
-            create_multi_series_histogram(rank_dict[ablation_lang], interactive=False, plt_path=plt_dir, file_name=f'new_ranks_zh_{lang}_{ablation_lang}')
+            create_multi_series_histogram(rank_dict[ablation_lang], interactive=False, plt_path=plt_dir, file_name=f'new_ranks_zh_{lang}_{ablation_lang}_1')
+
+    
+    for lang in langs:
+        logit_dict = dict()
+        rank_dict = dict()
+        for ablation_lang in langs:
+            logit_dict[ablation_lang] = dict()
+            rank_dict[ablation_lang] = dict()
+            for ans_lang in langs:
+                logit_dict[ablation_lang][ans_lang] = list()
+                rank_dict[ablation_lang][ans_lang] = list()
+        for adj, ans in big_data:
+            for ablation_lang in langs:
+                prompt = prompt_zh.format(adj=adj[ablation_lang])
+                logits = run_with_sae_hooks(model, prompt, ablation_lang, 3)
+                answer, _ = get_best_word(logits, ans[lang], model)
+                for ans_lang in langs:
+                    word, rank = get_best_word(logits, ans[ans_lang], model)
+                    logit_dif = logit_diff(logits, word, answer, model)
+                    logit_dict[ablation_lang][ans_lang].append(logit_dif)
+                    rank_dict[ablation_lang][ans_lang].append(rank)
+        for key, val in logit_dict.items():
+            for k, v in val.items():
+                if len(v) == 0:
+                    print(f"adj {lang}, ablation{key}, metric {k} zero")
+                    logit_dict[key][k] = 0
+                else:
+                    logit_dict[key][k] = sum(v) / len(v)
+        visualize_bar_2ddict_outer_inter(logit_dict, False, os.path.join(plt_dir, 'new_logits_zh_' + lang + "_3"))
+        for ablation_lang in langs:
+            create_multi_series_histogram(rank_dict[ablation_lang], interactive=False, plt_path=plt_dir, file_name=f'new_ranks_zh_{lang}_{ablation_lang}_3')
+
+    
+    for lang in langs:
+        logit_dict = dict()
+        rank_dict = dict()
+        for ablation_lang in langs:
+            logit_dict[ablation_lang] = dict()
+            rank_dict[ablation_lang] = dict()
+            for ans_lang in langs:
+                logit_dict[ablation_lang][ans_lang] = list()
+                rank_dict[ablation_lang][ans_lang] = list()
+        for adj, ans in big_data:
+            for ablation_lang in langs:
+                prompt = prompt_zh.format(adj=adj[ablation_lang])
+                logits = run_with_sae_hooks(model, prompt, ablation_lang, None)
+                answer, _ = get_best_word(logits, ans[lang], model)
+                for ans_lang in langs:
+                    word, rank = get_best_word(logits, ans[ans_lang], model)
+                    logit_dif = logit_diff(logits, word, answer, model)
+                    logit_dict[ablation_lang][ans_lang].append(logit_dif)
+                    rank_dict[ablation_lang][ans_lang].append(rank)
+        for key, val in logit_dict.items():
+            for k, v in val.items():
+                if len(v) == 0:
+                    print(f"adj {lang}, ablation{key}, metric {k} zero")
+                    logit_dict[key][k] = 0
+                else:
+                    logit_dict[key][k] = sum(v) / len(v)
+        visualize_bar_2ddict_outer_inter(logit_dict, False, os.path.join(plt_dir, 'new_logits_zh_' + lang + "_whole"))
+        for ablation_lang in langs:
+            create_multi_series_histogram(rank_dict[ablation_lang], interactive=False, plt_path=plt_dir, file_name=f'new_ranks_zh_{lang}_{ablation_lang}_whole')
+
+
