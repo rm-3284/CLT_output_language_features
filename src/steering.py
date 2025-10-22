@@ -257,7 +257,7 @@ if __name__ == "__main__":
             for j in top_language_features(i, lang):
                 if isinstance(j, torch.Tensor):
                     j = j.item()
-                response = requests.get(f"https://www.neuronpedia.org/api/feature/gemma-2-2b/{i}-gemmascope-mlp-16k/{j}")
+                response = requests.get(f"https://www.neuronpedia.org/api/feature/gemma-2-2b/{i}-gemmascope-res-16k/{j}")
                 explanations = response.json()['explanations']
                 description = explanations[0]['description']
                 top_features_dict[lang][i][j] = description
@@ -269,6 +269,6 @@ if __name__ == "__main__":
     if not os.path.exists(data_directory):
         os.makedirs(data_directory)
     for lang, v in top_features_dict.items():
-        file_name = f"gemmascope_16k_mlp_out_{lang}"
+        file_name = f"gemmascope_16k_res_{lang}"
         with open(os.path.join(data_directory, file_name), 'w') as f:
             json.dump(top_features_dict[lang], f)
