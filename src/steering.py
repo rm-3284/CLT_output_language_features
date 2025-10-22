@@ -259,13 +259,11 @@ if __name__ == "__main__":
                     j = j.item()
                 response = requests.get(f"https://www.neuronpedia.org/api/feature/gemma-2-2b/{i}-gemmascope-res-16k/{j}")
                 explanations = response.json()['explanations']
-                if isinstance(explanations, list):
+                try:
                     description = explanations[0]['description']
-                elif isinstance(explanations, dict):
-                    description = explanations['description']
-                else:
-                    print(type(explanations))
-                    description = 'could not extract description'
+                except IndexError:
+                    print(f"layer{i}, feature{j}, unable to retrieve description")
+                    description = ""
                 top_features_dict[lang][i][j] = description
     
     current_file_path = __file__
