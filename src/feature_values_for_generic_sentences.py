@@ -68,10 +68,10 @@ def iterate_over_sentences(
     return activation_values_dict
 
 if __name__ == "__main__":
-    from device_setup import device
+    from device_setup import device, num_gpus
     model_name = 'google/gemma-2-2b'
     transcoder_name = 'gemma'
-    model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16)
+    model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16, n_devices=num_gpus)
 
     import os, json
     current_file_path = __file__
