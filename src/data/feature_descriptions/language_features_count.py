@@ -1,11 +1,16 @@
 import json
 import os
-
-from ...template import identifiers
+from pathlib import Path
+import sys
 
 current_file_path = __file__
 current_directory = os.path.dirname(current_file_path)
 absolute_directory = os.path.abspath(current_directory)
+
+parent_directory = Path(absolute_directory).parent
+grand_parent_directory = parent_directory.parent
+sys.path.insert(0, str(grand_parent_directory))
+from template import identifiers
 
 all_entries = os.listdir(absolute_directory)
 result = dict()
