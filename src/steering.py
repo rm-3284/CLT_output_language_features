@@ -1,7 +1,7 @@
 from device_setup import device
 import os
 from sae_lens import SAE
-from template import load_transcoder_from_hub, TranscoderSet, CrossLayerTranscoder
+from circuit_tracer_import import load_transcoder_from_hub, TranscoderSet, CrossLayerTranscoder
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 

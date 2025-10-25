@@ -4,7 +4,8 @@ from intervention import (
     get_best_base, get_best_rank, get_top_outputs, logit_diff_single,
     visualize_bar_2ddict_outer_inter, create_multi_series_histogram
     )
-from template import langs, Feature, ReplacementModel, base_strings
+from template import langs, base_strings
+from circuit_tracer_import import Feature, ReplacementModel, 
 
 def ablation_test_strength(supernode_dict: dict[str, list[tuple[Feature, float]]], lang: str, alpha: float) -> list[tuple[int, int, int, torch.Tensor]]:
     if lang not in supernode_dict.keys():

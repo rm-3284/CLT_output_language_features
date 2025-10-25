@@ -4,7 +4,7 @@ import numpy as np
 import os
 import torch
 
-from template import Feature, ReplacementModel
+from circuit_tracer_import import Feature, ReplacementModel
 
 def ablation(supernode_dict: dict[str, list[tuple[Feature, float]]], lang: str, alpha: float=0) -> list[tuple[int, int, int, torch.Tensor]]:
     if lang not in supernode_dict.keys():

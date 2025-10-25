@@ -1,7 +1,7 @@
 import torch
 from typing import Optional
 
-from template import Graph, Feature, attribute, ReplacementModel
+from circuit_tracer_import import Graph, Feature, attribute, ReplacementModel
 
 def feature_find(graph: Graph, feature: Feature, device) -> Optional[int]:
     layer = feature.layer

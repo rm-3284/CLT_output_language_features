@@ -3,7 +3,7 @@ import torch
 from typing import Optional
 
 from device_setup import device
-from template import Graph, Supernode, Feature, ReplacementModel, attribute
+from circuit_tracer_import import Graph, Supernode, Feature, ReplacementModel, attribute
 
 def set_features_from_supernodes(*supernodes: Supernode) -> list[Feature]:
     feature_lst = []

@@ -1,7 +1,7 @@
 import torch
 from typing import Optional
 
-from template import Graph, Feature, attribute, ReplacementModel
+from circuit_tracer_import import Graph, Feature, attribute, ReplacementModel
 from feature_values_for_generic_sentences import iterate_over_sentences
 
 if __name__ == "__main__":

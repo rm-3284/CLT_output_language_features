@@ -3,7 +3,7 @@ import os
 import torch
 
 from intervention import get_top_outputs
-from template import (
+from circuit_tracer_import import (
     ReplacementModel, Feature, Supernode, 
     InterventionGraph, Intervention
     )

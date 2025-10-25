@@ -5,7 +5,7 @@ import requests
 import torch
 from typing import Optional
 
-from template import Graph, ReplacementModel, attribute, prune_graph
+from circuit_tracer_import import Graph, ReplacementModel, attribute, prune_graph
 from template import base_strings, langs, identifiers
 
 ## helper functions
