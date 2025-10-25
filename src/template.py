@@ -54,5 +54,11 @@ identifiers = {
     'de': ['German', 'german', 'Germany', 'germany'],
     'ja': ['Japanese', 'japanese', 'Japan', 'japan'],
     'zh': ['Chinese', 'chinese', 'China', 'china'],
-    'en': ['English', 'english']
+    'en': ['English', 'english'],
+    'ar': ['Arabic', 'arabic', 'Arab', 'arab'],
+    'es': ['Spanish', 'spanish', 'Spain', 'spain'],
+    'ko': ['Korean', 'korean', 'Korea', 'korea'],
+    'pt': ['Portuguese', 'portuguese', 'Portugal', 'portugal'],
+    'th': ['Thai', 'thai', 'Thailand', 'thailand'],
+    'vi': ['Vietnamese', 'vietnamese', 'Vietnam', 'vietnam'],
 }
