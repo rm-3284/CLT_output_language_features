@@ -273,6 +273,6 @@ if __name__ == "__main__":
     if not os.path.exists(data_directory):
         os.makedirs(data_directory)
     for lang, v in top_features_dict.items():
-        file_name = f"gemmascope_16k_res_{lang}"
+        file_name = f"gemmascope_16k_res_{lang}.json"
         with open(os.path.join(data_directory, file_name), 'w') as f:
             json.dump(top_features_dict[lang], f)
