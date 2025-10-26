@@ -24,7 +24,7 @@ def get_feature_activation_from_prompt(
         prompt: str, feature_list: list[str],
         model: ReplacementModel, device,
         max_n_logits:int=5, desired_logit_prob:float=0.95,
-        max_feature_nodes=None, batch_size:int=256,
+        max_feature_nodes=None, batch_size:int=128,
         offload:str='cpu', verbose:bool=True,
         ) -> list[float]:
     graph = attribute(
