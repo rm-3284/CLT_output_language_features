@@ -84,6 +84,7 @@ def sae_features_from_activations(
     for chunk in chunks:
         sae.eval()
         input_activation = chunk.squeeze(0).to(device)
+        print(chunk.shape, input_activation.shape)
         with torch.no_grad():
             # (batch, seq_len, d_sae)
             _, feature_acts, *args = sae(input_activation)
