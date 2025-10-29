@@ -477,7 +477,7 @@ def lape(
         features_info,
     )
 
-def get_sae_features(final_indices, model_name, sae_model_name, layers):
+def get_sae_features(final_indices, sae_model_name, layers):
     num_langs = len(final_indices)
 
     sae_features = [[] for _ in range(num_langs)]
@@ -557,6 +557,8 @@ if __name__ == "__main__":
 
     lang_to_activations_count = defaultdict(dict)
     langs = ['bg','zh','en','fr','de','ru','es','tr','vi',]
+    sae_name = "gemma-scope-2b-pt-mlp-canonical"
+    max_layers = 26
 
     current_file_path = __file__
     current_directory = os.path.dirname(current_file_path)
@@ -631,7 +633,7 @@ if __name__ == "__main__":
     sae_features = (
         {
             "sae_features": get_sae_features(
-                final_indice, args["model"], args["sae_model"], args["layers"]
+                final_indice, sae_name, [i for i in range(max_layers)]
             )
         }
     )
