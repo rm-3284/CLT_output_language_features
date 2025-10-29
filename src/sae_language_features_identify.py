@@ -1,5 +1,6 @@
 import bisect
 from collections import defaultdict
+import json
 import math
 import os
 from pathlib import Path
@@ -540,6 +541,24 @@ lang_choices_to_qualified_name = {
     "cmn": "Chinese",
 }
 
+lang_short_dict = {
+    "English": "en",
+    "German": "de",
+    "French": "fr",
+    "Italian": "it",
+    "Portuguese": "pt",
+    "Hindi": "hi",
+    "Spanish": "es",
+    "Thai": "th",
+    "Bulgarian": "bg",
+    "Russian": "ru",
+    "Turkish": "tr",
+    "Vietnamese": "vi",
+    "Japanese": "ja",
+    "Korean": "ko",
+    "Chinese": "zh",
+}
+
 if __name__ == "__main__":
     set_deterministic()
 
@@ -658,3 +677,16 @@ if __name__ == "__main__":
 
     file_path = out_dir / "result.pt"
     torch.save(output, file_path)
+
+    for key, val in features_info.items():
+        lang = lang_short_dict[key]
+        indices = val["indices"]
+        probs = val["selected_probs"].tolist()
+        entropies = val["entropies"].tolist()
+        result_list = []
+        for index, prob, entropy in zip(indices, probs, entropies):
+            result_list.append((index, prob, entropy))
+        file_path = out_dir / f"{lang}.json"
+        with open(file_path, "w") as f:
+            json.dump(result_list, f)
+
