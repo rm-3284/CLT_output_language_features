@@ -194,5 +194,7 @@ if __name__ == "__main__":
             start,
             end
         )
+
+        torch.cuda.empty_cache()
         print("Saved")
 
