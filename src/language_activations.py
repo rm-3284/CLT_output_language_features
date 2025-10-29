@@ -26,7 +26,7 @@ def collect_activations(
 
     with llm.trace(prompt):
         for layer in layers:
-            layers_activations[layer] = layers_modules.output.cpu().save()
+            layers_activations[layer] = layers_modules[layer].output.cpu().save()
 
     layers_activations_processed = {
         layer: (
