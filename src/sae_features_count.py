@@ -82,12 +82,12 @@ if __name__ == "__main__":
         max_active_over_zero = torch.zeros((num_layers, hidden_dim))
         min_active_over_zero = torch.full((num_layers, hidden_dim), math.inf)
 
-        num_examples = 0
-        num_tokens = 0
-
         for layer in range(num_layers):
             input_dir = (out_dir / lang)
             activations = load_activations(input_dir, layer)
+
+            num_examples = 0
+            num_tokens = 0
 
             (
                 over_zero_token,
