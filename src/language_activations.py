@@ -163,6 +163,7 @@ if __name__ == "__main__":
     sae_name = "gemma-scope-2b-pt-mlp-canonical"
     start, end = 0, 100
     max_layer = 26
+    batches = 50
 
     current_file_path = __file__
     current_directory = os.path.dirname(current_file_path)
@@ -181,7 +182,7 @@ if __name__ == "__main__":
         layer_template = "model.layers.{l}.mlp"
 
         all_activations = collect_all_activations(llm, max_layer, dataset, prompt_template, layer_template)
-        all_sae_features = collect_all_sae_features(all_activations, max_layer, sae_name, 100)
+        all_sae_features = collect_all_sae_features(all_activations, max_layer, sae_name, batches)
 
         output_dir = (out_dir / lang)
         save_activations(
