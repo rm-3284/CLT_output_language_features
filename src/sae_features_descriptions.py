@@ -32,7 +32,7 @@ if __name__ == "__main__":
             description_dict[f"{layer}.{feature_idx}"] = description
 
         file_path = (out_dir / f"description/{lang}.json")
-        with open(file_path, "r") as f:
+        with open(file_path, "w") as f:
             json.dump(description_dict, f)
     
     description_included = dict()
