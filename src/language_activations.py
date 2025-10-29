@@ -87,7 +87,7 @@ def sae_features_from_activations(
         print(chunk.shape, input_activation.shape)
         with torch.no_grad():
             # (batch, seq_len, d_sae)
-            _, feature_acts, *args = sae(input_activation)
+            feature_acts = sae(input_activation)
             print(feature_acts.shape)
             K = 100
             top_values, top_indices_batch = torch.topk(feature_acts, k=K, dim=-1)
