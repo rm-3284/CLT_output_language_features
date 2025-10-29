@@ -106,15 +106,15 @@ def sae_features_from_activations(
     for chunk in chunks:
         sae.eval()
         input_activation = chunk.to(device)
-        print(chunk.shape, input_activation.shape)
+        
         with torch.no_grad():
             # (batch, seq_len, d_sae)
             feature_acts = jumprelu_encode(sae, input_activation)
-            print(feature_acts.shape)
-            K = 100
+            
+            K = 32
             top_values, top_indices_batch = torch.topk(feature_acts, k=K, dim=-1)
-        top_acts.append(top_values.unsqueeze(0).cpu())
-        top_indices.append(top_indices_batch.unsqueeze(0).cpu())
+        top_acts.append(top_values.cpu())
+        top_indices.append(top_indices_batch.cpu())
     
     top_acts = torch.cat(top_acts, dim=1)
     top_acts = torch.split(top_acts, activations_size, dim=1)
