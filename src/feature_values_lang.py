@@ -39,12 +39,12 @@ if __name__ == "__main__":
 
     features = flatten([list(en_features.keys()), list(de_features.keys()), list(fr_features.keys()), list(ja_features.keys()), list(zh_features.keys())])
     
-    en_values = iterate_over_sentences(sentences, features, model, device, max_n_feature_nodes=None)
+    values = iterate_over_sentences(sentences, features, model, device, max_n_feature_nodes=None)
 
     values_directory = os.path.join(absolute_directory, 'data/values')
     if not os.path.exists(values_directory):
         os.makedirs(values_directory)
 
     with open(os.path.join(values_directory, lang + '_values_individual.json'), 'w') as f:
-        json.dump(en_values, f)
+        json.dump(values, f)
     
