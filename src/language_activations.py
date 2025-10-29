@@ -7,11 +7,10 @@ from sae_lens import SAE
 import torch
 from tqdm.auto import tqdm
 
+from device_setup import get_device
+
 def get_nested_attr(obj, attr_path):
     return reduce(getattr, attr_path.split("."), obj)
-
-def get_device():
-    return "cuda" if torch.cuda.is_available() else "cpu"
 
 def collect_activations(
         llm: LanguageModel,
