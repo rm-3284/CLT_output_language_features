@@ -117,7 +117,7 @@ def sae_features_from_activations(
         top_indices.append(top_indices_batch.cpu())
 
         torch.cuda.empty_cache()
-    
+    print("Success")
     top_acts = torch.cat(top_acts, dim=1)
     top_acts = torch.split(top_acts, activations_size, dim=1)
 
