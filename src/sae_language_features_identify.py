@@ -682,7 +682,9 @@ if __name__ == "__main__":
         lang = lang_short_dict[key]
         indices = val["indicies"]
         probs = val["selected_probs"].tolist()
+        probs = [probs] if isinstance(probs, float) else probs
         entropies = val["entropies"].tolist()
+        entropies = [entropies] if isinstance(entropies, float) else entropies
         result_list = []
         for index, prob, entropy in zip(indices, probs, entropies):
             result_list.append((index, prob, entropy))
