@@ -166,7 +166,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "langs", 
-        help="languages", 
+        help="list of languages",
+        nargs='+', 
         type=str,
         choices=['bg','zh','en','fr','de','hi','it','ja','ko','pt','ru','es','th','tr','vi',],
     )
