@@ -680,7 +680,7 @@ if __name__ == "__main__":
 
     for key, val in features_info.items():
         lang = lang_short_dict[key]
-        indices = val["indices"]
+        indices = val["indicies"]
         probs = val["selected_probs"].tolist()
         entropies = val["entropies"].tolist()
         result_list = []
