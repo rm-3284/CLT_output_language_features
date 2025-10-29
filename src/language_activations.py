@@ -142,6 +142,7 @@ def collect_all_sae_features(
         all_sae_features[layer] = sae_features_from_activations(
             layer_activations, sae, device, batch
         )
+        del sae
 
     return all_sae_features # val is tuple of top32 activations, indices
 
