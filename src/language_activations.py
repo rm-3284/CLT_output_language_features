@@ -90,8 +90,8 @@ def sae_features_from_activations(
             
             K = 32
             top_values, top_indices_batch = torch.topk(feature_acts, k=K, dim=-1)
-        top_acts.append(top_values.unsqueeze(0).cpu())
-        top_indices.append(top_indices_batch.unsqueeze(0).cpu())
+        top_acts.append(top_values.cpu())
+        top_indices.append(top_indices_batch.cpu())
     
     top_acts = torch.cat(top_acts, dim=1)
     top_acts = torch.split(top_acts, activations_size, dim=1)
