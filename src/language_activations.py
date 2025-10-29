@@ -194,7 +194,9 @@ if __name__ == "__main__":
             start,
             end
         )
-
+        
+        del all_activations
+        del all_sae_features
         torch.cuda.empty_cache()
         print("Saved")
 
