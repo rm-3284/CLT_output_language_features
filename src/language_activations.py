@@ -6,6 +6,7 @@ from pathlib import Path
 from sae_lens import SAE
 import torch
 from tqdm.auto import tqdm
+from jaxtyping import Float
 
 from device_setup import get_device
 
@@ -66,6 +67,27 @@ def load_sae(
         sae = SAE.from_pretrained(sae_model_name, sae_model_layer_name)[0]
         return sae
     
+threshold = 0.001 # threshold for jumprelu
+def jumprelu_encode(
+        sae: SAE, x: Float[torch.Tensor, "... d_in"]
+    ) -> Float[torch.Tensor, "... d_sae"]:
+        """
+        Encode the input tensor into the feature space using JumpReLU.
+        The threshold parameter determines which units remain active.
+        """
+        sae_in = sae.process_sae_in(x)
+        hidden_pre = sae.hook_sae_acts_pre(sae_in @ sae.W_enc + sae.b_enc)
+
+        # 1) Apply the base "activation_fn" from config (e.g., ReLU).
+        base_acts = sae.activation_fn(hidden_pre)
+
+        # 2) Zero out any unit whose (hidden_pre <= threshold).
+        #    We cast the boolean mask to the same dtype for safe multiplication.
+        jump_relu_mask = (hidden_pre > threshold).to(base_acts.dtype)
+
+        # 3) Multiply the normally activated units by that mask.
+        return sae.hook_sae_acts_post(base_acts * jump_relu_mask)
+    
 def sae_features_from_activations(
     activations_list: list[torch.Tensor],
     sae: SAE,
@@ -87,7 +109,7 @@ def sae_features_from_activations(
         print(chunk.shape, input_activation.shape)
         with torch.no_grad():
             # (batch, seq_len, d_sae)
-            feature_acts = sae(input_activation)
+            feature_acts = jumprelu_encode(sae, input_activation)
             print(feature_acts.shape)
             K = 100
             top_values, top_indices_batch = torch.topk(feature_acts, k=K, dim=-1)
