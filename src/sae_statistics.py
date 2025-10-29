@@ -27,8 +27,8 @@ def extract_range(file_path: Path):
 
     return (0, 0)
 
-def load_activations(input_dir: Path, layer: str):
-    layer_files = sorted(list(input_dir.glob(f"{layer}*.pt")), key=extract_range)
+def load_activations(input_dir: Path, layer: int):
+    layer_files = sorted(list(input_dir.glob(f"{layer}.*.pt")), key=extract_range)
     print(f"Loading activations from {input_dir}: {[layer_file.name for layer_file in layer_files]}")
     activations = []
     for layer_file in layer_files:
@@ -37,7 +37,7 @@ def load_activations(input_dir: Path, layer: str):
 
 def process_sae_features(
         sae_features_list: list[any],
-        layer: str,
+        layer: int,
         lang: str,
         rounding_digit=3,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     langs = ['bg','zh','en','fr','de','hi','it','ja','ko','pt','ru','es','th','tr','vi',]
     max_layers = 26
     layer_template = "model.layers.{l}.mlp"
-    layers = [layer_template.format(l=i) for i in range(max_layers)]
+    layers = [i for i in range(max_layers)]
 
     current_file_path = __file__
     current_directory = os.path.dirname(current_file_path)
@@ -150,10 +150,10 @@ if __name__ == "__main__":
                 sae_features, layer, lang
             )
 
-            output_dir = (Path(absolute_directory) / "statistics" / "summary" / layer)
+            output_dir = (Path(absolute_directory) / "statistics" / "summary" / str(layer))
             os.makedirs(output_dir, exist_ok=True)
             df_statistics.to_csv(output_dir / f"{lang}.csv", index=False)
 
-            output_dir = (Path(absolute_directory) / "statistics" / "dataset_token_activation" / layer)
+            output_dir = (Path(absolute_directory) / "statistics" / "dataset_token_activation" / str(layer))
             os.makedirs(output_dir, exist_ok=True)
             df_dataset_token_activations.to_csv(output_dir / f"{lang}.csv", index=False)
