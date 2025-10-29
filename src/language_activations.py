@@ -1,3 +1,4 @@
+import argparse
 from datasets import Dataset, load_dataset
 from functools import reduce
 from nnsight import LanguageModel
@@ -162,6 +163,16 @@ def save_activations(
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "langs", 
+        help="languages", 
+        type=str,
+        choices=['bg','zh','en','fr','de','hi','it','ja','ko','pt','ru','es','th','tr','vi',],
+    )
+    args = parser.parse_args()
+    langs = args.langs
+
     llm = LanguageModel("google/gemma-2-2b", device_map="auto", dispatch=True)
     sae_name = "gemma-scope-2b-pt-mlp-canonical"
     start, end = 0, 100
@@ -174,7 +185,7 @@ if __name__ == "__main__":
     out_dir = os.path.join(absolute_directory, "data/sae_features")
     out_dir = Path(out_dir)
 
-    for lang in ['bg','zh','en','fr','de','hi','it','ja','ko','pt','ru','es','th','tr','vi',]:
+    for lang in langs:
         try:
             dataset = load_dataset("facebook/xnli", lang, split=f"train[{start}:{end}]", trust_remote_code=True)
         except ValueError:
