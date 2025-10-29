@@ -149,7 +149,7 @@ if __name__ == "__main__":
 
     for lang in ['bg','zh','en','fr','de','hi','it','ja','ko','pt','ru','es','th','tr','vi',]:
         try:
-            dataset = load_dataset("facebook/xnli", lang, f"train[{start}:{end}]", trust_remote_code=True)
+            dataset = load_dataset("facebook/xnli", lang, split=f"train[{start}:{end}]", trust_remote_code=True)
         except ValueError:
             print(f"{lang} is not in the list of languages available")
             continue
