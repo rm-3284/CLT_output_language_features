@@ -68,7 +68,7 @@ if __name__ == "__main__":
         ds = load_dataset("openlanguagedata/flores_plus", ds_key, split="dev")
         ds = ds.shuffle(seed=42)
         df = ds.to_pandas()
-        batch = df[: 150, 'text'].tolist()
+        batch = df.loc[:150, 'text'].tolist()
         sentences = filter_sentences(batch, alphabet_char[lang], model) # only returns 100 sentences
         features = iterate_through_sentences(model, sentences)
         file_name = f'{lang}.json'
