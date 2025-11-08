@@ -6,7 +6,7 @@ import torch
 from typing import Optional
 
 from circuit_tracer_import import Graph, ReplacementModel, attribute, prune_graph
-from template import base_strings, langs, identifiers
+from template import base_strings, langs, langs_big, identifiers
 
 ## helper functions
 def token_to_idx(graph: Graph, token: int) -> int:
@@ -321,24 +321,25 @@ def iterate_through_data(
     return features
 
 if __name__ == '__main__':
-    from device_setup import device
+    #from device_setup import device
 
-    model_name = 'google/gemma-2-2b'
-    transcoder_name = 'gemma'
-    model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16)
+    #model_name = 'google/gemma-2-2b'
+    #transcoder_name = 'gemma'
+    #model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16)
 
-    from data.adjectives import train_data
+    #from data.adjectives import train_data
     import os
     current_file_path = __file__
     current_directory = os.path.dirname(current_file_path)
     absolute_directory = os.path.abspath(current_directory)
-    data_directory = os.path.join(absolute_directory, "data/features")
+    data_directory = os.path.join(absolute_directory, "data/flores_features")
     if not os.path.exists(data_directory):
         os.makedirs(data_directory)
 
     feature_dict = dict()
-    for lang in langs:
-        features = iterate_through_data(train_data, model, lang)
+    for lang in langs_big:
+        with open(os.path.join(data_directory, f'{lang}.json'), 'r') as f:
+            features = json.load(f)
         lang_features = choose_language_features(features, identifiers[lang])
         file_name = lang + "_features.json"
         file_path = os.path.join(data_directory, file_name)
