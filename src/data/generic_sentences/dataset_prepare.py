@@ -12,7 +12,7 @@ current_file_path = Path(__file__).resolve()
 three_levels_up = current_file_path.parents[2]
 sys.path.insert(0, str(three_levels_up))
 
-from template import ReplacementModel
+from circuit_tracer_import import ReplacementModel
 
 # character-checks
 def is_english_alphabet_char(char: str) -> bool:
@@ -61,6 +61,36 @@ def is_japanese_alphabet_char(char: str) -> bool:
     elif 0x4E00 <= unicode_value <= 0x9FFF:
         return True
     return False
+
+def is_spanish_alphabet_char(char: str) -> bool:
+    if len(char) > 1:
+        raise AssertionError('Argument should be one character')
+    
+    spanish_chars = "abcdefghijklmnopqrstuvwxyzñáéíóúü"
+    char_lower = char.lower()
+    return char_lower in spanish_chars
+
+def is_korean_alphabet_char(char: str) -> bool:
+    # Hangul Syllables range
+    if '\uAC00' <= char <= '\uD7A3':
+        return True
+    # Hangul Jamo (individual consonants and vowels) range
+    if '\u1100' <= char <= '\u11FF':
+        return True
+    # Hangul Compatibility Jamo range
+    if '\u3130' <= char <= '\u318F':
+        return True
+    return False
+
+alphabet_char = {
+    'en': is_english_alphabet_char,
+    'fr': is_french_alphabet_char,
+    'de': is_german_alphabet_char,
+    'es': is_spanish_alphabet_char,
+    'zh': is_chinese_alphabet_char,
+    'ja': is_japanese_alphabet_char,
+    'ko': is_korean_alphabet_char,
+}
 
 def english_sentence_clean(sentence: str) -> str:
     words = sentence.split(" ")

@@ -42,3 +42,13 @@ identifiers = {
     'ru': ['Russian', 'russian', 'Russia', 'russia'],
     'tr': ['Turkish', 'turkish', 'Turkey', 'turkey'],
 }
+
+lang_to_flores_key ={
+    'en': 'eng_Latn',
+    'fr': 'fra_Latn',
+    'de': 'deu_Latn',
+    'es': 'spa_Latn',
+    'zh': 'cmn_Hans',
+    'ja': 'jpn_Jpan',
+    'ko': 'kor_Hang',
+}
