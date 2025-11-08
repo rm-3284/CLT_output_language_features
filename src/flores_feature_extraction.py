@@ -64,6 +64,7 @@ if __name__ == "__main__":
     transcoder_name = "gemma"
     model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16)
     for lang, ds_key in lang_to_flores_key.items():
+        print(f"Loading {ds_key}")
         ds = load_dataset("openlanguagedata/flores_plus", ds_key, split="dev")
         ds = ds.shuffle(seed=42)
         df = ds.to_pandas()
