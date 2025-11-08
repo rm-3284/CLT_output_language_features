@@ -4,11 +4,11 @@ import pandas as pd
 import torch
 import os
 
-from .circuit_tracer_import import ReplacementModel, attribute
-from .data.generic_sentences import alphabet_char, filter_sentences
-from .device_setup import device
-from .feature_extraction import distinct_path_max_bottleneck, prune_paths_by_first_last, pick_last_pos_features
-from .template import lang_to_flores_key
+from circuit_tracer_import import ReplacementModel, attribute
+from data.generic_sentences import alphabet_char, filter_sentences
+from device_setup import device
+from feature_extraction import distinct_path_max_bottleneck, prune_paths_by_first_last, pick_last_pos_features
+from template import lang_to_flores_key
 
 def iterate_through_sentences(
         model: ReplacementModel,
