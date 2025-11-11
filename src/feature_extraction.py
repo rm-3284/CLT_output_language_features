@@ -242,7 +242,7 @@ def pick_last_pos_features(graph: Graph, paths: list[list[int]]) -> list[tuple[i
 
     return feature_list
 
-def choose_language_features(features: list[tuple[int, int]], language_identifiers: list[str], feature_dict: Optional[dict[str, str]] = None) -> dict[str, int]:
+def choose_language_features(features: list[tuple[int, int]], language_identifiers: list[str], feature_dict: Optional[dict[str, str]] = None) -> tuple[dict[str, int], dict[str, str]]:
     lang_feature_dict = dict()
     feature_description_dict = feature_dict if feature_dict is not None else dict()
     for layer, feature_idx in features:
@@ -265,7 +265,7 @@ def choose_language_features(features: list[tuple[int, int]], language_identifie
             else:
                 lang_feature_dict[key] = lang_feature_dict[key] + 1
 
-    return lang_feature_dict
+    return lang_feature_dict, feature_description_dict
 
 def iterate_through_data(
         train_data: list[tuple[dict[str, str], dict[str, list[str]]]],
@@ -330,11 +330,11 @@ if __name__ == '__main__':
     if not os.path.exists(data_directory):
         os.makedirs(data_directory)
 
-    feature_dict = dict()
+    feature_descriptions = dict()
     for lang in langs_big:
         with open(os.path.join(data_directory, f'{lang}.json'), 'r') as f:
             features = json.load(f)
-        lang_features = choose_language_features(features, identifiers[lang])
+        lang_features, feature_descriptions = choose_language_features(features, identifiers[lang], feature_descriptions)
         file_name = lang + "_features.json"
         file_path = os.path.join(data_directory, file_name)
         with open(file_path, 'w') as f:
