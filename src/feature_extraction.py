@@ -244,26 +244,20 @@ def pick_last_pos_features(graph: Graph, paths: list[list[int]]) -> list[tuple[i
 
 def choose_language_features(features: list[tuple[int, int]], language_identifiers: list[str], feature_dict: Optional[dict[str, str]] = None) -> dict[str, int]:
     lang_feature_dict = dict()
+    feature_description_dict = feature_dict if feature_dict is not None else dict()
     for layer, feature_idx in features:
         key = f'{layer}.{feature_idx}'
-        if feature_dict == None:
+        
+        try:
+            description = feature_description_dict[key]
+        except KeyError:
             try:
                 response = requests.get(f"https://www.neuronpedia.org/api/feature/gemma-2-2b/{layer}-gemmascope-transcoder-16k/{feature_idx}")
                 explanations = response.json()['explanations']
                 description = explanations[0]['description']
+                feature_description_dict[key] = description
             except TypeError:
                 raise TypeError(f"Layer {layer}, feature {feature_idx} does not exist")
-        else:
-            try:
-                description = feature_dict[key]
-            except KeyError:
-                try:
-                    response = requests.get(f"https://www.neuronpedia.org/api/feature/gemma-2-2b/{layer}-gemmascope-transcoder-16k/{feature_idx}")
-                    explanations = response.json()['explanations']
-                    description = explanations[0]['description']
-                    feature_dict[key] = description
-                except TypeError:
-                    raise TypeError(f"Layer {layer}, feature {feature_idx} does not exist")
                 
         if find_substring(description, language_identifiers):
             if lang_feature_dict.get(key) == None:
