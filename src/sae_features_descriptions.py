@@ -37,7 +37,7 @@ if __name__ == "__main__":
     
     description_included = dict()
     for item in (out_dir / "description_largest").glob("??.json"):
-        lang = str(item.stem)
+        lang = str(item.stem)[:2]
         with open(item, 'r') as f:
             descriptions = json.load(f)
         
