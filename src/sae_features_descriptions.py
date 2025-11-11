@@ -12,9 +12,9 @@ if __name__ == "__main__":
     out_dir = os.path.join(absolute_directory, "data/sae_features")
     out_dir = Path(out_dir)
 
-    os.makedirs((out_dir / "description"), exist_ok=True)
+    os.makedirs((out_dir / "description_largest"), exist_ok=True)
 
-    for item in out_dir.glob("*.json"):
+    for item in out_dir.glob("*_largest.json"):
         lang = str(item.stem)
         with open(item, "r") as f:
             tuples = json.load(f)
@@ -31,12 +31,12 @@ if __name__ == "__main__":
                 description = ""
             description_dict[f"{layer}.{feature_idx}"] = description
 
-        file_path = (out_dir / f"description/{lang}.json")
+        file_path = (out_dir / f"description_largest/{lang}.json")
         with open(file_path, "w") as f:
             json.dump(description_dict, f)
     
     description_included = dict()
-    for item in (out_dir / "description").glob("??.json"):
+    for item in (out_dir / "description_largest").glob("??.json"):
         lang = str(item.stem)
         with open(item, 'r') as f:
             descriptions = json.load(f)
@@ -55,6 +55,6 @@ if __name__ == "__main__":
             
         description_included[lang] = (included, total)
     
-    file_path = (out_dir / "description/summary.json")
+    file_path = (out_dir / "description_largest/summary.json")
     with open(file_path, "w") as f:
         json.dump(description_included, f)
