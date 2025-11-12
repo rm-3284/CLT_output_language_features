@@ -152,8 +152,8 @@ if __name__ == "__main__":
 
             output_dir = (Path(absolute_directory) / "statistics" / "summary" / str(layer))
             os.makedirs(output_dir, exist_ok=True)
-            df_statistics.to_csv(output_dir / f"{lang}.csv", index=False)
+            df_statistics.to_csv(output_dir / f"{lang}_extended.csv", index=False)
 
             output_dir = (Path(absolute_directory) / "statistics" / "dataset_token_activation" / str(layer))
             os.makedirs(output_dir, exist_ok=True)
-            df_dataset_token_activations.to_csv(output_dir / f"{lang}.csv", index=False)
+            df_dataset_token_activations.to_csv(output_dir / f"{lang}_extended.csv", index=False)
