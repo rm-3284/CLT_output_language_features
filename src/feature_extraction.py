@@ -337,8 +337,6 @@ if __name__ == '__main__':
 
     feature_descriptions = dict()
     for lang in langs_big:
-        if lang == 'es' or lang == 'ja' or lang == 'en' or lang == 'ko':
-            continue
         print(f"{lang} start")
         with open(os.path.join(data_directory, f'{lang}.json'), 'r') as f:
             features = json.load(f)
