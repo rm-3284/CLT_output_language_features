@@ -156,7 +156,7 @@ def sae_lape(
     
     # Take the N smallest or largest values of the entropy tensor
     # If largest is True, take the N largest values, otherwise take the N smallest values.
-    largest = True
+    largest = False
     
     # dismiss the neuron if no language has a total activated examples over the threshold
     num_examples = num_examples.clone().detach().unsqueeze(0) * example_rate
@@ -589,7 +589,7 @@ if __name__ == "__main__":
         normalized_lang = lang_choices_to_qualified_name[lang]
 
         output_dir = Path(absolute_directory) / "data/sae_features_count"
-        file_path = output_dir / f"{lang}.pt"
+        file_path = output_dir / f"{lang}_extended.pt"
 
         activations_count = torch.load(file_path)
         aggregate_activations_count(lang_to_activations_count, normalized_lang, activations_count)
@@ -675,7 +675,7 @@ if __name__ == "__main__":
     }
     print(output)
 
-    file_path = out_dir / "result_largest.pt"
+    file_path = out_dir / "result_extended.pt"
     torch.save(output, file_path)
 
     for key, val in features_info.items():
@@ -688,7 +688,7 @@ if __name__ == "__main__":
         result_list = []
         for index, prob, entropy in zip(indices, probs, entropies):
             result_list.append((index, prob, entropy))
-        file_path = out_dir / f"{lang}_largest.json"
+        file_path = out_dir / f"{lang}_extended.json"
         with open(file_path, "w") as f:
             json.dump(result_list, f)
 
