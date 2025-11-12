@@ -245,6 +245,9 @@ def pick_last_pos_features(graph: Graph, paths: list[list[int]]) -> list[tuple[i
 def choose_language_features(features: list[tuple[int, int]], language_identifiers: list[str], feature_dict: Optional[dict[str, str]] = None) -> tuple[dict[str, int], dict[str, str]]:
     lang_feature_dict = dict()
     feature_description_dict = feature_dict if feature_dict is not None else dict()
+    headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
     for layer, feature_idx in features:
         key = f'{layer}.{feature_idx}'
         
@@ -252,12 +255,14 @@ def choose_language_features(features: list[tuple[int, int]], language_identifie
             description = feature_description_dict[key]
         except KeyError:
             try:
-                response = requests.get(f"https://www.neuronpedia.org/api/feature/gemma-2-2b/{layer}-gemmascope-transcoder-16k/{feature_idx}")
+                response = requests.get(f"https://www.neuronpedia.org/api/feature/gemma-2-2b/{layer}-gemmascope-transcoder-16k/{feature_idx}", headers=headers)
                 explanations = response.json()['explanations']
                 description = explanations[0]['description']
                 feature_description_dict[key] = description
             except TypeError:
                 raise TypeError(f"Layer {layer}, feature {feature_idx} does not exist")
+            except IndexError:
+                description = ""
                 
         if find_substring(description, language_identifiers):
             if lang_feature_dict.get(key) == None:
@@ -332,6 +337,9 @@ if __name__ == '__main__':
 
     feature_descriptions = dict()
     for lang in langs_big:
+        if lang == 'es' or lang == 'ja' or lang == 'en':
+            continue
+        print(f"{lang} start")
         with open(os.path.join(data_directory, f'{lang}.json'), 'r') as f:
             features = json.load(f)
         lang_features, feature_descriptions = choose_language_features(features, identifiers[lang], feature_descriptions)
