@@ -110,7 +110,7 @@ if __name__ == "__main__":
             )
 
         output_dir = Path(absolute_directory) / "data/sae_features_count"
-        file_path = output_dir / f"{lang}.pt"
+        file_path = output_dir / f"{lang}_extended.pt"
 
         os.makedirs(output_dir, exist_ok=True)
 
