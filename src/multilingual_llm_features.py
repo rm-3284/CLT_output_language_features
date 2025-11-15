@@ -61,6 +61,7 @@ def get_mean_activation(
         for key, val in activation_values_sum.items():
             try:
                 current_val = mean_activation_dict[key]
+                current_val = current_val.item() if isinstance(current_val, torch.Tensor) else current_val
                 mean_activation_dict[key] = current_val + val
             except KeyError:
                 mean_activation_dict[key] = val
@@ -168,5 +169,6 @@ if __name__ == "__main__":
 
     for lang, data in lang_mean_activation_dict.items():
         file_name = "{lang}_vplot.png"
-        full_path = os.path.join(data_directory, )
+        full_path = os.path.join(data_directory, file_name)
+        histogram_v_values(data, full_path)
     
