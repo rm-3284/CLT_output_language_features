@@ -46,6 +46,8 @@ def get_activation(
             activation_values_sum[key] = val + activation_value
         except KeyError:
             activation_values_sum[key] = activation_value
+    for key, val in activation_values_sum.items():
+        activation_values_sum[key] = val.item() if isinstance(val, torch.Tensor) else val
     del graph
     return activation_values_sum, n_pos
 
