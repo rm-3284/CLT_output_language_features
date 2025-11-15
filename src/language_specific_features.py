@@ -16,7 +16,7 @@ def get_activation_vector(
         max_n_logits = 5,
         desired_logit_prob = 0.95,
         max_feature_nodes = None,
-        batch_size = 256,
+        batch_size = 64,
         offload = 'cpu',
         verbose = True,
         ) -> tuple[torch.Tensor, int]:
