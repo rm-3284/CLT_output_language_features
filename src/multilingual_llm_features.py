@@ -122,7 +122,7 @@ def histogram_v_values(data: dict[str, float], save_path: str):
     plt.ylabel("Values")
     plt.title(
         f"Bar Chart in Decreasing Order\n"
-        f"Max (Green): {max_val:.2f} | Min (Red): {min_val:.2f} | Difference: {difference:.2f}"
+        f"Max (Green): {max_val:.2f} | Min (Red): {min_val:.2f}"
     )
     if len(labels) > 5:
         plt.xticks(rotation=45, ha='right')
