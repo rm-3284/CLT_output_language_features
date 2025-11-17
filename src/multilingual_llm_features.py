@@ -98,7 +98,7 @@ def histogram_v_values(data: dict[str, float], save_path: str):
         print("The dictionary is empty. No plot to generate.")
         return
     
-    sorted_items = sorted(data.items(), key=lambda item: item[1], reverse=True)
+    sorted_items = sorted(data.items(), key=lambda item: item[1], reverse=True)[:100]
     labels, values = zip(*sorted_items)
     if len(values) == 1:
         # If there's only one bar, it's both max and min
@@ -165,12 +165,17 @@ if __name__ == "__main__":
                 json.dump(mean_activation, f)
             lang_mean_activation_dict[lang] = mean_activation
     
-    v_dict = calculate_v(lang_mean_activation_dict)
-    with open(os.path.join(data_directory, 'v_values'), 'w') as f:
-        json.dump(v_dict, f)
+    full_path = os.path.join(data_directory, 'v_values.json')
+    if os.path.exists(full_path):
+        with open(full_path, 'r') as f:
+            v_dict = json.load(f)
+    else:
+        v_dict = calculate_v(lang_mean_activation_dict)
+        with open(full_path, 'w') as f:
+            json.dump(v_dict, f)
 
     for lang, data in lang_mean_activation_dict.items():
-        file_name = "{lang}_vplot.png"
+        file_name = f"{lang}_vplot.png"
         full_path = os.path.join(data_directory, file_name)
         histogram_v_values(data, full_path)
     
