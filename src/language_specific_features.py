@@ -94,6 +94,8 @@ def choose_language_specific_features(
         language_specific_features[lang] = []
 
     for (layer, feature_idx) in true_indices:
+        layer = layer.item() if isinstance(layer, torch.Tensor) else layer
+        feature_idx = feature_idx.item() if isinstance(feature_idx, torch.Tensor) else feature_idx
         vals = stacked[layer, feature_idx, :]
         max_val = max(vals)
         active = (vals >= max_val * cross_lingual_thres)
@@ -138,10 +140,11 @@ if __name__ == "__main__":
             lang_activation_vec[lang] = activation_vector
             lang_active_examples[lang] = active_examples
     
+    example_thres = 0.9
     language_specific_features = choose_language_specific_features(
-        list(langs_big), lang_activation_vec, lang_active_examples, 0.8, 0.8
+        list(langs_big), lang_activation_vec, lang_active_examples, 0.8, example_thres
     ) # example_thres is 0.98 for the original paper
-    file_name = "features.json"
+    file_name = f"features_{example_thres}.json"
     with open(os.path.join(data_directory, file_name), 'w') as f:
         json.dump(language_specific_features, f)
     
