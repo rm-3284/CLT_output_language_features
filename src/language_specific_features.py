@@ -142,8 +142,6 @@ def scale_steer_to_A(
 
     generated = prompt
     for _ in range(max_new_tokens):
-        if generated == '':
-            generated = torch.tensor(2) # bos token
         graph = attribute(
                 prompt=generated,
                 model=model,
