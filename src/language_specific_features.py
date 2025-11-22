@@ -6,6 +6,7 @@ import torch.nn.functional as F
 
 from circuit_tracer_import import attribute, ReplacementModel
 from device_setup import device
+from intervention import get_top_outputs
 from template import lang_to_flores_key, langs_big
 
 def get_activation_vector(
@@ -122,7 +123,65 @@ def choose_language_specific_features(
             language_specific_features[lang].append((layer, feature_idx))
     return language_specific_features
 
+def scale_steer_to_A(
+        language_features: dict[str, list[tuple[int, int]]],
+        max_activation: dict[str, dict[str, float]],
+        lang_A: str,
+        prompt: str,
+        model: ReplacementModel,
+        alpha = 0.2,
+        max_new_tokens = 64,
+        max_n_logits = 5,
+        desired_logit_prob = 0.95,
+        max_feature_nodes = None,
+        batch_size = 64,
+        offload = 'cpu',
+        verbose = True,
+        ) -> str:
+    lang_A_features = language_features[lang_A]
 
+    generated = prompt
+    for _ in range(max_new_tokens):
+        graph = attribute(
+                prompt=prompt,
+                model=model,
+                max_n_logits=max_n_logits,
+                desired_logit_prob=desired_logit_prob,
+                batch_size=batch_size,
+                max_feature_nodes=max_feature_nodes,
+                offload=offload,
+                verbose=verbose,
+            )
+        active_features = graph.active_features # (n_active_features, 3) containing (layer, pos, feature_idx)
+        active_features = active_features.detach().cpu()
+        activation_values = graph.activation_values
+        n_pos = graph.n_pos
+
+        interventions = []
+        for layer, feature_idx in lang_A_features:
+            pos = n_pos - 1
+            target_row = torch.tensor((layer, pos, feature_idx))
+
+            matches = (active_features == target_row)
+            row_matches_all = torch.all(matches, dim=1)
+            indices = torch.nonzero(row_matches_all, as_tuple=False)
+            original_activation = 0
+            if indices.numel() > 0:
+                index = indices.item()
+                print(f"{layer}.{feature_idx} was active in prompt {prompt}")
+                original_activation = activation_values[index].detach().cpu()
+                original_activation = original_activation.item() if isinstance(original_activation, torch.Tensor) else original_activation
+            
+            activation_value = original_activation + alpha * max_activation[lang_A][f"{layer}.{feature_idx}"]
+            # tuple of layer, position, feature_idx, value
+            intervention = (layer, pos, feature_idx, activation_value)
+            interventions.append(intervention)
+        
+        new_logits, new_activations = model.feature_intervention(prompt, interventions)
+        token, prob = get_top_outputs(new_logits, model, 1)[0]
+        generated += token
+
+    return generated
 
 if __name__ == "__main__":
     current_file_path = __file__
@@ -176,4 +235,17 @@ if __name__ == "__main__":
         with open(full_path, 'w') as f:
             json.dump(language_specific_features, f)
     
-
+    data_list = []
+    alphas = [0.1, 0.3, 0.4, 0.5, 0.8]
+    for lang in langs_big:
+        for alpha in alphas:
+            output = scale_steer_to_A(language_specific_features, lang_max_vals, lang, "", model, alpha)
+            record = [lang, alpha, output]
+            data_list.append(record)
+    
+    file_name = "text_generation.jsonl"
+    full_path = os.path.join(data_directory, file_name)
+    with open(full_path, 'w', encoding='utf-8') as file:
+        for record in data_list:
+            json_line = json.dumps(record, ensure_ascii=False)
+            file.write(json_line + '\n')
