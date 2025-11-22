@@ -142,8 +142,14 @@ def scale_steer_to_A(
 
     generated = prompt
     for _ in range(max_new_tokens):
+        encoded_input = model.tokenizer(
+                prompt,
+                return_tensors="pt",
+                add_special_tokens=True,
+                # This ensures the BOS token is added
+            ).input_ids
         graph = attribute(
-                prompt=prompt,
+                prompt=encoded_input,
                 model=model,
                 max_n_logits=max_n_logits,
                 desired_logit_prob=desired_logit_prob,
