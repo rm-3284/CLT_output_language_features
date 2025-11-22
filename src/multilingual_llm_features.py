@@ -142,6 +142,7 @@ def steering_from_A_to_B(
         lang_B: str, # target
         prompt: str,
         model: ReplacementModel,
+        topk = 10,
         max_n_logits = 5,
         desired_logit_prob = 0.95,
         max_feature_nodes = None,
@@ -149,8 +150,8 @@ def steering_from_A_to_B(
         offload = 'cpu',
         verbose = True,
         ) -> tuple[torch.Tensor, torch.Tensor]:
-    intervening_features1 = list(sorted(per_lang_mean_activation_dict[lang_A].items(), key=lambda item: item[1], reverse=True)[:10])
-    intervening_features2 = list(sorted(per_lang_mean_activation_dict[lang_B].items(), key=lambda item: item[1], reverse=True)[:10])
+    intervening_features1 = list(sorted(per_lang_mean_activation_dict[lang_A].items(), key=lambda item: item[1], reverse=True)[:topk])
+    intervening_features2 = list(sorted(per_lang_mean_activation_dict[lang_B].items(), key=lambda item: item[1], reverse=True)[:topk])
     combined_intervening_features = intervening_features1 + intervening_features2
 
     graph = attribute(
@@ -252,18 +253,19 @@ if __name__ == "__main__":
                 prompt_list.append(json_object)
     
     data_list = list()
+    topk = 20
     for prompt in prompt_list:
         ori_sentence = prompt["ori_sentence"]
         ori_lan = prompt["ori_lan"]
         target_lan = prompt["target_lan"]
         if not (ori_lan in lang_to_flores_key.keys() and target_lan in lang_to_flores_key.keys()):
             continue
-        logits, activation = steering_from_A_to_B(v_dict, ori_lan, target_lan, ori_sentence, model)
+        logits, activation = steering_from_A_to_B(v_dict, ori_lan, target_lan, ori_sentence, model, topk)
         top_outputs = get_top_outputs(logits, model)
         record = {"sentence": ori_sentence, "source_lang": ori_lan, "target_lang": target_lan, "top_outputs": top_outputs}
         data_list.append(record)
     
-    file_name = "cross_lingual_continuation.jsonl"
+    file_name = f"cross_lingual_continuation_{topk}.jsonl"
     full_path = os.path.join(data_directory, file_name)
     with open(full_path, 'w', encoding='utf-8') as file:
         for record in data_list:
