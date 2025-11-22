@@ -156,6 +156,7 @@ def scale_steer_to_A(
         active_features = active_features.detach().cpu()
         activation_values = graph.activation_values
         n_pos = graph.n_pos
+        print(n_pos)
 
         interventions = []
         for layer, feature_idx in lang_A_features:
