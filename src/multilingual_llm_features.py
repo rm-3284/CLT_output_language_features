@@ -5,8 +5,9 @@ import os
 import pandas as pd
 import torch
 
-from circuit_tracer_import import Graph, attribute, ReplacementModel
+from circuit_tracer_import import attribute, ReplacementModel
 from device_setup import device
+from intervention import get_top_outputs
 from template import lang_to_flores_key
 
 def get_activation(
@@ -135,6 +136,66 @@ def histogram_v_values(data: dict[str, float], save_path: str):
     print(f"Bar chart saved to {save_path}")
     return
 
+def steering_from_A_to_B(
+        per_lang_mean_activation_dict: dict[str, dict[str, float]], 
+        lang_A: str, # source
+        lang_B: str, # target
+        prompt: str,
+        model: ReplacementModel,
+        max_n_logits = 5,
+        desired_logit_prob = 0.95,
+        max_feature_nodes = None,
+        batch_size = 64,
+        offload = 'cpu',
+        verbose = True,
+        ) -> tuple[torch.Tensor, torch.Tensor]:
+    intervening_features1 = list(sorted(per_lang_mean_activation_dict[lang_A].items(), key=lambda item: item[1], reverse=True)[:10])
+    intervening_features2 = list(sorted(per_lang_mean_activation_dict[lang_B].items(), key=lambda item: item[1], reverse=True)[:10])
+    combined_intervening_features = intervening_features1 + intervening_features2
+
+    graph = attribute(
+            prompt=prompt,
+            model=model,
+            max_n_logits=max_n_logits,
+            desired_logit_prob=desired_logit_prob,
+            batch_size=batch_size,
+            max_feature_nodes=max_feature_nodes,
+            offload=offload,
+            verbose=verbose,
+        )
+    active_features = graph.active_features # (n_active_features, 3) containing (layer, pos, feature_idx)
+    activation_values = graph.activation_values
+    n_pos = graph.n_pos
+
+    interventions = list()
+    for key, _ in combined_intervening_features:
+        pos = n_pos - 1
+        layer, feature_idx = key.split('.')
+        layer = int(layer)
+        feature_idx = int(feature_idx)
+        target_row = torch.tensor((layer, pos, feature_idx))
+
+        matches = (active_features == target_row)
+        row_matches_all = torch.all(matches, dim=1)
+        indices = torch.nonzero(row_matches_all, as_tuple=False)
+        original_activation = 0
+        if indices.numel() > 0:
+            index = indices.item()
+            print(f"{key} was active in prompt {prompt}")
+            original_activation = activation_values[index]
+            original_activation = original_activation.item() if isinstance(original_activation, torch.Tensor) else original_activation
+
+        langA_activation = per_lang_mean_activation_dict[lang_A].get(key, 0)
+        langB_activation = per_lang_mean_activation_dict[lang_B].get(key, 0)
+        diff = langB_activation - langA_activation
+
+        # tuple of layer, position, feature_idx, value
+        intervention = (layer, pos, feature_idx, original_activation + diff)
+        interventions.append(intervention)
+    
+    new_logits, new_activations = model.feature_intervention(prompt, interventions)
+    return new_logits, new_activations
+
 if __name__ == "__main__":
     current_file_path = __file__
     current_directory = os.path.dirname(current_file_path)
@@ -177,5 +238,33 @@ if __name__ == "__main__":
     for lang, data in lang_mean_activation_dict.items():
         file_name = f"{lang}_vplot.png"
         full_path = os.path.join(data_directory, file_name)
-        histogram_v_values(data, full_path)
+        if not os.path.exists(full_path):
+            histogram_v_values(data, full_path)
     
+    # steering experiments
+    full_path = os.path.join(data_directory, 'forced_code_switch.jsonl')
+    prompt_list = []
+    with open(full_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            if line.strip():
+                json_object = json.loads(line.strip())
+                prompt_list.append(json_object)
+    
+    data_list = list()
+    for prompt in prompt_list:
+        ori_sentence = prompt["ori_sentence"]
+        ori_lan = prompt["ori_lan"]
+        target_lan = prompt["target_lan"]
+        if not (ori_lan in lang_to_flores_key.keys() and target_lan in lang_to_flores_key.keys()):
+            continue
+        logits, activation = steering_from_A_to_B(v_dict, ori_lan, target_lan, ori_sentence, model)
+        top_outputs = get_top_outputs(logits, model)
+        record = {"sentence": ori_sentence, "source_lang": ori_lan, "target_lang": target_lan, "top_outputs": top_outputs}
+        data_list.append(record)
+    
+    file_name = "cross_lingual_continuation.jsonl"
+    full_path = os.path.join(data_directory, file_name)
+    with open(full_path, 'w', encoding='utf-8') as file:
+        for record in data_list:
+            json_line = json.dumps(record, ensure_ascii=False)
+            file.write(json_line + '\n')
