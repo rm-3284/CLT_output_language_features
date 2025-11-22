@@ -19,7 +19,7 @@ def get_activation_vector(
         batch_size = 64,
         offload = 'cpu',
         verbose = True,
-        ) -> tuple[torch.Tensor, int]:
+        ) -> tuple[torch.Tensor, int, dict[str, float]]:
     graph = attribute(
             prompt=prompt,
             model=model,
@@ -31,31 +31,46 @@ def get_activation_vector(
             verbose=verbose,
         )
     active_features = graph.active_features # (n_active_features, 3) containing (layer, pos, feature_idx)
+    activation_values = graph.activation_values
     activation_vector = torch.zeros((n_layers, n_features))
     n_pos = graph.n_pos
-    for layer, pos, feature_idx in active_features:
+    values_dict = dict()
+    for i, (layer, pos, feature_idx) in enumerate(active_features):
         layer = int(layer) if isinstance(layer, torch.Tensor) else layer
         feature_idx = int(feature_idx) if isinstance(feature_idx, torch.Tensor) else feature_idx
         activation_vector[layer, feature_idx] += 1
-    return activation_vector, n_pos
+        
+        key = f"{layer}.{feature_idx}"
+        cur = values_dict.get(key, 0)
+        activation_value = activation_values[i]
+        activation_value = activation_value.item() if isinstance(activation_value, torch.Tensor) else activation_value
+        values_dict[key] = max(cur, activation_value)
+
+    return activation_vector, n_pos, values_dict
 
 def get_lang_activation_vector(
         prompts: list[str],
         model: ReplacementModel,
         n_layers = 26, n_features=16384,
-) -> tuple[torch.Tensor, torch.Tensor]:
+) -> tuple[torch.Tensor, torch.Tensor, dict[str, float]]:
     activation_vector = torch.zeros((n_layers, n_features))
     active_examples = torch.zeros((n_layers, n_features))
     n_pos_total = 0
+    max_values_dict = dict()
     for prompt in prompts:
-        vec, n_pos = get_activation_vector(prompt, model, n_layers, n_features)
+        vec, n_pos, values_dict = get_activation_vector(prompt, model, n_layers, n_features)
         activation_vector += vec
         n_pos_total += n_pos
         bool_mask = (activation_vector > 0).float()
         active_examples += bool_mask
+
+        for key, val in values_dict.items():
+            cur = max_values_dict.get(key, 0)
+            max_values_dict[key] = max(cur, val)
+
     activation_vector /= n_pos_total
     active_examples /= len(prompts)
-    return activation_vector, active_examples
+    return activation_vector, active_examples, max_values_dict
 
 def normalize(lang_activation_vec: dict[str, torch.Tensor]) -> tuple[list[str], torch.Tensor]:
     # the returned tensor is (n_layers, n_features, langs)
@@ -123,28 +138,42 @@ if __name__ == "__main__":
 
     lang_activation_vec = dict()
     lang_active_examples = dict()
+    lang_max_vals = dict()
     for lang, ds_key in lang_to_flores_key.items():
         file_name = f"{lang}.pt"
-        full_path = os.path.join(data_directory, file_name)
-        if os.path.exists(full_path):
-            activation_vector, active_examples = torch.load(full_path)
+        json_name = f"{lang}.json" # for max activation values
+        pt_path = os.path.join(data_directory, file_name)
+        json_path = os.path.join(data_directory, json_name)
+        if os.path.exists(pt_path) and os.path.exists(json_path):
+            activation_vector, active_examples = torch.load(pt_path)
             lang_activation_vec[lang] = activation_vector
             lang_active_examples[lang] = active_examples
+            with open(json_path, 'r') as f:
+                lang_max_vals[lang] = json.load(f)
         else:
             ds = load_dataset("openlanguagedata/flores_plus", ds_key, split="dev")
             ds = ds.shuffle(seed=42)
             df = ds.to_pandas()
             batch = df.loc[:100, 'text'].tolist()
-            activation_vector, active_examples = get_lang_activation_vector(batch, model)
-            torch.save((activation_vector, active_examples), full_path)
+            activation_vector, active_examples, max_values_dict = get_lang_activation_vector(batch, model)
+            torch.save((activation_vector, active_examples), pt_path)
             lang_activation_vec[lang] = activation_vector
             lang_active_examples[lang] = active_examples
+            with open(json_path, 'w') as f:
+                json.dump(max_values_dict, f)
+            lang_max_vals[lang] = max_values_dict
     
-    example_thres = 0.9
-    language_specific_features = choose_language_specific_features(
-        list(langs_big), lang_activation_vec, lang_active_examples, 0.8, example_thres
-    ) # example_thres is 0.98 for the original paper
+    example_thres = 0.98
     file_name = f"features_{example_thres}.json"
-    with open(os.path.join(data_directory, file_name), 'w') as f:
-        json.dump(language_specific_features, f)
+    full_path = os.path.join(data_directory, file_name)
+    if os.path.exists(full_path):
+        with open(full_path, 'r') as f:
+            language_specific_features = json.load(f)
+    else:
+        language_specific_features = choose_language_specific_features(
+            list(langs_big), lang_activation_vec, lang_active_examples, 0.8, example_thres
+        ) # example_thres is 0.98 for the original paper
+        with open(full_path, 'w') as f:
+            json.dump(language_specific_features, f)
     
+
