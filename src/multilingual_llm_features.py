@@ -164,6 +164,7 @@ def steering_from_A_to_B(
             verbose=verbose,
         )
     active_features = graph.active_features # (n_active_features, 3) containing (layer, pos, feature_idx)
+    active_features = active_features.detach().cpu()
     activation_values = graph.activation_values
     n_pos = graph.n_pos
 
@@ -182,7 +183,7 @@ def steering_from_A_to_B(
         if indices.numel() > 0:
             index = indices.item()
             print(f"{key} was active in prompt {prompt}")
-            original_activation = activation_values[index]
+            original_activation = activation_values[index].detach().cpu()
             original_activation = original_activation.item() if isinstance(original_activation, torch.Tensor) else original_activation
 
         langA_activation = per_lang_mean_activation_dict[lang_A].get(key, 0)
