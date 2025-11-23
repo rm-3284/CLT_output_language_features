@@ -236,15 +236,16 @@ if __name__ == "__main__":
         with open(full_path, 'w') as f:
             json.dump(language_specific_features, f)
     
+    max_new_tokens = 16
     data_list = []
     alphas = [0.1, 0.3, 0.4, 0.5, 0.8]
     for lang in langs_big:
         for alpha in alphas:
-            output = scale_steer_to_A(language_specific_features, lang_max_vals, lang, "", model, alpha)
+            output = scale_steer_to_A(language_specific_features, lang_max_vals, lang, "", model, alpha, max_new_tokens)
             record = [lang, alpha, output]
             data_list.append(record)
     
-    file_name = "text_generation.jsonl"
+    file_name = f"text_generation_{max_new_tokens}.jsonl"
     full_path = os.path.join(data_directory, file_name)
     with open(full_path, 'w', encoding='utf-8') as file:
         for record in data_list:
