@@ -253,7 +253,7 @@ if __name__ == "__main__":
                 prompt_list.append(json_object)
     
     data_list = list()
-    topk = 30
+    topk = 50
     for prompt in prompt_list:
         ori_sentence = prompt["ori_sentence"]
         ori_lan = prompt["ori_lan"]
