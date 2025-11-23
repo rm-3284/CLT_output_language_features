@@ -156,7 +156,6 @@ def scale_steer_to_A(
         active_features = active_features.detach().cpu()
         activation_values = graph.activation_values
         n_pos = graph.n_pos
-        print(n_pos)
 
         interventions = []
         for layer, feature_idx in lang_A_features:
@@ -181,6 +180,7 @@ def scale_steer_to_A(
         new_logits, new_activations = model.feature_intervention(prompt, interventions)
         token, prob = get_top_outputs(new_logits, model, 1)[0]
         generated += token
+        print(generated)
 
     return generated
 
