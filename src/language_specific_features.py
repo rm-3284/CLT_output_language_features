@@ -160,7 +160,7 @@ def scale_steer_to_A(
         interventions = []
         for layer, feature_idx in lang_A_features:
             pos = -1
-            target_row = torch.tensor((layer, pos, feature_idx))
+            target_row = torch.tensor((layer, n_pos + pos, feature_idx))
 
             matches = (active_features == target_row)
             row_matches_all = torch.all(matches, dim=1)
