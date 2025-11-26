@@ -130,6 +130,7 @@ def scale_steer_to_A(
         prompt: str,
         model: ReplacementModel,
         alpha = 0.2,
+        p=0.9,
         max_new_tokens = 64,
         max_n_logits = 5,
         desired_logit_prob = 0.95,
@@ -177,8 +178,20 @@ def scale_steer_to_A(
             intervention = (layer, pos, feature_idx, activation_value)
             interventions.append(intervention)
         
-        new_logits, new_activations = model.feature_intervention(prompt, interventions)
-        token, prob = get_top_outputs(new_logits, model, 1)[0]
+        new_logits, _ = model.feature_intervention(generated, interventions)
+        # top-p decoding
+        probs = F.softmax(new_logits.float(), dim=-1)
+        sorted_probs, sorted_indices = torch.sort(probs, descending=True)
+        cumulative_probs = torch.cumsum(sorted_probs, dim=-1)
+        indices_to_remove = cumulative_probs > p
+        indices_to_remove[..., 1:] = indices_to_remove[..., :-1].clone()
+        indices_to_remove[..., 0] = False
+        sorted_probs[indices_to_remove] = 0.0
+
+        next_token_index = torch.multinomial(sorted_probs, num_samples=1)
+        next_token_id = sorted_indices[next_token_index].item()
+        token = tokenizer.decode([next_token_id], skip_special_tokens=False)
+
         generated += token
         print(generated)
 
@@ -236,14 +249,16 @@ if __name__ == "__main__":
         with open(full_path, 'w') as f:
             json.dump(language_specific_features, f)
     
-    max_new_tokens = 16
+    max_new_tokens = 64
     data_list = []
     alphas = [0.1, 0.3, 0.4, 0.5, 0.8]
+    ps = [0.0, 0.5, 0.8, 0.9, 0.95] # 0.0 is greedy decoding
     for lang in langs_big:
         for alpha in alphas:
-            output = scale_steer_to_A(language_specific_features, lang_max_vals, lang, "", model, alpha, max_new_tokens)
-            record = [lang, alpha, output]
-            data_list.append(record)
+            for p in ps:
+                output = scale_steer_to_A(language_specific_features, lang_max_vals, lang, "", model, alpha, p, max_new_tokens)
+                record = [lang, alpha, p, output]
+                data_list.append(record)
     
     file_name = f"text_generation_{max_new_tokens}.jsonl"
     full_path = os.path.join(data_directory, file_name)
