@@ -169,7 +169,7 @@ def scale_steer_to_A(
             original_activation = 0
             if indices.numel() > 0:
                 index = indices.item()
-                print(f"{layer}.{feature_idx} was active in prompt {prompt}")
+                print(f"{layer}.{feature_idx} was active in prompt {generated}")
                 original_activation = activation_values[index].detach().cpu()
                 original_activation = original_activation.item() if isinstance(original_activation, torch.Tensor) else original_activation
             
