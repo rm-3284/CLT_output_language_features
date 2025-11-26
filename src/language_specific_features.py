@@ -191,7 +191,7 @@ def scale_steer_to_A(
 
         next_token_index = torch.multinomial(sorted_probs, num_samples=1)
         next_token_id = sorted_indices[next_token_index].item()
-        token = tokenizer.decode([next_token_id], skip_special_tokens=False)
+        token = model.tokenizer.decode([next_token_id], skip_special_tokens=False)
 
         generated += token
         print(generated)
