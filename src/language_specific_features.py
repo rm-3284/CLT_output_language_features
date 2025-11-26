@@ -180,7 +180,8 @@ def scale_steer_to_A(
         
         new_logits, _ = model.feature_intervention(generated, interventions)
         # top-p decoding
-        probs = F.softmax(new_logits.float(), dim=-1)
+        next_token_logits = new_logits[0, -1, :]
+        probs = F.softmax(next_token_logits.float(), dim=-1)
         sorted_probs, sorted_indices = torch.sort(probs, descending=True)
         cumulative_probs = torch.cumsum(sorted_probs, dim=-1)
         indices_to_remove = cumulative_probs > p
