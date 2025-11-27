@@ -136,6 +136,23 @@ def histogram_v_values(data: dict[str, float], save_path: str):
     print(f"Bar chart saved to {save_path}")
     return
 
+def last_pos_feature_find(key: str, n_pos: int, active_features: torch.Tensor) -> int:
+    pos = n_pos - 1
+    layer, feature_idx = key.split('.')
+    layer = int(layer)
+    feature_idx = int(feature_idx)
+
+    target_row = torch.tensor((layer, pos, feature_idx))
+    matches = (active_features == target_row)
+    row_matches_all = torch.all(matches, dim=1)
+    indices = torch.nonzero(row_matches_all, as_tuple=False)
+
+    if indices.numel() == 0:
+        return -1
+    else:
+        return indices.item()
+
+
 def steering_from_A_to_B(
         per_lang_mean_activation_dict: dict[str, dict[str, float]], 
         lang_A: str, # source
@@ -171,19 +188,10 @@ def steering_from_A_to_B(
 
     interventions = list()
     for key, _ in combined_intervening_features:
-        pos = n_pos - 1
-        layer, feature_idx = key.split('.')
-        layer = int(layer)
-        feature_idx = int(feature_idx)
-        target_row = torch.tensor((layer, pos, feature_idx))
-
-        matches = (active_features == target_row)
-        row_matches_all = torch.all(matches, dim=1)
-        indices = torch.nonzero(row_matches_all, as_tuple=False)
-        original_activation = 0
-        if indices.numel() > 0:
-            index = indices.item()
-            print(f"{key} was active in prompt {prompt}")
+        index = last_pos_feature_find(key, n_pos, active_features)
+        if index == -1:
+            original_activation = 0
+        else:
             original_activation = activation_values[index].detach().cpu()
             original_activation = original_activation.item() if isinstance(original_activation, torch.Tensor) else original_activation
 
@@ -197,6 +205,106 @@ def steering_from_A_to_B(
     
     new_logits, new_activations = model.feature_intervention(prompt, interventions)
     return new_logits, new_activations
+
+def code_switch_analysis(
+        per_lang_mean_activation_dict: dict[str, dict[str, float]], 
+        lang_A,
+        lang_B,
+        prompt_list,
+        model: ReplacementModel,
+        topk = 10,
+        max_n_logits = 5,
+        desired_logit_prob = 0.95,
+        max_feature_nodes = None,
+        batch_size = 64,
+        offload = 'cpu',
+        verbose = True,
+        ) -> dict[str, tuple[float, float, float]]: 
+        # lang_B noun, lang_A prefix lang_B noun, lang_A prefix lang_A noun
+    top_features = list(sorted(per_lang_mean_activation_dict[lang_A].items(), key=lambda item: item[1], reverse=True)[:topk])
+    activation_diff = dict()
+    for key, _ in top_features:
+        activation_diff[key] = [[], [], []]
+    
+    for prompt in prompt_list:
+        ori_lan = prompt["ori_lan"]
+        target_lan = prompt["target_lan"]
+        ori_sentence = prompt["ori_sentence"]
+        sentence = prompt["sentence"]
+        if ori_lan != lang_A:
+            continue
+        if target_lan != lang_A and target_lan != lang_B:
+            continue
+        graph = attribute(
+                prompt=sentence,
+                model=model,
+                max_n_logits=max_n_logits,
+                desired_logit_prob=desired_logit_prob,
+                batch_size=batch_size,
+                max_feature_nodes=max_feature_nodes,
+                offload=offload,
+                verbose=verbose,
+            )
+        active_features = graph.active_features # (n_active_features, 3) containing (layer, pos, feature_idx)
+        active_features = active_features.detach().cpu()
+        activation_values = graph.activation_values
+        n_pos = graph.n_pos
+        if target_lan == lang_A:
+            for key, val in activation_diff.items():
+                index = last_pos_feature_find(key, n_pos, active_features)
+                if index == -1:
+                    val[2].append(0)
+                else:
+                    activation_value = activation_values[index]
+                    activation_value = activation_value.item() if isinstance(activation_value, torch.Tensor) else activation_value
+                    val[2].append(activation_value)
+        elif target_lan == lang_B:
+            for key, val in activation_diff.items():
+                index = last_pos_feature_find(key, n_pos, active_features)
+                if index == -1:
+                    val[1].append(0)
+                else:
+                    activation_value = activation_values[index]
+                    activation_value = activation_value.item() if isinstance(activation_value, torch.Tensor) else activation_value
+                    val[1].append(activation_value)
+            
+            # lang_B noun
+            prompt_inputs = model.tokenizer.encode(sentence)
+            ori_prompt_inputs = model.tokenizer.encode(ori_sentence)
+            noun = torch.concat((prompt_inputs[:1], prompt_inputs[ori_prompt_inputs.shape[0]:]))
+            graph = attribute(
+                prompt=sentence,
+                model=model,
+                max_n_logits=max_n_logits,
+                desired_logit_prob=desired_logit_prob,
+                batch_size=batch_size,
+                max_feature_nodes=max_feature_nodes,
+                offload=offload,
+                verbose=verbose,
+            )
+            active_features = graph.active_features # (n_active_features, 3) containing (layer, pos, feature_idx)
+            active_features = active_features.detach().cpu()
+            activation_values = graph.activation_values
+            n_pos = graph.n_pos
+
+            for key, val in activation_diff.items():
+                index = last_pos_feature_find(key, n_pos, active_features)
+                if index == -1:
+                    val[0].append(0)
+                else:
+                    activation_value = activation_values[index]
+                    activation_value = activation_value.item() if isinstance(activation_value, torch.Tensor) else activation_value
+                    val[0].append(activation_value)
+
+    result = dict()
+    for key, val in activation_diff.items():
+        list1, list2, list3 = val
+        mean1 = sum(list1) / len(list1)
+        mean2 = sum(list2) / len(list2)
+        mean3 = sum(list3) / len(list3)
+        result[key] = (mean1, mean2, mean3)
+    return result
+
 
 if __name__ == "__main__":
     current_file_path = __file__
@@ -252,8 +360,9 @@ if __name__ == "__main__":
                 json_object = json.loads(line.strip())
                 prompt_list.append(json_object)
     
-    data_list = list()
+    #data_list = list()
     topk = 50
+    """
     for prompt in prompt_list:
         ori_sentence = prompt["ori_sentence"]
         ori_lan = prompt["ori_lan"]
@@ -271,3 +380,14 @@ if __name__ == "__main__":
         for record in data_list:
             json_line = json.dumps(record, ensure_ascii=False)
             file.write(json_line + '\n')
+    """
+
+    for lang_A in lang_to_flores_key.keys():
+        for lang_B in lang_to_flores_key.keys():
+            if lang_A == lang_B:
+                continue
+            result = code_switch_analysis(v_dict, lang_A, lang_B, model, topk)
+            file_name = f"code_switch_analysis_{lang_A}_{langB}.json"
+            full_path = os.path.join(data_directory, file_name)
+            with open(full_path, 'w') as f:
+                json.dump(result, f)
