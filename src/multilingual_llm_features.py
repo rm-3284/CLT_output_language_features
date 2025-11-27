@@ -386,7 +386,7 @@ if __name__ == "__main__":
         for lang_B in lang_to_flores_key.keys():
             if lang_A == lang_B:
                 continue
-            result = code_switch_analysis(v_dict, lang_A, lang_B, model, topk)
+            result = code_switch_analysis(v_dict, lang_A, lang_B, prompt_list, model, topk)
             file_name = f"code_switch_analysis_{lang_A}_{langB}.json"
             full_path = os.path.join(data_directory, file_name)
             with open(full_path, 'w') as f:
