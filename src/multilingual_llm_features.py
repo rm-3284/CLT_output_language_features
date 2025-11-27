@@ -271,7 +271,7 @@ def code_switch_analysis(
             # lang_B noun
             prompt_inputs = model.tokenizer.encode(sentence)
             ori_prompt_inputs = model.tokenizer.encode(ori_sentence)
-            noun = torch.concat((prompt_inputs[:1], prompt_inputs[len(ori_prompt_inputs):]))
+            noun = prompt_inputs[:1] + prompt_inputs[len(ori_prompt_inputs):]
             graph = attribute(
                 prompt=sentence,
                 model=model,
