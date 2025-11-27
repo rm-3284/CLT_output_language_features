@@ -381,9 +381,9 @@ if __name__ == "__main__":
             json_line = json.dumps(record, ensure_ascii=False)
             file.write(json_line + '\n')
     """
-
-    for lang_A in lang_to_flores_key.keys():
-        for lang_B in lang_to_flores_key.keys():
+    langs = ['en', 'es', 'fr', 'ja', 'ko', 'zh']
+    for lang_A in langs:
+        for lang_B in langs:
             if lang_A == lang_B:
                 continue
             result = code_switch_analysis(v_dict, lang_A, lang_B, prompt_list, model, topk)
