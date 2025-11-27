@@ -387,7 +387,7 @@ if __name__ == "__main__":
             if lang_A == lang_B:
                 continue
             result = code_switch_analysis(v_dict, lang_A, lang_B, prompt_list, model, topk)
-            file_name = f"code_switch_analysis_{lang_A}_{langB}.json"
+            file_name = f"code_switch_analysis_{lang_A}_{lang_B}.json"
             full_path = os.path.join(data_directory, file_name)
             with open(full_path, 'w') as f:
                 json.dump(result, f)
