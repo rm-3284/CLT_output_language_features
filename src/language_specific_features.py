@@ -250,7 +250,7 @@ if __name__ == "__main__":
         with open(full_path, 'w') as f:
             json.dump(language_specific_features, f)
     
-    max_new_tokens = 64
+    max_new_tokens = 16
     data_list = []
     alphas = [0.1, 0.3, 0.4, 0.5, 0.8]
     ps = [0.0, 0.5, 0.8, 0.9, 0.95] # 0.0 is greedy decoding
