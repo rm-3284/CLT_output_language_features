@@ -1,14 +1,15 @@
 from datasets import load_dataset
+import glob
 import json
 import matplotlib.pyplot as plt
 import os
 import pandas as pd
+import requests
 import torch
 
 from circuit_tracer_import import attribute, ReplacementModel
 from device_setup import device
-from intervention import get_top_outputs
-from template import lang_to_flores_key
+from template import lang_to_flores_key, identifiers
 
 def get_activation(
         prompt: str, 
@@ -349,7 +350,7 @@ if __name__ == "__main__":
         file_name = f"{lang}_vplot.png"
         full_path = os.path.join(data_directory, file_name)
         if not os.path.exists(full_path):
-            histogram_v_values(data, full_path)
+           histogram_v_values(data, full_path)
     
     # steering experiments
     full_path = os.path.join(data_directory, 'forced_code_switch.jsonl')
@@ -360,7 +361,7 @@ if __name__ == "__main__":
                 json_object = json.loads(line.strip())
                 prompt_list.append(json_object)
     
-    #data_list = list()
+    data_list = list()
     topk = 50
     """
     for prompt in prompt_list:
@@ -381,6 +382,7 @@ if __name__ == "__main__":
             json_line = json.dumps(record, ensure_ascii=False)
             file.write(json_line + '\n')
     """
+    
     langs = ['en', 'es', 'fr', 'ja', 'ko', 'zh']
     for lang_A in langs:
         for lang_B in langs:
@@ -391,3 +393,53 @@ if __name__ == "__main__":
             full_path = os.path.join(data_directory, file_name)
             with open(full_path, 'w') as f:
                 json.dump(result, f)
+    
+    for lang, val in v_dict.items():
+        file_name = f'{lang}_description.json'
+        file_path = os.path.join(data_directory, file_name)
+        if os.path.exists(file_path):
+            continue
+
+        top_features = list(sorted(val.items(), key=lambda item: item[1], reverse=True)[:topk])
+        description_dict = dict()
+        for key, _ in top_features:
+            layer, feature_idx = key.split('.')
+            response = requests.get(f"https://www.neuronpedia.org/api/feature/gemma-2-2b/{layer}-gemmascope-transcoder-16k/{feature_idx}")
+            explanations = response.json()['explanations']
+            try:
+                description = explanations[0]['description']
+            except IndexError:
+                print(f"layer{layer}, feature{feature_idx}, no description")
+                description = ""
+            description_dict[key] = description
+
+        with open(file_path, 'w') as f:
+            json.dump(description_dict, f)
+            
+    language_name_in_description = dict()
+    patterns = '??_description.json'
+    matching_files = glob.glob(os.path.join(data_directory, patterns))
+    for file_path in matching_files:
+        filename_with_ext = os.path.basename(file_path)
+        filename_only, file_extension = os.path.splitext(filename_with_ext)
+        first_two_letters = filename_only[:2]
+
+        identifier = identifiers[first_two_letters]
+        with open(file_path, 'r') as f:
+            descriptions = json.load(f)
+        
+        total_count = 0
+        included = 0
+        for _, description in descriptions.items():
+            is_included = any(sub in description for sub in identifier)
+            total_count += 1
+            if is_included:
+                included += 1
+
+        language_name_in_description[first_two_letters] = (included, total_count)
+    
+    file_name = 'summary.json'
+    file_path = os.path.join(data_directory, file_name)
+    with open(file_path, 'w') as f:
+        json.dump(language_name_in_description, f)
+        
