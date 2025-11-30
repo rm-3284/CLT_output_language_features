@@ -1,13 +1,15 @@
 from datasets import load_dataset
+import glob
 import json
 import os
+import requests
 import torch
 import torch.nn.functional as F
 
 from circuit_tracer_import import attribute, ReplacementModel
 from device_setup import device
 from intervention import get_top_outputs
-from template import lang_to_flores_key, langs_big
+from template import lang_to_flores_key, langs_big, identifiers
 
 def get_activation_vector(
         prompt: str, 
@@ -205,7 +207,7 @@ if __name__ == "__main__":
     data_directory = os.path.join(absolute_directory, "data/language_specific_features")
     if not os.path.exists(data_directory):
         os.makedirs(data_directory)
-
+    
     model_name = 'google/gemma-2-2b'
     transcoder_name = "gemma"
     model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16)
@@ -267,3 +269,54 @@ if __name__ == "__main__":
         for record in data_list:
             json_line = json.dumps(record, ensure_ascii=False)
             file.write(json_line + '\n')
+    
+
+    for lang, val in language_specific_features.items():
+        file_name = f'{lang}_description.json'
+        file_path = os.path.join(data_directory, file_name)
+        if os.path.exists(file_path):
+            continue
+
+        description_dict = dict()
+        for layer, feature_idx in val:
+            response = requests.get(f"https://www.neuronpedia.org/api/feature/gemma-2-2b/{layer}-gemmascope-transcoder-16k/{feature_idx}")
+            explanations = response.json()['explanations']
+            try:
+                description = explanations[0]['description']
+            except IndexError:
+                print(f"layer{layer}, feature{feature_idx}, no description")
+                description = ""
+            key = f'{layer}.{feature_idx}'
+            description_dict[key] = description
+
+        with open(file_path, 'w') as f:
+            json.dump(description_dict, f)
+    
+    language_name_in_description = dict()
+    patterns = '??_description.json'
+    matching_files = glob.glob(os.path.join(data_directory, patterns))
+    for file_path in matching_files:
+        filename_with_ext = os.path.basename(file_path)
+        filename_only, file_extension = os.path.splitext(filename_with_ext)
+        first_two_letters = filename_only[:2]
+
+        identifier = identifiers[first_two_letters]
+        with open(file_path, 'r') as f:
+            descriptions = json.load(f)
+        
+        total_count = 0
+        included = 0
+        for _, description in descriptions.items():
+            is_included = any(sub in description for sub in identifier)
+            total_count += 1
+            if is_included:
+                included += 1
+
+        language_name_in_description[first_two_letters] = (included, total_count)
+    
+    file_name = 'summary.json'
+    file_path = os.path.join(data_directory, file_name)
+    with open(file_path, 'w') as f:
+        json.dump(language_name_in_description, f)
+    
+
