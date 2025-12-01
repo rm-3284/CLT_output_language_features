@@ -274,7 +274,7 @@ def code_switch_analysis(
             ori_prompt_inputs = model.tokenizer.encode(ori_sentence)
             noun = prompt_inputs[:1] + prompt_inputs[len(ori_prompt_inputs):]
             graph = attribute(
-                prompt=sentence,
+                prompt=noun,
                 model=model,
                 max_n_logits=max_n_logits,
                 desired_logit_prob=desired_logit_prob,
