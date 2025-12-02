@@ -37,7 +37,7 @@ def feature_find(graph: Graph, feature: str) -> Optional[int]:
 def get_feature_activation_from_prompt(
         prompt: str, feature_list: list[str], model: ReplacementModel,
         max_n_logits = 5, desired_logit_prob = 0.95,
-        max_feature_nodes = None, batch_size = 256,
+        max_feature_nodes = None, batch_size = 64,
         offload = 'cpu', verbose = True,
         ) -> list[float]:
     graph = attribute(
