@@ -1,9 +1,16 @@
+from datasets import load_dataset
+import json
+import math
 import matplotlib.pyplot as plt
+import os
+import statistics
 import torch
 from typing import Optional
 
+from data.generic_sentences import alphabet_char, filter_sentences
 from device_setup import device
 from circuit_tracer_import import Graph, Supernode, Feature, ReplacementModel, attribute
+from template import lang_to_flores_key
 
 def set_features_from_supernodes(*supernodes: Supernode) -> list[Feature]:
     feature_lst = []
@@ -11,12 +18,11 @@ def set_features_from_supernodes(*supernodes: Supernode) -> list[Feature]:
         feature_lst.extend(supernode.features)
     return list(set(feature_lst))
 
-def feature_find(graph: Graph, feature: Feature) -> Optional[int]:
-    layer = feature.layer
-    pos = feature.pos
-    if pos < 0:
-        pos = graph.n_pos + pos
-    feature_idx = feature.feature_idx
+def feature_find(graph: Graph, feature: str) -> Optional[int]:
+    layer, feature_idx = feature.split(".")
+    layer = int(layer)
+    feature_idx = int(feature_idx)
+    pos = graph.n_pos - 1
     feature_tensor = torch.tensor([layer, pos, feature_idx], device=device)
 
     element_wise_match = (graph.active_features == feature_tensor)
@@ -29,7 +35,7 @@ def feature_find(graph: Graph, feature: Feature) -> Optional[int]:
     return matching_indices.item()
 
 def get_feature_activation_from_prompt(
-        prompt: str, feature_list: list[Feature], model: ReplacementModel,
+        prompt: str, feature_list: list[str], model: ReplacementModel,
         max_n_logits = 5, desired_logit_prob = 0.95,
         max_feature_nodes = None, batch_size = 256,
         offload = 'cpu', verbose = True,
@@ -56,7 +62,7 @@ def get_feature_activation_from_prompt(
     del graph
     return activation_list
 
-def iterate_over_sentences(prompts: list[str], feature_list: list[Feature], model: ReplacementModel) -> dict[Feature, list[float]]:
+def iterate_over_sentences(prompts: list[str], feature_list: list[str], model: ReplacementModel) -> dict[str, list[float]]:
     activation_values_dict = dict()
     for feature in feature_list:
         activation_values_dict[feature] = []
@@ -112,12 +118,51 @@ def print_feature(feature: Feature) -> str:
     return f'Layer {layer}, feature_idx {feature_idx}'
 
 if __name__ == "__main__":
-    from device_setup import device
-
     model_name = 'google/gemma-2-2b'
     transcoder_name = "gemma"
     model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16)
 
-    
+    current_file_path = __file__
+    current_directory = os.path.dirname(current_file_path)
+    absolute_directory = os.path.abspath(current_directory)
+    data_directory = os.path.join(absolute_directory, "data")
+    flores_directory = os.path.join(data_directory, "flores_features")
+    lang_specific_directory = os.path.join(data_directory, "language_specific_features")
+    multilingual_features_directory = os.path.join(data_directory, "multilingual_llm_features")
 
+    amplification_value_directory = os.path.join(data_directory, "amplification_values")
+    os.makedirs(amplification_value_directory, exist_ok=True)
+
+    for lang, ds_key in lang_to_flores_key.items():
+        print(f"Loading {ds_key}")
+        ds = load_dataset("openlanguagedata/flores_plus", ds_key, split="dev")
+        ds = ds.shuffle(seed=42)
+        df = ds.to_pandas()
+        batch = df.loc[:150, 'text'].tolist()
+        sentences = filter_sentences(batch, alphabet_char[lang], model) # only returns 100 sentences
+
+        # features
+        file_name = f"{lang}.json"
+        feature_set = set()
+
+        with open(os.path.join(flores_directory, file_name), 'r') as f:
+            flores_features = json.load(f)
+        for layer, feature_idx in flores_features:
+            key = f"{layer}.{feature_idx}"
+            feature_set.add(key)
+        
+        with open(os.path.join(lang_specific_directory, file_name), 'r') as f:
+            lang_specific_features = json.load(f)
+        for key in lang_specific_features.keys():
+            feature_set.add(key)
+        
+        with open(os.path.join(multilingual_features_directory, file_name), 'r') as f:
+            multilingual_features = json.load(f)
+        for key in multilingual_features.keys():
+            feature_set.add(key)
+
+        feature_list = list(feature_set)
+        activation_dict = iterate_over_sentences(sentences, feature_list, model)
+        with open(os.path.join(amplification_value_directory, file_name), 'w') as f:
+            json.dump(activation_dict, f)
 
