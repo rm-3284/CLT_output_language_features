@@ -117,6 +117,23 @@ def print_feature(feature: Feature) -> str:
     feature_idx = feature_idx.item() if isinstance(feature_idx, torch.Tensor) else feature_idx
     return f'Layer {layer}, feature_idx {feature_idx}'
 
+def summarize(features: list[float]) -> tuple[int, int, float, float, float, float]:
+    # return value is number of nans, total number excluding nans, min, max, mean, median
+    clean_data = []
+    nan_count = 0
+    
+    for x in features:
+        if math.isnan(x):
+            nan_count += 1
+        else:
+            clean_data.append(x)
+    
+    maximum = max(clean_data)
+    minimum = min(clean_data)
+    mean = statistics.mean(clean_data)
+    median = statistics.median(clean_data)
+    return nan_count, len(clean_data), minimum, maximum, mean, median
+
 if __name__ == "__main__":
     model_name = 'google/gemma-2-2b'
     transcoder_name = "gemma"
@@ -134,6 +151,10 @@ if __name__ == "__main__":
     os.makedirs(amplification_value_directory, exist_ok=True)
 
     for lang, ds_key in lang_to_flores_key.items():
+        file_name = f"{lang}.json"
+        if os.path.exists(os.path.join(amplification_value_directory, file_name)):
+            continue
+
         print(f"Loading {ds_key}")
         ds = load_dataset("openlanguagedata/flores_plus", ds_key, split="dev")
         ds = ds.shuffle(seed=42)
@@ -166,3 +187,17 @@ if __name__ == "__main__":
         with open(os.path.join(amplification_value_directory, file_name), 'w') as f:
             json.dump(activation_dict, f)
 
+    for lang in lang_to_flores_key.keys():
+        file_name = f"{lang}.json"
+        with open(os.path.join(amplification_value_directory, file_name), 'r') as f:
+            feature_dict = json.load(f)
+        
+        feature_summarized = dict()
+        for key, features in feature_dict.items():
+            summarized = summarize(features)
+            feature_summarized[key] = summarized
+        
+        summarized_file_name = f"{lang}_summary.json"
+        with open(os.path.join(amplification_value_directory, summarized_file_name), 'w') as f:
+            json.dump(feature_summarized, f)
+        
