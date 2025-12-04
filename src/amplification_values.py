@@ -128,10 +128,16 @@ def summarize(features: list[float]) -> tuple[int, int, float, float, float, flo
         else:
             clean_data.append(x)
     
-    maximum = max(clean_data)
-    minimum = min(clean_data)
-    mean = statistics.mean(clean_data)
-    median = statistics.median(clean_data)
+    if len(clean_data) != 0:
+        maximum = max(clean_data)
+        minimum = min(clean_data)
+        mean = statistics.mean(clean_data)
+        median = statistics.median(clean_data)
+    else:
+        maximum = float('nan')
+        minimum = float('nan')
+        mean = float('nan')
+        median = float('nan')
     return nan_count, len(clean_data), minimum, maximum, mean, median
 
 if __name__ == "__main__":
