@@ -271,8 +271,9 @@ if __name__ == "__main__":
         
 
     for lang, ds_key in lang_to_flores_key.items():
-        file_name = f"{lang}_every_pos.json"
-        if os.path.exists(os.path.join(amplification_value_directory, file_name)):
+        file_name = f"{lang}.json"
+        destination_file_name = f"{lang}_every_pos.json"
+        if os.path.exists(os.path.join(amplification_value_directory, destination_file_name)):
             continue
 
         print(f"Loading {ds_key}")
@@ -301,7 +302,7 @@ if __name__ == "__main__":
 
         feature_list = list(feature_set)
         activation_dict = iterate_every_pos_feature_activation(batch, feature_list, model)
-        with open(os.path.join(amplification_value_directory, file_name), 'w') as f:
+        with open(os.path.join(amplification_value_directory, destination_file_name), 'w') as f:
             json.dump(activation_dict, f)
 
     for lang in lang_to_flores_key.keys():
