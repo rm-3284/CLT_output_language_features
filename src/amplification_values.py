@@ -126,7 +126,7 @@ def iterate_every_pos_feature_activation(prompts: list[str], feature_list: list[
     for feature in feature_list:
         activation_values_dict[feature] = []
     for prompt in prompts:
-        activation_list = get_feature_activation_from_prompt(prompt, feature_list, model)
+        activation_list = get_feature_activation_for_every_pos(prompt, feature_list, model)
         for i, feature in enumerate(feature_list):
             activation_values_dict[feature].extend(activation_list[i])
     return activation_values_dict
