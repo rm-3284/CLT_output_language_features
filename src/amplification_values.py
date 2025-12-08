@@ -34,6 +34,23 @@ def feature_find(graph: Graph, feature: str) -> Optional[int]:
         return None
     return matching_indices.item()
 
+def feature_find_for_every_pos(graph: Graph, feature: str) -> list[int]:
+    layer, feature_idx = feature.split(".")
+    layer = int(layer)
+    feature_idx = int(feature_idx)
+
+    idx_list = []
+    for pos in range(graph.n_pos):
+        feature_tensor = torch.tensor([layer, pos, feature_idx], device=device)
+        element_wise_match = (graph.active_features == feature_tensor)
+        row_match = torch.all(element_wise_match, dim=1)
+        matching_indices = torch.where(row_match)[0]
+        if matching_indices.numel() > 1:
+            raise ValueError('Multiple matching rows')
+        elif matching_indices.numel() !=0:
+            idx_list.append(matching_indices.item())
+    return idx_list
+
 def get_feature_activation_from_prompt(
         prompt: str, feature_list: list[str], model: ReplacementModel,
         max_n_logits = 5, desired_logit_prob = 0.95,
@@ -62,6 +79,38 @@ def get_feature_activation_from_prompt(
     del graph
     return activation_list
 
+def get_feature_activation_for_every_pos(
+    prompt: str, feature_list: list[str], model: ReplacementModel,
+        max_n_logits = 5, desired_logit_prob = 0.95,
+        max_feature_nodes = None, batch_size = 64,
+        offload = 'cpu', verbose = True,
+        ) -> list[list[float]]:
+    graph = attribute(
+        prompt=prompt,
+        model=model,
+        max_n_logits=max_n_logits,
+        desired_logit_prob=desired_logit_prob,
+        batch_size=batch_size,
+        max_feature_nodes=max_feature_nodes,
+        offload=offload,
+        verbose=verbose
+    )
+    activation_list = []
+    for feature in feature_list:
+        idx_list = feature_find_for_every_pos(graph, feature)
+        if len(idx_list) == 0:
+            activation_list.append([float('nan')])
+        else:
+            activation_list_for_each_feature = []
+            for idx in idx_list:
+                activation_value = graph.activation_values[idx]
+                activation_value = activation_value.item() if isinstance(activation_value, torch.Tensor) else activation_value
+                activation_list_for_each_feature.append(activation_value)
+            activation_list.append(activation_list_for_each_feature)
+    
+    del graph
+    return activation_list
+
 def iterate_over_sentences(prompts: list[str], feature_list: list[str], model: ReplacementModel) -> dict[str, list[float]]:
     activation_values_dict = dict()
     for feature in feature_list:
@@ -70,6 +119,16 @@ def iterate_over_sentences(prompts: list[str], feature_list: list[str], model: R
         activation_list = get_feature_activation_from_prompt(prompt, feature_list, model)
         for i, feature in enumerate(feature_list):
             activation_values_dict[feature].append(activation_list[i])
+    return activation_values_dict
+
+def iterate_every_pos_feature_activation(prompts: list[str], feature_list: list[str], model: ReplacementModel) -> dict[str, list[float]]:
+    activation_values_dict = dict()
+    for feature in feature_list:
+        activation_values_dict[feature] = []
+    for prompt in prompts:
+        activation_list = get_feature_activation_from_prompt(prompt, feature_list, model)
+        for i, feature in enumerate(feature_list):
+            activation_values_dict[feature].extend(activation_list[i])
     return activation_values_dict
 
 def make_histogram_from_values_dict(data: list[float], bins: int = 30, title: str = "Histogram of Data (NaNs Excluded)", xlabel: str = "Value", ylabel: str = "Frequency") -> None:
@@ -195,6 +254,10 @@ if __name__ == "__main__":
 
     for lang in lang_to_flores_key.keys():
         file_name = f"{lang}.json"
+        summarized_file_name = f"{lang}_summary.json"
+        if os.path.exists(os.path.join(amplification_value_directory, summarized_file_name)):
+            continue
+
         with open(os.path.join(amplification_value_directory, file_name), 'r') as f:
             feature_dict = json.load(f)
         
@@ -203,7 +266,57 @@ if __name__ == "__main__":
             summarized = summarize(features)
             feature_summarized[key] = summarized
         
-        summarized_file_name = f"{lang}_summary.json"
         with open(os.path.join(amplification_value_directory, summarized_file_name), 'w') as f:
             json.dump(feature_summarized, f)
         
+
+    for lang, ds_key in lang_to_flores_key.items():
+        file_name = f"{lang}_every_pos.json"
+        if os.path.exists(os.path.join(amplification_value_directory, file_name)):
+            continue
+
+        print(f"Loading {ds_key}")
+        ds = load_dataset("openlanguagedata/flores_plus", ds_key, split="dev")
+        ds = ds.shuffle(seed=42)
+        df = ds.to_pandas()
+        batch = df.loc[:100, 'text'].tolist()
+        
+        feature_set = set()
+
+        with open(os.path.join(flores_directory, file_name), 'r') as f:
+            flores_features = json.load(f)
+        for layer, feature_idx in flores_features:
+            key = f"{layer}.{feature_idx}"
+            feature_set.add(key)
+        
+        with open(os.path.join(lang_specific_directory, file_name), 'r') as f:
+            lang_specific_features = json.load(f)
+        for key in lang_specific_features.keys():
+            feature_set.add(key)
+        
+        with open(os.path.join(multilingual_features_directory, file_name), 'r') as f:
+            multilingual_features = json.load(f)
+        for key in multilingual_features.keys():
+            feature_set.add(key)
+
+        feature_list = list(feature_set)
+        activation_dict = iterate_every_pos_feature_activation(batch, feature_list, model)
+        with open(os.path.join(amplification_value_directory, file_name), 'w') as f:
+            json.dump(activation_dict, f)
+
+    for lang in lang_to_flores_key.keys():
+        file_name = f"{lang}_every_pos.json"
+        summarized_file_name = f"{lang}_pos_summary.json"
+        if os.path.exists(os.path.join(amplification_value_directory, summarized_file_name)):
+            continue
+
+        with open(os.path.join(amplification_value_directory, file_name), 'r') as f:
+            feature_dict = json.load(f)
+        
+        feature_summarized = dict()
+        for key, features in feature_dict.items():
+            summarized = summarize(features)
+            feature_summarized[key] = summarized
+        
+        with open(os.path.join(amplification_value_directory, summarized_file_name), 'w') as f:
+            json.dump(feature_summarized, f)
