@@ -271,7 +271,7 @@ if __name__ == "__main__":
         
 
     for lang, ds_key in lang_to_flores_key.items():
-        if lang != 'ko':
+        if lang != 'zh':
             continue
 
         file_name = f"{lang}.json"
