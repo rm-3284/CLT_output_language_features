@@ -271,6 +271,9 @@ if __name__ == "__main__":
         
 
     for lang, ds_key in lang_to_flores_key.items():
+        if lang != 'ja':
+            continue
+
         file_name = f"{lang}.json"
         destination_file_name = f"{lang}_every_pos.json"
         if os.path.exists(os.path.join(amplification_value_directory, destination_file_name)):
