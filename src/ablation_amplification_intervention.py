@@ -100,20 +100,20 @@ def activation_dict(lang_feature_dict: dict[str, list[str]], dir_path: str, lang
 
 def ablation_and_amplification(ablation, amplification):
     ablation_features = set()
-    for feature, _ in ablation:
-        ablation_features.add(feature)
+    for layer, _, feature_idx, _ in ablation:
+        ablation_features.add((layer, feature_idx))
     amplification_features = set()
-    for feature, _ in amplification:
-        amplification_features.add(feature)
+    for layer, _, feature_idx, _ in amplification:
+        amplification_features.add((layer, feature_idx))
     intersection = ablation_features.intersection(amplification_features)
 
     intervention_list = []
-    for feature, val in ablation:
-        if feature not in intersection:
-            intervention_list.append((feature, val))
-    for feature, val in amplification:
-        if feature not in intersection:
-            intervention_list.append((feature, val))
+    for layer, pos, feature_idx, val in ablation:
+        if (layer, feature_idx) not in intersection:
+            intervention_list.append((layer, pos, feature_idx, val))
+    for layer, pos, feature_idx, val in amplification:
+        if (layer, feature_idx) not in intersection:
+            intervention_list.append((layer, pos, feature_idx, val))
     return intervention_list
 
 def perform_intervention(
