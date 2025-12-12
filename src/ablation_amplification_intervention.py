@@ -144,7 +144,7 @@ def perform_intervention(
     amplifications_outputs = dict()
     for intervention_lang in langs:
         amplifications_dict[intervention_lang] = dict()
-        amplification_outputs, amplification_logits = model_intervention(prompt, model, ablation[intervention_lang])
+        amplification_outputs, amplification_logits = model_intervention(prompt, model, amplification[intervention_lang])
         amplifications_outputs[intervention_lang] = amplification_outputs
         for measure_lang in langs:
             target = get_best_base(amplification_logits, ans[measure_lang], model)
@@ -211,7 +211,7 @@ if __name__ == "__main__":
         val_ablations[lang] = ablation(val_interventions, lang)
         val_amplifications[lang] = amplification(val_interventions, lang)
         freq_ablations[lang] = ablation(freq_interventions, lang)
-        freq_amplifications = amplification(freq_interventions, lang)
+        freq_amplifications[lang] = amplification(freq_interventions, lang)
 
     # ablation + amplification experiments
     output_dir = os.path.join(data_directory, "interventions")
