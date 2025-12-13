@@ -281,19 +281,19 @@ if __name__ == "__main__":
                 freq_based['intervention']['outputs'][prompt] = interventions_outputs
                 freq_based['intervention']['logits_and_ranks'][prompt] = interventions_dict
 
-            for key, val in desc_based.items:
+            for key, val in desc_based.items():
                 for key2, val2 in val.items():
                     file_name = f'description_based_{key}_{key2}.json'
                     with open(os.path.join(adj_lang_out_dir, file_name)) as f:
                         json.dump(val2, f, indent=4)
 
-            for key, val in val_based.items:
+            for key, val in val_based.items():
                 for key2, val2 in val.items():
                     file_name = f'value_based_{key}_{key2}.json'
                     with open(os.path.join(adj_lang_out_dir, file_name)) as f:
                         json.dump(val2, f, indent=4)
 
-            for key, val in freq_based.items:
+            for key, val in freq_based.items():
                 for key2, val2 in val.items():
                     file_name = f'frequency_based_{key}_{key2}.json'
                     with open(os.path.join(adj_lang_out_dir, file_name)) as f:
