@@ -286,19 +286,19 @@ if __name__ == "__main__":
             for key, val in desc_based.items():
                 for key2, val2 in val.items():
                     file_name = f'description_based_{key}_{key2}.json'
-                    with open(os.path.join(adj_lang_out_dir, file_name)) as f:
+                    with open(os.path.join(adj_lang_out_dir, file_name), 'w') as f:
                         json.dump(val2, f, indent=4)
 
             for key, val in val_based.items():
                 for key2, val2 in val.items():
                     file_name = f'value_based_{key}_{key2}.json'
-                    with open(os.path.join(adj_lang_out_dir, file_name)) as f:
+                    with open(os.path.join(adj_lang_out_dir, file_name), 'w') as f:
                         json.dump(val2, f, indent=4)
 
             for key, val in freq_based.items():
                 for key2, val2 in val.items():
                     file_name = f'frequency_based_{key}_{key2}.json'
-                    with open(os.path.join(adj_lang_out_dir, file_name)) as f:
+                    with open(os.path.join(adj_lang_out_dir, file_name), 'w') as f:
                         json.dump(val2, f, indent=4)
 
 
