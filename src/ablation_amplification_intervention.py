@@ -216,6 +216,8 @@ if __name__ == "__main__":
     # ablation + amplification experiments
     output_dir = os.path.join(data_directory, "interventions")
     for prompt_lang in langs:
+        if prompt_lang != 'fr':
+            continue
         lang_out_dir = os.path.join(output_dir, prompt_lang)
 
         base = base_strings[prompt_lang]
