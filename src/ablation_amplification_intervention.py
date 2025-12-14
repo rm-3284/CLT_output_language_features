@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 import torch
@@ -9,8 +10,6 @@ from device_setup import device
 from intervention import (
     ablation, amplification, get_best_base, get_best_rank,
     get_top_outputs, logit_diff_single, check_valid_meaning,
-    visualize_bar_2ddict_outer_inter, bar_graph_visualize,
-    create_multi_series_histogram,
     )
 from template import lang_to_flores_key, base_strings
 
@@ -117,15 +116,12 @@ def ablation_and_amplification(ablation, amplification):
     return intervention_list
 
 def perform_intervention(
-        prompt: str, model: ReplacementModel, old_logits: torch.Tensor, 
+        prompt: str, model: ReplacementModel, logits: torch.Tensor, 
         adj_lang: str, ans, ablation, amplification, langs):
     # info that should be stored is after each intervention, 
     # for answer in each language, how the logit changed and rank changed
     # the base should be the adjective language
     base = get_best_base(logits, ans[adj_lang], model)
-    best_rank_before_intervention = dict()
-    for lang in langs:
-        best_rank_before_intervention[lang] = get_best_rank(logits, ans[lang], model)
 
     ablations_dict = dict()
     ablations_outputs = dict()
@@ -169,10 +165,88 @@ def perform_intervention(
                 n_rank = get_best_rank(intervention_logits, ans[measure_lang], model)
                 interventions_dict[ablation_lang][amplification_lang][measure_lang] = (o_diff, n_diff, n_rank)
     
-    return best_rank_before_intervention, ablations_dict, ablations_outputs, amplifications_dict, amplifications_outputs, interventions_outputs, interventions_dict
-        
+    return ablations_dict, ablations_outputs, amplifications_dict, amplifications_outputs, interventions_outputs, interventions_dict
+
+def combine_except_one(intervention: dict[str, list[tuple]], exclude:str):
+    already_seen = set()
+    duplicates = set()
+    for key, val in intervention.items():
+        if key == exclude:
+            continue
+        for layer, _, feature_idx, _ in val:
+            item = (layer, feature_idx)
+            if item in already_seen:
+                duplicates.add(item)
+            else:
+                already_seen.add(item)
+    interventions = list()
+    for key, vals in intervention.items():
+        if key == exclude:
+            continue
+        for layer, pos, feature_idx, val in vals:
+            item = (layer, feature_idx)
+            if item not in duplicates:
+                interventions.append((layer, pos, feature_idx, val))
+    return interventions
+
+
+def perform_everything_intervention(
+        prompt: str, model: ReplacementModel, logits: torch.Tensor,
+        adj_lang: str, ans, ablation, amplification, langs):
+    base = get_best_base(logits, ans[adj_lang], model)
+    
+    ablations_dict = dict()
+    ablations_outputs = dict()
+    for intervention_lang in langs:
+        ablations_dict[intervention_lang] = dict()
+        ablation_intervention = combine_except_one(ablation, intervention_lang)
+        ablation_outputs, ablation_logits = model_intervention(prompt, model, ablation_intervention)
+        ablations_outputs[intervention_lang] = ablation_outputs
+        for measure_lang in langs:
+            target = get_best_base(ablation_logits, ans[measure_lang], model)
+            o_diff, n_diff, _ = logit_diff_single(logits, ablation_logits, target, base, model)
+            n_rank = get_best_rank(ablation_logits, ans[measure_lang], model)
+
+            ablations_dict[intervention_lang][measure_lang] = (o_diff, n_diff, n_rank)
+
+    amplifications_dict = dict()
+    amplifications_outputs = dict()
+    for intervention_lang in langs:
+        amplifications_dict[intervention_lang] = dict()
+        amplification_intervention = combine_except_one(amplification, intervention_lang)
+        amplification_outputs, amplification_logits = model_intervention(prompt, model, amplification_intervention)
+        amplifications_outputs[intervention_lang] = amplification_outputs
+        for measure_lang in langs:
+            target = get_best_base(amplification_logits, ans[measure_lang], model)
+            o_diff, n_diff, _ = logit_diff_single(logits, amplification_logits, target, base, model)
+            n_rank = get_best_rank(amplification_logits, ans[measure_lang], model)
+
+            amplifications_dict[intervention_lang][measure_lang] = (o_diff, n_diff, n_rank)
+    
+    return ablations_dict, ablations_outputs, amplifications_dict, amplifications_outputs
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Prompt language",
+        formatter_class=argparse.RawTextHelpFormatter
+    )
+
+    # 2. Add a string argument
+    # 'message' is the variable name inside the script
+    # '--input-string' is the flag used on the command line
+    parser.add_argument(
+        '--lang',
+        '-l',
+        type=str,
+        default=None,
+        help='Prompt language',
+    )
+
+    return parser.parse_args()
 
 if __name__ == "__main__":
+    args = parse_args()
+
     # load the model
     model_name = 'google/gemma-2-2b'
     transcoder_name = "gemma"
@@ -216,8 +290,10 @@ if __name__ == "__main__":
     # ablation + amplification experiments
     output_dir = os.path.join(data_directory, "interventions")
     for prompt_lang in langs:
-        if prompt_lang != 'ko':
-            continue
+        if args.lang != None:
+            if prompt_lang != args.lang:
+                continue
+
         lang_out_dir = os.path.join(output_dir, prompt_lang)
 
         base = base_strings[prompt_lang]
@@ -225,16 +301,21 @@ if __name__ == "__main__":
             adj_lang_out_dir = os.path.join(lang_out_dir, adj_lang)
             os.makedirs(adj_lang_out_dir, exist_ok=True)
 
-            desc_based = {'ablation': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification': {'outputs': {}, 'logits_and_ranks': {}}, 'intervention': {'outputs': {}, 'logits_and_ranks': {}}}
-            val_based = {'ablation': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification': {'outputs': {}, 'logits_and_ranks': {}}, 'intervention': {'outputs': {}, 'logits_and_ranks': {}}}
-            freq_based = {'ablation': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification': {'outputs': {}, 'logits_and_ranks': {}}, 'intervention': {'outputs': {}, 'logits_and_ranks': {}}}
+            desc_based = {'ablation': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification': {'outputs': {}, 'logits_and_ranks': {}}, 'intervention': {'outputs': {}, 'logits_and_ranks': {}}, 'ablation_everything_except': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification_everything_except': {'outputs': {}, 'logits_and_ranks': {}}}
+            val_based = {'ablation': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification': {'outputs': {}, 'logits_and_ranks': {}}, 'intervention': {'outputs': {}, 'logits_and_ranks': {}}, 'ablation_everything_except': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification_everything_except': {'outputs': {}, 'logits_and_ranks': {}}}
+            freq_based = {'ablation': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification': {'outputs': {}, 'logits_and_ranks': {}}, 'intervention': {'outputs': {}, 'logits_and_ranks': {}}, 'ablation_everything_except': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification_everything_except': {'outputs': {}, 'logits_and_ranks': {}}}
 
-            best_rank_without_intervention = dict()
+            before_intervention = {'outputs': {}, 'ranks': {}}
             for adj, ans in big_data:
                 adjective = adj[adj_lang]
                 prompt = base.format(adj=adjective)
                 
                 base_line, logits = model_run(prompt, model)
+                before_intervention['outputs'][prompt] = base_line
+                before_intervention['ranks'][prompt] = dict()
+                for measure_lang in langs:
+                    rank = get_best_rank(logits, ans[measure_lang], model)
+                    before_intervention['ranks'][prompt][measure_lang] = rank
                 
                 if (get_best_rank(logits, ans['en'], model) >= 10 and 
                     get_best_rank(logits, ans[adj_lang], model) >= 10 and
@@ -242,26 +323,40 @@ if __name__ == "__main__":
                     # the model does not understand the correct meaning of the adjective
                     print(f"skipping prompt {prompt}")
                     continue
+
+
                 
-                (best_rank_before_intervention, 
+                ( 
                  ablations_dict, ablations_outputs, 
                  amplifications_dict, amplifications_outputs, 
                  interventions_outputs, interventions_dict
                  ) = perform_intervention(prompt, model, logits, adj_lang, ans, desc_ablations, desc_amplifications, langs)
                 
-                best_rank_without_intervention[prompt] = best_rank_before_intervention
+                (
+                 ablations_et_dict, ablations_et_outputs,
+                 amplification_et_dict, amplification_et_outputs
+                 ) = perform_everything_intervention(prompt, model, logits, adj_lang, ans, desc_ablations, desc_amplifications, langs)
+                
                 desc_based['ablation']['outputs'][prompt] = ablations_outputs
                 desc_based['ablation']['logits_and_ranks'][prompt] = ablations_dict
                 desc_based['amplification']['outputs'][prompt] = amplifications_outputs
                 desc_based['amplification']['logits_and_ranks'][prompt] = amplifications_dict
                 desc_based['intervention']['outputs'][prompt] = interventions_outputs
                 desc_based['intervention']['logits_and_ranks'][prompt] = interventions_dict
+                desc_based['ablation_everything_except']['outputs'][prompt] = ablations_et_outputs
+                desc_based['ablation_everything_except']['logits_and_ranks'][prompt] = ablations_et_dict
+                desc_based['amplification_everything_except']['outputs'][prompt] = amplification_et_outputs
+                desc_based['amplification_everything_except']['logits_and_ranks'][prompt] = amplification_et_dict
                 
-                (_, 
+                (
                  ablations_dict, ablations_outputs, 
                  amplifications_dict, amplifications_outputs, 
                  interventions_outputs, interventions_dict
                  ) = perform_intervention(prompt, model, logits, adj_lang, ans, val_ablations, val_amplifications, langs)
+                (
+                 ablations_et_dict, ablations_et_outputs,
+                 amplification_et_dict, amplification_et_outputs
+                 ) = perform_everything_intervention(prompt, model, logits, adj_lang, ans, val_ablations, val_amplifications, langs)
                 
                 val_based['ablation']['outputs'][prompt] = ablations_outputs
                 val_based['ablation']['logits_and_ranks'][prompt] = ablations_dict
@@ -269,12 +364,20 @@ if __name__ == "__main__":
                 val_based['amplification']['logits_and_ranks'][prompt] = amplifications_dict
                 val_based['intervention']['outputs'][prompt] = interventions_outputs
                 val_based['intervention']['logits_and_ranks'][prompt] = interventions_dict
+                val_based['ablation_everything_except']['outputs'][prompt] = ablations_et_outputs
+                val_based['ablation_everything_except']['logits_and_ranks'][prompt] = ablations_et_dict
+                val_based['amplification_everything_except']['outputs'][prompt] = amplification_et_outputs
+                val_based['amplification_everything_except']['logits_and_ranks'][prompt] = amplification_et_dict
                 
-                (_, 
+                (
                  ablations_dict, ablations_outputs, 
                  amplifications_dict, amplifications_outputs, 
                  interventions_outputs, interventions_dict
                  ) = perform_intervention(prompt, model, logits, adj_lang, ans, freq_ablations, freq_amplifications, langs)
+                (
+                 ablations_et_dict, ablations_et_outputs,
+                 amplification_et_dict, amplification_et_outputs
+                 ) = perform_everything_intervention(prompt, model, logits, adj_lang, ans, val_ablations, val_amplifications, langs)
                 
                 freq_based['ablation']['outputs'][prompt] = ablations_outputs
                 freq_based['ablation']['logits_and_ranks'][prompt] = ablations_dict
@@ -282,6 +385,15 @@ if __name__ == "__main__":
                 freq_based['amplification']['logits_and_ranks'][prompt] = amplifications_dict
                 freq_based['intervention']['outputs'][prompt] = interventions_outputs
                 freq_based['intervention']['logits_and_ranks'][prompt] = interventions_dict
+                freq_based['ablation_everything_except']['outputs'][prompt] = ablations_et_outputs
+                freq_based['ablation_everything_except']['logits_and_ranks'][prompt] = ablations_et_dict
+                freq_based['amplification_everything_except']['outputs'][prompt] = amplification_et_outputs
+                freq_based['amplification_everything_except']['logits_and_ranks'][prompt] = amplification_et_dict
+
+            for key, val in before_intervention.items():
+                file_name = f'before_intervention_{key}.json'
+                with open(os.path.join(adj_lang_out_dir, file_name), 'w') as f:
+                    json.dump(val, f, indent=4)
 
             for key, val in desc_based.items():
                 for key2, val2 in val.items():
