@@ -1,0 +1,866 @@
+{
+    "Lo opuesto de \"gut\" es \"": {
+        "en": 35,
+        "fr": 1,
+        "de": 127,
+        "es": 1,
+        "zh": 74366,
+        "ja": 17761,
+        "ko": 15647
+    },
+    "Lo opuesto de \"gl\u00fccklich\" es \"": {
+        "en": 0,
+        "fr": 4,
+        "de": 1,
+        "es": 4,
+        "zh": 16322,
+        "ja": 20942,
+        "ko": 512
+    },
+    "Lo opuesto de \"gro\u00df\" es \"": {
+        "en": 5295,
+        "fr": 41,
+        "de": 0,
+        "es": 1393,
+        "zh": 6056,
+        "ja": 64228,
+        "ko": 152577
+    },
+    "Lo opuesto de \"hei\u00df\" es \"": {
+        "en": 4,
+        "fr": 15,
+        "de": 0,
+        "es": 6,
+        "zh": 886,
+        "ja": 3116,
+        "ko": 19625
+    },
+    "Lo opuesto de \"schnell\" es \"": {
+        "en": 11,
+        "fr": 60,
+        "de": 0,
+        "es": 38,
+        "zh": 2536,
+        "ja": 2580,
+        "ko": 2176
+    },
+    "Lo opuesto de \"leicht\" es \"": {
+        "en": 4,
+        "fr": 189,
+        "de": 0,
+        "es": 183,
+        "zh": 6103,
+        "ja": 7642,
+        "ko": 16238
+    },
+    "Lo opuesto de \"einfach\" es \"": {
+        "en": 223,
+        "fr": 223,
+        "de": 1,
+        "es": 400,
+        "zh": 842,
+        "ja": 1080,
+        "ko": 851
+    },
+    "Lo opuesto de \"neu\" es \"": {
+        "en": 278,
+        "fr": 1204,
+        "de": 89,
+        "es": 781,
+        "zh": 60814,
+        "ja": 54118,
+        "ko": 17110
+    },
+    "Lo opuesto de \"wahr\" es \"": {
+        "en": 12,
+        "fr": 229,
+        "de": 0,
+        "es": 41,
+        "zh": 12842,
+        "ja": 2969,
+        "ko": 17583
+    },
+    "Lo opuesto de \"lebendig\" es \"": {
+        "en": 9,
+        "fr": 127,
+        "de": 2,
+        "es": 51,
+        "zh": 1220,
+        "ja": 1220,
+        "ko": 309
+    },
+    "Lo opuesto de \"voll\" es \"": {
+        "en": 12,
+        "fr": 271,
+        "de": 0,
+        "es": 166,
+        "zh": 5287,
+        "ja": 5287,
+        "ko": 1235
+    },
+    "Lo opuesto de \"hell\" es \"": {
+        "en": 1955,
+        "fr": 68,
+        "de": 10193,
+        "es": 332,
+        "zh": 88297,
+        "ja": 171048,
+        "ko": 85105
+    },
+    "Lo opuesto de \"stark\" es \"": {
+        "en": 3,
+        "fr": 67,
+        "de": 726,
+        "es": 39,
+        "zh": 749,
+        "ja": 3914,
+        "ko": 10941
+    },
+    "Lo opuesto de \"sauber\" es \"": {
+        "en": 23,
+        "fr": 232,
+        "de": 21,
+        "es": 0,
+        "zh": 1578,
+        "ja": 3521,
+        "ko": 7983
+    },
+    "Lo opuesto de \"offen\" es \"": {
+        "en": 2,
+        "fr": 30,
+        "de": 32,
+        "es": 71,
+        "zh": 14710,
+        "ja": 899,
+        "ko": 957
+    },
+    "Lo opuesto de \"reich\" es \"": {
+        "en": 5,
+        "fr": 33,
+        "de": 22,
+        "es": 1,
+        "zh": 1593,
+        "ja": 3238,
+        "ko": 117549
+    },
+    "Lo opuesto de \"sch\u00f6n\" es \"": {
+        "en": 5,
+        "fr": 158805,
+        "de": 17,
+        "es": 104,
+        "zh": 2726,
+        "ja": 577,
+        "ko": 12000
+    },
+    "Lo opuesto de \"lang\" es \"": {
+        "en": 0,
+        "fr": 149,
+        "de": 25,
+        "es": 15,
+        "zh": 457,
+        "ja": 2698,
+        "ko": 1392
+    },
+    "Lo opuesto de \"breit\" es \"": {
+        "en": 112,
+        "fr": 1128,
+        "de": 26,
+        "es": 43,
+        "zh": 3528,
+        "ja": 6101,
+        "ko": 5561
+    },
+    "Lo opuesto de \"hart\" es \"": {
+        "en": 4,
+        "fr": 4332,
+        "de": 6164,
+        "es": 86,
+        "zh": 1752,
+        "ja": 25363,
+        "ko": 17304
+    },
+    "Lo opuesto de \"trocken\" es \"": {
+        "en": 14,
+        "fr": 3,
+        "de": 23,
+        "es": 0,
+        "zh": 1734,
+        "ja": 1734,
+        "ko": 11410
+    },
+    "Lo opuesto de \"laut\" es \"": {
+        "en": 53,
+        "fr": 10,
+        "de": 0,
+        "es": 9,
+        "zh": 1423,
+        "ja": 3690,
+        "ko": 6965
+    },
+    "Lo opuesto de \"fr\u00fch\" es \"": {
+        "en": 3,
+        "fr": 20,
+        "de": 2,
+        "es": 18,
+        "zh": 568,
+        "ja": 988,
+        "ko": 526
+    },
+    "Lo opuesto de \"nah\" es \"": {
+        "en": 1505,
+        "fr": 5117,
+        "de": 14767,
+        "es": 297,
+        "zh": 68957,
+        "ja": 130203,
+        "ko": 14658
+    },
+    "Lo opuesto de \"tief\" es \"": {
+        "en": 123,
+        "fr": 23539,
+        "de": 36,
+        "es": 117,
+        "zh": 1513,
+        "ja": 1513,
+        "ko": 9202
+    },
+    "Lo opuesto de \"schlecht\" es \"": {
+        "en": 19,
+        "fr": 76,
+        "de": 0,
+        "es": 175,
+        "zh": 77753,
+        "ja": 858,
+        "ko": 1683
+    },
+    "Lo opuesto de \"traurig\" es \"": {
+        "en": 3,
+        "fr": 6,
+        "de": 8,
+        "es": 0,
+        "zh": 2557,
+        "ja": 3291,
+        "ko": 1449
+    },
+    "Lo opuesto de \"klein\" es \"": {
+        "en": 5,
+        "fr": 7,
+        "de": 1,
+        "es": 18,
+        "zh": 3455,
+        "ja": 6020,
+        "ko": 6937
+    },
+    "Lo opuesto de \"kalt\" es \"": {
+        "en": 0,
+        "fr": 862,
+        "de": 1,
+        "es": 4,
+        "zh": 241,
+        "ja": 2349,
+        "ko": 1281
+    },
+    "Lo opuesto de \"langsam\" es \"": {
+        "en": 17,
+        "fr": 1,
+        "de": 0,
+        "es": 60,
+        "zh": 3508,
+        "ja": 241,
+        "ko": 794
+    },
+    "Lo opuesto de \"schwer\" es \"": {
+        "en": 7,
+        "fr": 258,
+        "de": 0,
+        "es": 414,
+        "zh": 115,
+        "ja": 18980,
+        "ko": 51787
+    },
+    "Lo opuesto de \"schwierig\" es \"": {
+        "en": 4,
+        "fr": 14,
+        "de": 0,
+        "es": 8,
+        "zh": 232,
+        "ja": 558,
+        "ko": 296
+    },
+    "Lo opuesto de \"alt\" es \"": {
+        "en": 1338,
+        "fr": 6938,
+        "de": 1320,
+        "es": 654,
+        "zh": 77729,
+        "ja": 106124,
+        "ko": 22851
+    },
+    "Lo opuesto de \"falsch\" es \"": {
+        "en": 12,
+        "fr": 29,
+        "de": 0,
+        "es": 163,
+        "zh": 2685,
+        "ja": 1738,
+        "ko": 55822
+    },
+    "Lo opuesto de \"tot\" es \"": {
+        "en": 6307,
+        "fr": 1201,
+        "de": 26655,
+        "es": 3443,
+        "zh": 30175,
+        "ja": 125358,
+        "ko": 89704
+    },
+    "Lo opuesto de \"leer\" es \"": {
+        "en": 3923,
+        "fr": 65818,
+        "de": 3794,
+        "es": 317,
+        "zh": 39493,
+        "ja": 131176,
+        "ko": 41547
+    },
+    "Lo opuesto de \"dunkel\" es \"": {
+        "en": 25,
+        "fr": 10,
+        "de": 0,
+        "es": 10,
+        "zh": 1484,
+        "ja": 235,
+        "ko": 640
+    },
+    "Lo opuesto de \"schwach\" es \"": {
+        "en": 11,
+        "fr": 63,
+        "de": 0,
+        "es": 82,
+        "zh": 1949,
+        "ja": 1406,
+        "ko": 50
+    },
+    "Lo opuesto de \"schmutzig\" es \"": {
+        "en": 3,
+        "fr": 429,
+        "de": 2,
+        "es": 193,
+        "zh": 579,
+        "ja": 2109,
+        "ko": 845
+    },
+    "Lo opuesto de \"geschlossen\" es \"": {
+        "en": 12,
+        "fr": 142,
+        "de": 0,
+        "es": 14,
+        "zh": 264,
+        "ja": 433,
+        "ko": 2190
+    },
+    "Lo opuesto de \"arm\" es \"": {
+        "en": 7770,
+        "fr": 141782,
+        "de": 15809,
+        "es": 483,
+        "zh": 105498,
+        "ja": 49389,
+        "ko": 7355
+    },
+    "Lo opuesto de \"h\u00e4sslich\" es \"": {
+        "en": 55,
+        "fr": 136,
+        "de": 0,
+        "es": 355,
+        "zh": 52407,
+        "ja": 2713,
+        "ko": 6304
+    },
+    "Lo opuesto de \"kurz\" es \"": {
+        "en": 2,
+        "fr": 2,
+        "de": 0,
+        "es": 24,
+        "zh": 35,
+        "ja": 2052,
+        "ko": 4274
+    },
+    "Lo opuesto de \"eng\" es \"": {
+        "en": 3003,
+        "fr": 1557,
+        "de": 5930,
+        "es": 728,
+        "zh": 60760,
+        "ja": 29674,
+        "ko": 12767
+    },
+    "Lo opuesto de \"weich\" es \"": {
+        "en": 11,
+        "fr": 49,
+        "de": 0,
+        "es": 80,
+        "zh": 5285,
+        "ja": 5285,
+        "ko": 22595
+    },
+    "Lo opuesto de \"nass\" es \"": {
+        "en": 34,
+        "fr": 778,
+        "de": 664,
+        "es": 864,
+        "zh": 17995,
+        "ja": 4693,
+        "ko": 69352
+    },
+    "Lo opuesto de \"leise\" es \"": {
+        "en": 22,
+        "fr": 85,
+        "de": 2,
+        "es": 8,
+        "zh": 4007,
+        "ja": 14192,
+        "ko": 4985
+    },
+    "Lo opuesto de \"sp\u00e4t\" es \"": {
+        "en": 14,
+        "fr": 80,
+        "de": 1,
+        "es": 158,
+        "zh": 549,
+        "ja": 10415,
+        "ko": 107475
+    },
+    "Lo opuesto de \"fern\" es \"": {
+        "en": 1736,
+        "fr": 513,
+        "de": 5218,
+        "es": 3984,
+        "zh": 91693,
+        "ja": 112608,
+        "ko": 72702
+    },
+    "Lo opuesto de \"flach\" es \"": {
+        "en": 344,
+        "fr": 2,
+        "de": 45,
+        "es": 2,
+        "zh": 12742,
+        "ja": 10233,
+        "ko": 4510
+    },
+    "Lo opuesto de \"jung\" es \"": {
+        "en": 0,
+        "fr": 99,
+        "de": 373,
+        "es": 4,
+        "zh": 1851,
+        "ja": 1851,
+        "ko": 7021
+    },
+    "Lo opuesto de \"freundlich\" es \"": {
+        "en": 2,
+        "fr": 1210,
+        "de": 0,
+        "es": 155,
+        "zh": 2139,
+        "ja": 10575,
+        "ko": 1312
+    },
+    "Lo opuesto de \"mutig\" es \"": {
+        "en": 30,
+        "fr": 89,
+        "de": 129,
+        "es": 30,
+        "zh": 4508,
+        "ja": 10356,
+        "ko": 18167
+    },
+    "Lo opuesto de \"weise\" es \"": {
+        "en": 6,
+        "fr": 145,
+        "de": 1,
+        "es": 120,
+        "zh": 2687,
+        "ja": 2687,
+        "ko": 21266
+    },
+    "Lo opuesto de \"h\u00f6flich\" es \"": {
+        "en": 9,
+        "fr": 11,
+        "de": 3,
+        "es": 1,
+        "zh": 5992,
+        "ja": 438,
+        "ko": 2721
+    },
+    "Lo opuesto de \"geduldig\" es \"": {
+        "en": 5,
+        "fr": 5,
+        "de": 1,
+        "es": 5,
+        "zh": 38870,
+        "ja": 49330,
+        "ko": 24240
+    },
+    "Lo opuesto de \"ehrlich\" es \"": {
+        "en": 160,
+        "fr": 62,
+        "de": 3,
+        "es": 1354,
+        "zh": 25235,
+        "ja": 25235,
+        "ko": 11891
+    },
+    "Lo opuesto de \"sicher\" es \"": {
+        "en": 5,
+        "fr": 100,
+        "de": 0,
+        "es": 6,
+        "zh": 205,
+        "ja": 633,
+        "ko": 17426
+    },
+    "Lo opuesto de \"aktiv\" es \"": {
+        "en": 4,
+        "fr": 0,
+        "de": 0,
+        "es": 0,
+        "zh": 6108,
+        "ja": 6108,
+        "ko": 4123
+    },
+    "Lo opuesto de \"gerade\" es \"": {
+        "en": 287,
+        "fr": 1251,
+        "de": 143,
+        "es": 239,
+        "zh": 15216,
+        "ja": 2679,
+        "ko": 14989
+    },
+    "Lo opuesto de \"ganz\" es \"": {
+        "en": 266,
+        "fr": 868,
+        "de": 33,
+        "es": 305,
+        "zh": 8544,
+        "ja": 8544,
+        "ko": 56894
+    },
+    "Lo opuesto de \"ruhig\" es \"": {
+        "en": 9,
+        "fr": 9,
+        "de": 15,
+        "es": 93,
+        "zh": 4505,
+        "ja": 7417,
+        "ko": 41731
+    },
+    "Lo opuesto de \"richtig\" es \"": {
+        "en": 11,
+        "fr": 135,
+        "de": 0,
+        "es": 15,
+        "zh": 2897,
+        "ja": 2086,
+        "ko": 6688
+    },
+    "Lo opuesto de \"komplex\" es \"": {
+        "en": 0,
+        "fr": 0,
+        "de": 47,
+        "es": 0,
+        "zh": 445,
+        "ja": 739,
+        "ko": 1287
+    },
+    "Lo opuesto de \"effektiv\" es \"": {
+        "en": 0,
+        "fr": 0,
+        "de": 0,
+        "es": 0,
+        "zh": 867,
+        "ja": 876,
+        "ko": 728
+    },
+    "Lo opuesto de \"ber\u00fchmt\" es \"": {
+        "en": 312,
+        "fr": 395,
+        "de": 1,
+        "es": 43,
+        "zh": 16610,
+        "ja": 49545,
+        "ko": 6893
+    },
+    "Lo opuesto de \"gro\u00dfz\u00fcgig\" es \"": {
+        "en": 147,
+        "fr": 2074,
+        "de": 49,
+        "es": 14563,
+        "zh": 1037,
+        "ja": 2609,
+        "ko": 18357
+    },
+    "Lo opuesto de \"zufrieden\" es \"": {
+        "en": 0,
+        "fr": 7,
+        "de": 0,
+        "es": 7,
+        "zh": 3812,
+        "ja": 3812,
+        "ko": 125
+    },
+    "Lo opuesto de \"gesund\" es \"": {
+        "en": 1,
+        "fr": 633,
+        "de": 2,
+        "es": 376,
+        "zh": 12912,
+        "ja": 4411,
+        "ko": 40612
+    },
+    "Lo opuesto de \"hoch\" es \"": {
+        "en": 5,
+        "fr": 46,
+        "de": 4,
+        "es": 0,
+        "zh": 595,
+        "ja": 2559,
+        "ko": 2850
+    },
+    "Lo opuesto de \"wichtig\" es \"": {
+        "en": 6,
+        "fr": 18,
+        "de": 6,
+        "es": 264,
+        "zh": 2747,
+        "ja": 13730,
+        "ko": 7073
+    },
+    "Lo opuesto de \"unschuldig\" es \"": {
+        "en": 3,
+        "fr": 262,
+        "de": 1,
+        "es": 5,
+        "zh": 699,
+        "ja": 699,
+        "ko": 6237
+    },
+    "Lo opuesto de \"bekannt\" es \"": {
+        "en": 18,
+        "fr": 317,
+        "de": 1,
+        "es": 224,
+        "zh": 2983,
+        "ja": 2983,
+        "ko": 988
+    },
+    "Lo opuesto de \"m\u00e4nnlich\" es \"": {
+        "en": 20,
+        "fr": 421,
+        "de": 0,
+        "es": 24,
+        "zh": 1162,
+        "ja": 1270,
+        "ko": 24916
+    },
+    "Lo opuesto de \"normal\" es \"": {
+        "en": 0,
+        "fr": 3,
+        "de": 0,
+        "es": 3,
+        "zh": 1255,
+        "ja": 1354,
+        "ko": 11796
+    },
+    "Lo opuesto de \"m\u00f6glich\" es \"": {
+        "en": 4,
+        "fr": 4,
+        "de": 0,
+        "es": 3,
+        "zh": 324,
+        "ja": 324,
+        "ko": 1666
+    },
+    "Lo opuesto de \"privat\" es \"": {
+        "en": 1,
+        "fr": 1,
+        "de": 52,
+        "es": 2,
+        "zh": 3126,
+        "ja": 3126,
+        "ko": 171
+    },
+    "Lo opuesto de \"s\u00fc\u00df\" es \"": {
+        "en": 3,
+        "fr": 143,
+        "de": 0,
+        "es": 57,
+        "zh": 564,
+        "ja": 564,
+        "ko": 8168
+    },
+    "Lo opuesto de \"sichtbar\" es \"": {
+        "en": 12,
+        "fr": 12,
+        "de": 2,
+        "es": 12,
+        "zh": 270,
+        "ja": 15287,
+        "ko": 13873
+    },
+    "Lo opuesto de \"warm\" es \"": {
+        "en": 0,
+        "fr": 16,
+        "de": 15,
+        "es": 11,
+        "zh": 62,
+        "ja": 460,
+        "ko": 9212
+    },
+    "Lo opuesto de \"glatt\" es \"": {
+        "en": 40,
+        "fr": 106,
+        "de": 140,
+        "es": 1142,
+        "zh": 1150,
+        "ja": 1150,
+        "ko": 21060
+    },
+    "Lo opuesto de \"d\u00fcnn\" es \"": {
+        "en": 60,
+        "fr": 216,
+        "de": 0,
+        "es": 51,
+        "zh": 3033,
+        "ja": 3033,
+        "ko": 34273
+    },
+    "Lo opuesto de \"verheiratet\" es \"": {
+        "en": 1,
+        "fr": 12423,
+        "de": 1,
+        "es": 122,
+        "zh": 1388,
+        "ja": 1388,
+        "ko": 3721
+    },
+    "Lo opuesto de \"optimistisch\" es \"": {
+        "en": 0,
+        "fr": 0,
+        "de": 0,
+        "es": 0,
+        "zh": 111,
+        "ja": 111,
+        "ko": 22670
+    },
+    "Lo opuesto de \"permanent\" es \"": {
+        "en": 0,
+        "fr": 5,
+        "de": 5,
+        "es": 3,
+        "zh": 1091,
+        "ja": 1182,
+        "ko": 8268
+    },
+    "Lo opuesto de \"gegenw\u00e4rtig\" es \"": {
+        "en": 169,
+        "fr": 123,
+        "de": 0,
+        "es": 22,
+        "zh": 622,
+        "ja": 867,
+        "ko": 33121
+    },
+    "Lo opuesto de \"\u00f6ffentlich\" es \"": {
+        "en": 3,
+        "fr": 1,
+        "de": 1,
+        "es": 0,
+        "zh": 1037,
+        "ja": 92367,
+        "ko": 87551
+    },
+    "Lo opuesto de \"echt\" es \"": {
+        "en": 4,
+        "fr": 6,
+        "de": 1,
+        "es": 59,
+        "zh": 537,
+        "ja": 1026,
+        "ko": 11386
+    },
+    "Lo opuesto de \"verantwortlich\" es \"": {
+        "en": 3,
+        "fr": 3,
+        "de": 1,
+        "es": 3,
+        "zh": 48477,
+        "ja": 1323,
+        "ko": 2931
+    },
+    "Lo opuesto de \"ledig\" es \"": {
+        "en": 505,
+        "fr": 5512,
+        "de": 44,
+        "es": 5114,
+        "zh": 48671,
+        "ja": 50044,
+        "ko": 7859
+    },
+    "Lo opuesto de \"sauer\" es \"": {
+        "en": 2,
+        "fr": 45,
+        "de": 0,
+        "es": 68,
+        "zh": 3854,
+        "ja": 7181,
+        "ko": 3318
+    },
+    "Lo opuesto de \"n\u00fctzlich\" es \"": {
+        "en": 66,
+        "fr": 13,
+        "de": 0,
+        "es": 13,
+        "zh": 4567,
+        "ja": 1756,
+        "ko": 1342
+    },
+    "Lo opuesto de \"vertikal\" es \"": {
+        "en": 0,
+        "fr": 0,
+        "de": 0,
+        "es": 0,
+        "zh": 208,
+        "ja": 4073,
+        "ko": 4073
+    },
+    "Lo opuesto de \"gewinnend\" es \"": {
+        "en": 29,
+        "fr": 108,
+        "de": 0,
+        "es": 108,
+        "zh": 2955,
+        "ja": 5090,
+        "ko": 5786
+    },
+    "Lo opuesto de \"unfreundlich\" es \"": {
+        "en": 285,
+        "fr": 18,
+        "de": 0,
+        "es": 381,
+        "zh": 1556,
+        "ja": 1943,
+        "ko": 1286
+    },
+    "Lo opuesto de \"feige\" es \"": {
+        "en": 386,
+        "fr": 494,
+        "de": 56,
+        "es": 146,
+        "zh": 3697,
+        "ja": 3697,
+        "ko": 49510
+    }
+}

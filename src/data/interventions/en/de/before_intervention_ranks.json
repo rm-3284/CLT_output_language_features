@@ -1,0 +1,866 @@
+{
+    "The opposite of \"gut\" is \"": {
+        "en": 216,
+        "fr": 507,
+        "de": 1364,
+        "es": 348,
+        "zh": 191204,
+        "ja": 78364,
+        "ko": 45500
+    },
+    "The opposite of \"gl\u00fccklich\" is \"": {
+        "en": 0,
+        "fr": 5,
+        "de": 1,
+        "es": 5,
+        "zh": 32209,
+        "ja": 25876,
+        "ko": 697
+    },
+    "The opposite of \"gro\u00df\" is \"": {
+        "en": 1700,
+        "fr": 34,
+        "de": 0,
+        "es": 2121,
+        "zh": 5540,
+        "ja": 60927,
+        "ko": 158818
+    },
+    "The opposite of \"hei\u00df\" is \"": {
+        "en": 3,
+        "fr": 15,
+        "de": 0,
+        "es": 6,
+        "zh": 779,
+        "ja": 3457,
+        "ko": 25255
+    },
+    "The opposite of \"schnell\" is \"": {
+        "en": 8,
+        "fr": 157,
+        "de": 0,
+        "es": 116,
+        "zh": 2392,
+        "ja": 2243,
+        "ko": 1778
+    },
+    "The opposite of \"leicht\" is \"": {
+        "en": 4,
+        "fr": 256,
+        "de": 0,
+        "es": 219,
+        "zh": 5543,
+        "ja": 5426,
+        "ko": 22262
+    },
+    "The opposite of \"einfach\" is \"": {
+        "en": 198,
+        "fr": 198,
+        "de": 0,
+        "es": 1739,
+        "zh": 640,
+        "ja": 702,
+        "ko": 1706
+    },
+    "The opposite of \"neu\" is \"": {
+        "en": 25,
+        "fr": 2241,
+        "de": 351,
+        "es": 906,
+        "zh": 17621,
+        "ja": 37651,
+        "ko": 19591
+    },
+    "The opposite of \"wahr\" is \"": {
+        "en": 4,
+        "fr": 190,
+        "de": 0,
+        "es": 35,
+        "zh": 18228,
+        "ja": 3518,
+        "ko": 8274
+    },
+    "The opposite of \"lebendig\" is \"": {
+        "en": 11,
+        "fr": 363,
+        "de": 0,
+        "es": 126,
+        "zh": 1816,
+        "ja": 1816,
+        "ko": 370
+    },
+    "The opposite of \"voll\" is \"": {
+        "en": 11,
+        "fr": 374,
+        "de": 0,
+        "es": 216,
+        "zh": 5314,
+        "ja": 5314,
+        "ko": 897
+    },
+    "The opposite of \"hell\" is \"": {
+        "en": 734,
+        "fr": 108,
+        "de": 6335,
+        "es": 875,
+        "zh": 47995,
+        "ja": 160622,
+        "ko": 78142
+    },
+    "The opposite of \"stark\" is \"": {
+        "en": 125,
+        "fr": 66,
+        "de": 1300,
+        "es": 1571,
+        "zh": 8651,
+        "ja": 63988,
+        "ko": 50530
+    },
+    "The opposite of \"sauber\" is \"": {
+        "en": 41,
+        "fr": 2854,
+        "de": 0,
+        "es": 131,
+        "zh": 2373,
+        "ja": 893,
+        "ko": 13336
+    },
+    "The opposite of \"offen\" is \"": {
+        "en": 14,
+        "fr": 101,
+        "de": 95,
+        "es": 6336,
+        "zh": 35287,
+        "ja": 3658,
+        "ko": 5307
+    },
+    "The opposite of \"reich\" is \"": {
+        "en": 1,
+        "fr": 54,
+        "de": 24,
+        "es": 15,
+        "zh": 1180,
+        "ja": 2275,
+        "ko": 103031
+    },
+    "The opposite of \"sch\u00f6n\" is \"": {
+        "en": 5,
+        "fr": 164776,
+        "de": 21,
+        "es": 296,
+        "zh": 3175,
+        "ja": 848,
+        "ko": 9033
+    },
+    "The opposite of \"lang\" is \"": {
+        "en": 36,
+        "fr": 5354,
+        "de": 3292,
+        "es": 1317,
+        "zh": 1938,
+        "ja": 14354,
+        "ko": 12176
+    },
+    "The opposite of \"breit\" is \"": {
+        "en": 190,
+        "fr": 2108,
+        "de": 24,
+        "es": 435,
+        "zh": 6281,
+        "ja": 8959,
+        "ko": 4220
+    },
+    "The opposite of \"hart\" is \"": {
+        "en": 2,
+        "fr": 1880,
+        "de": 2215,
+        "es": 1160,
+        "zh": 2588,
+        "ja": 27053,
+        "ko": 17796
+    },
+    "The opposite of \"trocken\" is \"": {
+        "en": 19,
+        "fr": 83,
+        "de": 2,
+        "es": 7,
+        "zh": 874,
+        "ja": 874,
+        "ko": 7876
+    },
+    "The opposite of \"laut\" is \"": {
+        "en": 23,
+        "fr": 12,
+        "de": 0,
+        "es": 61,
+        "zh": 1108,
+        "ja": 2175,
+        "ko": 17928
+    },
+    "The opposite of \"fr\u00fch\" is \"": {
+        "en": 4,
+        "fr": 44,
+        "de": 2,
+        "es": 56,
+        "zh": 545,
+        "ja": 767,
+        "ko": 519
+    },
+    "The opposite of \"nah\" is \"": {
+        "en": 862,
+        "fr": 14794,
+        "de": 5881,
+        "es": 758,
+        "zh": 70119,
+        "ja": 134655,
+        "ko": 18567
+    },
+    "The opposite of \"tief\" is \"": {
+        "en": 368,
+        "fr": 14480,
+        "de": 58,
+        "es": 270,
+        "zh": 3317,
+        "ja": 3317,
+        "ko": 18345
+    },
+    "The opposite of \"schlecht\" is \"": {
+        "en": 18,
+        "fr": 107,
+        "de": 0,
+        "es": 329,
+        "zh": 80207,
+        "ja": 1126,
+        "ko": 1646
+    },
+    "The opposite of \"traurig\" is \"": {
+        "en": 6,
+        "fr": 85,
+        "de": 1,
+        "es": 351,
+        "zh": 907,
+        "ja": 6903,
+        "ko": 6865
+    },
+    "The opposite of \"klein\" is \"": {
+        "en": 2,
+        "fr": 16,
+        "de": 0,
+        "es": 32,
+        "zh": 4508,
+        "ja": 2003,
+        "ko": 3745
+    },
+    "The opposite of \"kalt\" is \"": {
+        "en": 0,
+        "fr": 1372,
+        "de": 1,
+        "es": 7,
+        "zh": 369,
+        "ja": 2635,
+        "ko": 1864
+    },
+    "The opposite of \"langsam\" is \"": {
+        "en": 50,
+        "fr": 2,
+        "de": 0,
+        "es": 198,
+        "zh": 8170,
+        "ja": 496,
+        "ko": 2124
+    },
+    "The opposite of \"schwer\" is \"": {
+        "en": 5,
+        "fr": 533,
+        "de": 0,
+        "es": 730,
+        "zh": 74,
+        "ja": 11033,
+        "ko": 57786
+    },
+    "The opposite of \"schwierig\" is \"": {
+        "en": 3,
+        "fr": 63,
+        "de": 0,
+        "es": 118,
+        "zh": 368,
+        "ja": 860,
+        "ko": 238
+    },
+    "The opposite of \"alt\" is \"": {
+        "en": 25,
+        "fr": 2218,
+        "de": 367,
+        "es": 6447,
+        "zh": 10656,
+        "ja": 21606,
+        "ko": 9616
+    },
+    "The opposite of \"falsch\" is \"": {
+        "en": 19,
+        "fr": 28,
+        "de": 0,
+        "es": 445,
+        "zh": 8906,
+        "ja": 2499,
+        "ko": 58130
+    },
+    "The opposite of \"tot\" is \"": {
+        "en": 1712,
+        "fr": 1757,
+        "de": 8653,
+        "es": 16695,
+        "zh": 20029,
+        "ja": 142947,
+        "ko": 36042
+    },
+    "The opposite of \"leer\" is \"": {
+        "en": 1368,
+        "fr": 4290,
+        "de": 4840,
+        "es": 728,
+        "zh": 21921,
+        "ja": 92876,
+        "ko": 17206
+    },
+    "The opposite of \"dunkel\" is \"": {
+        "en": 19,
+        "fr": 16,
+        "de": 0,
+        "es": 16,
+        "zh": 2198,
+        "ja": 241,
+        "ko": 718
+    },
+    "The opposite of \"schwach\" is \"": {
+        "en": 6,
+        "fr": 98,
+        "de": 0,
+        "es": 101,
+        "zh": 2339,
+        "ja": 1773,
+        "ko": 78
+    },
+    "The opposite of \"schmutzig\" is \"": {
+        "en": 3,
+        "fr": 590,
+        "de": 0,
+        "es": 749,
+        "zh": 443,
+        "ja": 2409,
+        "ko": 657
+    },
+    "The opposite of \"geschlossen\" is \"": {
+        "en": 12,
+        "fr": 185,
+        "de": 0,
+        "es": 13,
+        "zh": 686,
+        "ja": 723,
+        "ko": 2232
+    },
+    "The opposite of \"arm\" is \"": {
+        "en": 9414,
+        "fr": 178023,
+        "de": 17045,
+        "es": 255,
+        "zh": 161477,
+        "ja": 54461,
+        "ko": 23207
+    },
+    "The opposite of \"h\u00e4sslich\" is \"": {
+        "en": 83,
+        "fr": 284,
+        "de": 0,
+        "es": 512,
+        "zh": 62934,
+        "ja": 3250,
+        "ko": 9934
+    },
+    "The opposite of \"kurz\" is \"": {
+        "en": 5,
+        "fr": 5,
+        "de": 0,
+        "es": 139,
+        "zh": 94,
+        "ja": 1814,
+        "ko": 8886
+    },
+    "The opposite of \"eng\" is \"": {
+        "en": 631,
+        "fr": 1313,
+        "de": 5894,
+        "es": 2428,
+        "zh": 22099,
+        "ja": 42095,
+        "ko": 15131
+    },
+    "The opposite of \"weich\" is \"": {
+        "en": 12,
+        "fr": 87,
+        "de": 0,
+        "es": 82,
+        "zh": 5151,
+        "ja": 5151,
+        "ko": 20463
+    },
+    "The opposite of \"nass\" is \"": {
+        "en": 1529,
+        "fr": 1479,
+        "de": 4429,
+        "es": 67552,
+        "zh": 34072,
+        "ja": 17815,
+        "ko": 49411
+    },
+    "The opposite of \"leise\" is \"": {
+        "en": 5,
+        "fr": 407,
+        "de": 0,
+        "es": 8,
+        "zh": 3251,
+        "ja": 3420,
+        "ko": 2501
+    },
+    "The opposite of \"sp\u00e4t\" is \"": {
+        "en": 12,
+        "fr": 87,
+        "de": 0,
+        "es": 318,
+        "zh": 426,
+        "ja": 11245,
+        "ko": 132586
+    },
+    "The opposite of \"fern\" is \"": {
+        "en": 1125,
+        "fr": 308,
+        "de": 21163,
+        "es": 48578,
+        "zh": 72549,
+        "ja": 106351,
+        "ko": 69416
+    },
+    "The opposite of \"flach\" is \"": {
+        "en": 77,
+        "fr": 126,
+        "de": 3,
+        "es": 126,
+        "zh": 39552,
+        "ja": 7020,
+        "ko": 25418
+    },
+    "The opposite of \"jung\" is \"": {
+        "en": 2,
+        "fr": 552,
+        "de": 465,
+        "es": 717,
+        "zh": 1188,
+        "ja": 1188,
+        "ko": 7973
+    },
+    "The opposite of \"freundlich\" is \"": {
+        "en": 2,
+        "fr": 2257,
+        "de": 0,
+        "es": 229,
+        "zh": 1904,
+        "ja": 24036,
+        "ko": 2002
+    },
+    "The opposite of \"mutig\" is \"": {
+        "en": 155,
+        "fr": 84,
+        "de": 80,
+        "es": 155,
+        "zh": 14985,
+        "ja": 9173,
+        "ko": 7798
+    },
+    "The opposite of \"weise\" is \"": {
+        "en": 36,
+        "fr": 246,
+        "de": 2,
+        "es": 202,
+        "zh": 6658,
+        "ja": 6658,
+        "ko": 27010
+    },
+    "The opposite of \"h\u00f6flich\" is \"": {
+        "en": 21,
+        "fr": 71,
+        "de": 0,
+        "es": 75,
+        "zh": 23364,
+        "ja": 1768,
+        "ko": 8557
+    },
+    "The opposite of \"geduldig\" is \"": {
+        "en": 4,
+        "fr": 4,
+        "de": 1,
+        "es": 4,
+        "zh": 63697,
+        "ja": 40511,
+        "ko": 56828
+    },
+    "The opposite of \"ehrlich\" is \"": {
+        "en": 275,
+        "fr": 169,
+        "de": 2,
+        "es": 2075,
+        "zh": 30594,
+        "ja": 30594,
+        "ko": 21968
+    },
+    "The opposite of \"sicher\" is \"": {
+        "en": 9,
+        "fr": 131,
+        "de": 0,
+        "es": 6,
+        "zh": 202,
+        "ja": 457,
+        "ko": 13743
+    },
+    "The opposite of \"aktiv\" is \"": {
+        "en": 2,
+        "fr": 0,
+        "de": 0,
+        "es": 0,
+        "zh": 2208,
+        "ja": 2208,
+        "ko": 1148
+    },
+    "The opposite of \"gerade\" is \"": {
+        "en": 485,
+        "fr": 1568,
+        "de": 239,
+        "es": 337,
+        "zh": 29441,
+        "ja": 3095,
+        "ko": 5565
+    },
+    "The opposite of \"ganz\" is \"": {
+        "en": 119,
+        "fr": 399,
+        "de": 10,
+        "es": 278,
+        "zh": 3109,
+        "ja": 3109,
+        "ko": 42173
+    },
+    "The opposite of \"ruhig\" is \"": {
+        "en": 19,
+        "fr": 19,
+        "de": 12,
+        "es": 113,
+        "zh": 4738,
+        "ja": 8137,
+        "ko": 41118
+    },
+    "The opposite of \"richtig\" is \"": {
+        "en": 50,
+        "fr": 90,
+        "de": 0,
+        "es": 18,
+        "zh": 4549,
+        "ja": 3431,
+        "ko": 8816
+    },
+    "The opposite of \"komplex\" is \"": {
+        "en": 1,
+        "fr": 1,
+        "de": 2,
+        "es": 1,
+        "zh": 283,
+        "ja": 796,
+        "ko": 1806
+    },
+    "The opposite of \"effektiv\" is \"": {
+        "en": 1,
+        "fr": 1,
+        "de": 1,
+        "es": 1,
+        "zh": 2415,
+        "ja": 1746,
+        "ko": 920
+    },
+    "The opposite of \"ber\u00fchmt\" is \"": {
+        "en": 168,
+        "fr": 631,
+        "de": 0,
+        "es": 88,
+        "zh": 25869,
+        "ja": 65966,
+        "ko": 7131
+    },
+    "The opposite of \"gro\u00dfz\u00fcgig\" is \"": {
+        "en": 84,
+        "fr": 2664,
+        "de": 42,
+        "es": 27315,
+        "zh": 739,
+        "ja": 1129,
+        "ko": 20141
+    },
+    "The opposite of \"zufrieden\" is \"": {
+        "en": 0,
+        "fr": 29,
+        "de": 0,
+        "es": 29,
+        "zh": 11102,
+        "ja": 11102,
+        "ko": 260
+    },
+    "The opposite of \"gesund\" is \"": {
+        "en": 1,
+        "fr": 550,
+        "de": 0,
+        "es": 222,
+        "zh": 7709,
+        "ja": 1797,
+        "ko": 90200
+    },
+    "The opposite of \"hoch\" is \"": {
+        "en": 11,
+        "fr": 313,
+        "de": 0,
+        "es": 97,
+        "zh": 590,
+        "ja": 1970,
+        "ko": 2210
+    },
+    "The opposite of \"wichtig\" is \"": {
+        "en": 10,
+        "fr": 27,
+        "de": 10,
+        "es": 378,
+        "zh": 2064,
+        "ja": 9973,
+        "ko": 7804
+    },
+    "The opposite of \"unschuldig\" is \"": {
+        "en": 4,
+        "fr": 9076,
+        "de": 0,
+        "es": 400,
+        "zh": 28893,
+        "ja": 28893,
+        "ko": 11739
+    },
+    "The opposite of \"bekannt\" is \"": {
+        "en": 34,
+        "fr": 836,
+        "de": 0,
+        "es": 198,
+        "zh": 3196,
+        "ja": 3196,
+        "ko": 1168
+    },
+    "The opposite of \"m\u00e4nnlich\" is \"": {
+        "en": 24,
+        "fr": 405,
+        "de": 0,
+        "es": 42,
+        "zh": 1347,
+        "ja": 1588,
+        "ko": 30392
+    },
+    "The opposite of \"normal\" is \"": {
+        "en": 0,
+        "fr": 7,
+        "de": 0,
+        "es": 7,
+        "zh": 1067,
+        "ja": 431,
+        "ko": 7738
+    },
+    "The opposite of \"m\u00f6glich\" is \"": {
+        "en": 3,
+        "fr": 3,
+        "de": 0,
+        "es": 6,
+        "zh": 664,
+        "ja": 664,
+        "ko": 1061
+    },
+    "The opposite of \"privat\" is \"": {
+        "en": 0,
+        "fr": 0,
+        "de": 4,
+        "es": 9,
+        "zh": 440,
+        "ja": 440,
+        "ko": 176
+    },
+    "The opposite of \"s\u00fc\u00df\" is \"": {
+        "en": 3,
+        "fr": 1353,
+        "de": 1,
+        "es": 436,
+        "zh": 759,
+        "ja": 759,
+        "ko": 14301
+    },
+    "The opposite of \"sichtbar\" is \"": {
+        "en": 29,
+        "fr": 29,
+        "de": 0,
+        "es": 29,
+        "zh": 711,
+        "ja": 15538,
+        "ko": 23284
+    },
+    "The opposite of \"warm\" is \"": {
+        "en": 0,
+        "fr": 39,
+        "de": 77,
+        "es": 39,
+        "zh": 222,
+        "ja": 806,
+        "ko": 18301
+    },
+    "The opposite of \"glatt\" is \"": {
+        "en": 33,
+        "fr": 120,
+        "de": 251,
+        "es": 748,
+        "zh": 1771,
+        "ja": 1771,
+        "ko": 22065
+    },
+    "The opposite of \"d\u00fcnn\" is \"": {
+        "en": 86,
+        "fr": 449,
+        "de": 0,
+        "es": 147,
+        "zh": 4431,
+        "ja": 4431,
+        "ko": 57250
+    },
+    "The opposite of \"verheiratet\" is \"": {
+        "en": 1,
+        "fr": 2853,
+        "de": 2,
+        "es": 112,
+        "zh": 525,
+        "ja": 525,
+        "ko": 1572
+    },
+    "The opposite of \"optimistisch\" is \"": {
+        "en": 0,
+        "fr": 0,
+        "de": 0,
+        "es": 0,
+        "zh": 415,
+        "ja": 415,
+        "ko": 1504
+    },
+    "The opposite of \"permanent\" is \"": {
+        "en": 0,
+        "fr": 47,
+        "de": 47,
+        "es": 24,
+        "zh": 4886,
+        "ja": 1086,
+        "ko": 18618
+    },
+    "The opposite of \"gegenw\u00e4rtig\" is \"": {
+        "en": 170,
+        "fr": 190,
+        "de": 0,
+        "es": 29,
+        "zh": 586,
+        "ja": 703,
+        "ko": 38622
+    },
+    "The opposite of \"\u00f6ffentlich\" is \"": {
+        "en": 2,
+        "fr": 0,
+        "de": 0,
+        "es": 1,
+        "zh": 1584,
+        "ja": 99373,
+        "ko": 85783
+    },
+    "The opposite of \"echt\" is \"": {
+        "en": 0,
+        "fr": 7,
+        "de": 2,
+        "es": 90,
+        "zh": 512,
+        "ja": 720,
+        "ko": 16496
+    },
+    "The opposite of \"verantwortlich\" is \"": {
+        "en": 14,
+        "fr": 14,
+        "de": 1,
+        "es": 14,
+        "zh": 103721,
+        "ja": 2999,
+        "ko": 8849
+    },
+    "The opposite of \"ledig\" is \"": {
+        "en": 78,
+        "fr": 2182,
+        "de": 114,
+        "es": 24221,
+        "zh": 51285,
+        "ja": 43756,
+        "ko": 1322
+    },
+    "The opposite of \"sauer\" is \"": {
+        "en": 0,
+        "fr": 84,
+        "de": 1,
+        "es": 208,
+        "zh": 4686,
+        "ja": 3934,
+        "ko": 2485
+    },
+    "The opposite of \"n\u00fctzlich\" is \"": {
+        "en": 80,
+        "fr": 35,
+        "de": 1,
+        "es": 35,
+        "zh": 6478,
+        "ja": 635,
+        "ko": 643
+    },
+    "The opposite of \"vertikal\" is \"": {
+        "en": 0,
+        "fr": 0,
+        "de": 0,
+        "es": 0,
+        "zh": 102,
+        "ja": 4009,
+        "ko": 4009
+    },
+    "The opposite of \"gewinnend\" is \"": {
+        "en": 82,
+        "fr": 481,
+        "de": 0,
+        "es": 481,
+        "zh": 2666,
+        "ja": 4906,
+        "ko": 8562
+    },
+    "The opposite of \"unfreundlich\" is \"": {
+        "en": 268,
+        "fr": 37,
+        "de": 0,
+        "es": 3753,
+        "zh": 2382,
+        "ja": 1108,
+        "ko": 2063
+    },
+    "The opposite of \"feige\" is \"": {
+        "en": 152,
+        "fr": 261,
+        "de": 47,
+        "es": 997,
+        "zh": 8462,
+        "ja": 8462,
+        "ko": 20539
+    }
+}

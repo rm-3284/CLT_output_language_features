@@ -1,0 +1,902 @@
+{
+    "Das Gegenteil von \"good\" ist \"": {
+        "en": 0,
+        "fr": 297,
+        "de": 31,
+        "es": 195,
+        "zh": 318,
+        "ja": 1676,
+        "ko": 6511
+    },
+    "Das Gegenteil von \"happy\" ist \"": {
+        "en": 0,
+        "fr": 32,
+        "de": 12,
+        "es": 32,
+        "zh": 1618,
+        "ja": 1108,
+        "ko": 903
+    },
+    "Das Gegenteil von \"big\" ist \"": {
+        "en": 0,
+        "fr": 20,
+        "de": 4,
+        "es": 13,
+        "zh": 33,
+        "ja": 1230,
+        "ko": 929
+    },
+    "Das Gegenteil von \"hot\" ist \"": {
+        "en": 0,
+        "fr": 69,
+        "de": 9,
+        "es": 121,
+        "zh": 173,
+        "ja": 1436,
+        "ko": 15121
+    },
+    "Das Gegenteil von \"fast\" ist \"": {
+        "en": 90,
+        "fr": 754,
+        "de": 87,
+        "es": 4960,
+        "zh": 8133,
+        "ja": 31530,
+        "ko": 32432
+    },
+    "Das Gegenteil von \"light\" ist \"": {
+        "en": 0,
+        "fr": 1081,
+        "de": 34,
+        "es": 806,
+        "zh": 177,
+        "ja": 1497,
+        "ko": 6045
+    },
+    "Das Gegenteil von \"easy\" ist \"": {
+        "en": 0,
+        "fr": 26,
+        "de": 24,
+        "es": 88,
+        "zh": 112,
+        "ja": 678,
+        "ko": 6021
+    },
+    "Das Gegenteil von \"new\" ist \"": {
+        "en": 0,
+        "fr": 48,
+        "de": 33,
+        "es": 174,
+        "zh": 253,
+        "ja": 677,
+        "ko": 11190
+    },
+    "Das Gegenteil von \"true\" ist \"": {
+        "en": 0,
+        "fr": 13,
+        "de": 4,
+        "es": 5,
+        "zh": 42,
+        "ja": 10784,
+        "ko": 1151
+    },
+    "Das Gegenteil von \"alive\" ist \"": {
+        "en": 0,
+        "fr": 170,
+        "de": 343,
+        "es": 297,
+        "zh": 50,
+        "ja": 50,
+        "ko": 127
+    },
+    "Das Gegenteil von \"full\" ist \"": {
+        "en": 0,
+        "fr": 1342,
+        "de": 52,
+        "es": 36,
+        "zh": 117,
+        "ja": 117,
+        "ko": 383
+    },
+    "Das Gegenteil von \"bright\" ist \"": {
+        "en": 0,
+        "fr": 18,
+        "de": 6,
+        "es": 194,
+        "zh": 38,
+        "ja": 140,
+        "ko": 1401
+    },
+    "Das Gegenteil von \"strong\" ist \"": {
+        "en": 0,
+        "fr": 34,
+        "de": 11,
+        "es": 90,
+        "zh": 37,
+        "ja": 394,
+        "ko": 5460
+    },
+    "Das Gegenteil von \"clean\" ist \"": {
+        "en": 0,
+        "fr": 3379,
+        "de": 7,
+        "es": 362,
+        "zh": 156,
+        "ja": 304,
+        "ko": 6123
+    },
+    "Das Gegenteil von \"open\" ist \"": {
+        "en": 0,
+        "fr": 55,
+        "de": 41,
+        "es": 1598,
+        "zh": 5187,
+        "ja": 117,
+        "ko": 648
+    },
+    "Das Gegenteil von \"rich\" ist \"": {
+        "en": 0,
+        "fr": 87,
+        "de": 12,
+        "es": 1,
+        "zh": 252,
+        "ja": 346,
+        "ko": 22472
+    },
+    "Das Gegenteil von \"beautiful\" ist \"": {
+        "en": 0,
+        "fr": 19177,
+        "de": 141,
+        "es": 416,
+        "zh": 83,
+        "ja": 72,
+        "ko": 26013
+    },
+    "Das Gegenteil von \"long\" ist \"": {
+        "en": 0,
+        "fr": 838,
+        "de": 4,
+        "es": 151,
+        "zh": 26,
+        "ja": 391,
+        "ko": 176
+    },
+    "Das Gegenteil von \"wide\" ist \"": {
+        "en": 0,
+        "fr": 3927,
+        "de": 938,
+        "es": 1705,
+        "zh": 74,
+        "ja": 517,
+        "ko": 523
+    },
+    "Das Gegenteil von \"hard\" ist \"": {
+        "en": 0,
+        "fr": 3205,
+        "de": 80,
+        "es": 297,
+        "zh": 132,
+        "ja": 1486,
+        "ko": 27172
+    },
+    "Das Gegenteil von \"dry\" ist \"": {
+        "en": 0,
+        "fr": 69,
+        "de": 200,
+        "es": 6,
+        "zh": 319,
+        "ja": 319,
+        "ko": 4083
+    },
+    "Das Gegenteil von \"loud\" ist \"": {
+        "en": 0,
+        "fr": 37,
+        "de": 7,
+        "es": 43,
+        "zh": 506,
+        "ja": 452,
+        "ko": 6625
+    },
+    "Das Gegenteil von \"early\" ist \"": {
+        "en": 0,
+        "fr": 102,
+        "de": 204,
+        "es": 241,
+        "zh": 89,
+        "ja": 1159,
+        "ko": 64
+    },
+    "Das Gegenteil von \"near\" ist \"": {
+        "en": 0,
+        "fr": 440,
+        "de": 23,
+        "es": 55,
+        "zh": 18,
+        "ja": 1604,
+        "ko": 2084
+    },
+    "Das Gegenteil von \"deep\" ist \"": {
+        "en": 0,
+        "fr": 7461,
+        "de": 88,
+        "es": 3,
+        "zh": 8,
+        "ja": 8,
+        "ko": 562
+    },
+    "Das Gegenteil von \"bad\" ist \"": {
+        "en": 0,
+        "fr": 81,
+        "de": 17,
+        "es": 4,
+        "zh": 1298,
+        "ja": 844,
+        "ko": 555
+    },
+    "Das Gegenteil von \"sad\" ist \"": {
+        "en": 0,
+        "fr": 3,
+        "de": 23,
+        "es": 9,
+        "zh": 737,
+        "ja": 3426,
+        "ko": 4316
+    },
+    "Das Gegenteil von \"small\" ist \"": {
+        "en": 0,
+        "fr": 19,
+        "de": 5,
+        "es": 7,
+        "zh": 98,
+        "ja": 692,
+        "ko": 801
+    },
+    "Das Gegenteil von \"cold\" ist \"": {
+        "en": 0,
+        "fr": 127,
+        "de": 14,
+        "es": 4,
+        "zh": 30,
+        "ja": 606,
+        "ko": 2151
+    },
+    "Das Gegenteil von \"slow\" ist \"": {
+        "en": 0,
+        "fr": 27,
+        "de": 5,
+        "es": 335,
+        "zh": 103,
+        "ja": 43,
+        "ko": 1831
+    },
+    "Das Gegenteil von \"heavy\" ist \"": {
+        "en": 0,
+        "fr": 64,
+        "de": 16,
+        "es": 310,
+        "zh": 36,
+        "ja": 1118,
+        "ko": 12942
+    },
+    "Das Gegenteil von \"difficult\" ist \"": {
+        "en": 0,
+        "fr": 33,
+        "de": 3,
+        "es": 54,
+        "zh": 136,
+        "ja": 637,
+        "ko": 159
+    },
+    "Das Gegenteil von \"old\" ist \"": {
+        "en": 0,
+        "fr": 13,
+        "de": 16,
+        "es": 21,
+        "zh": 100,
+        "ja": 99,
+        "ko": 135
+    },
+    "Das Gegenteil von \"false\" ist \"": {
+        "en": 0,
+        "fr": 21,
+        "de": 25,
+        "es": 14,
+        "zh": 37,
+        "ja": 1562,
+        "ko": 3823
+    },
+    "Das Gegenteil von \"dead\" ist \"": {
+        "en": 0,
+        "fr": 28,
+        "de": 3,
+        "es": 22,
+        "zh": 49,
+        "ja": 468,
+        "ko": 252
+    },
+    "Das Gegenteil von \"empty\" ist \"": {
+        "en": 0,
+        "fr": 54,
+        "de": 3,
+        "es": 92,
+        "zh": 403,
+        "ja": 263,
+        "ko": 9032
+    },
+    "Das Gegenteil von \"dark\" ist \"": {
+        "en": 0,
+        "fr": 110,
+        "de": 17,
+        "es": 92,
+        "zh": 213,
+        "ja": 177,
+        "ko": 158
+    },
+    "Das Gegenteil von \"weak\" ist \"": {
+        "en": 0,
+        "fr": 192,
+        "de": 9,
+        "es": 48,
+        "zh": 42,
+        "ja": 122,
+        "ko": 20
+    },
+    "Das Gegenteil von \"dirty\" ist \"": {
+        "en": 0,
+        "fr": 313,
+        "de": 19,
+        "es": 126,
+        "zh": 205,
+        "ja": 710,
+        "ko": 497
+    },
+    "Das Gegenteil von \"closed\" ist \"": {
+        "en": 0,
+        "fr": 46,
+        "de": 85,
+        "es": 22,
+        "zh": 468,
+        "ja": 565,
+        "ko": 1022
+    },
+    "Das Gegenteil von \"poor\" ist \"": {
+        "en": 0,
+        "fr": 12,
+        "de": 13,
+        "es": 27,
+        "zh": 195,
+        "ja": 990,
+        "ko": 4417
+    },
+    "Das Gegenteil von \"ugly\" ist \"": {
+        "en": 0,
+        "fr": 12,
+        "de": 4,
+        "es": 608,
+        "zh": 1111,
+        "ja": 416,
+        "ko": 3570
+    },
+    "Das Gegenteil von \"short\" ist \"": {
+        "en": 0,
+        "fr": 0,
+        "de": 17,
+        "es": 15,
+        "zh": 9,
+        "ja": 264,
+        "ko": 848
+    },
+    "Das Gegenteil von \"narrow\" ist \"": {
+        "en": 0,
+        "fr": 13,
+        "de": 90,
+        "es": 768,
+        "zh": 31,
+        "ja": 546,
+        "ko": 218
+    },
+    "Das Gegenteil von \"soft\" ist \"": {
+        "en": 0,
+        "fr": 162,
+        "de": 4,
+        "es": 27,
+        "zh": 204,
+        "ja": 204,
+        "ko": 4821
+    },
+    "Das Gegenteil von \"wet\" ist \"": {
+        "en": 0,
+        "fr": 1468,
+        "de": 1620,
+        "es": 2640,
+        "zh": 466,
+        "ja": 1601,
+        "ko": 71943
+    },
+    "Das Gegenteil von \"quiet\" ist \"": {
+        "en": 0,
+        "fr": 1756,
+        "de": 128,
+        "es": 13,
+        "zh": 355,
+        "ja": 488,
+        "ko": 4389
+    },
+    "Das Gegenteil von \"late\" ist \"": {
+        "en": 0,
+        "fr": 58,
+        "de": 23,
+        "es": 1439,
+        "zh": 68,
+        "ja": 2981,
+        "ko": 17872
+    },
+    "Das Gegenteil von \"far\" ist \"": {
+        "en": 0,
+        "fr": 530,
+        "de": 15,
+        "es": 1619,
+        "zh": 62,
+        "ja": 2966,
+        "ko": 30189
+    },
+    "Das Gegenteil von \"shallow\" ist \"": {
+        "en": 0,
+        "fr": 1,
+        "de": 3,
+        "es": 1,
+        "zh": 157,
+        "ja": 673,
+        "ko": 158
+    },
+    "Das Gegenteil von \"young\" ist \"": {
+        "en": 0,
+        "fr": 28,
+        "de": 31,
+        "es": 54,
+        "zh": 63,
+        "ja": 63,
+        "ko": 196
+    },
+    "Das Gegenteil von \"kind\" ist \"": {
+        "en": 19,
+        "fr": 5679,
+        "de": 15,
+        "es": 597,
+        "zh": 3761,
+        "ja": 107958,
+        "ko": 5030
+    },
+    "Das Gegenteil von \"brave\" ist \"": {
+        "en": 0,
+        "fr": 290,
+        "de": 5,
+        "es": 0,
+        "zh": 627,
+        "ja": 369,
+        "ko": 242
+    },
+    "Das Gegenteil von \"wise\" ist \"": {
+        "en": 0,
+        "fr": 10,
+        "de": 12,
+        "es": 184,
+        "zh": 705,
+        "ja": 705,
+        "ko": 7971
+    },
+    "Das Gegenteil von \"polite\" ist \"": {
+        "en": 1,
+        "fr": 4,
+        "de": 0,
+        "es": 87,
+        "zh": 3253,
+        "ja": 711,
+        "ko": 6163
+    },
+    "Das Gegenteil von \"patient\" ist \"": {
+        "en": 4,
+        "fr": 4,
+        "de": 6,
+        "es": 4,
+        "zh": 7771,
+        "ja": 32272,
+        "ko": 19332
+    },
+    "Das Gegenteil von \"honest\" ist \"": {
+        "en": 3,
+        "fr": 84,
+        "de": 2,
+        "es": 851,
+        "zh": 2210,
+        "ja": 2210,
+        "ko": 9769
+    },
+    "Das Gegenteil von \"safe\" ist \"": {
+        "en": 0,
+        "fr": 343,
+        "de": 5,
+        "es": 21,
+        "zh": 339,
+        "ja": 225,
+        "ko": 12721
+    },
+    "Das Gegenteil von \"active\" ist \"": {
+        "en": 0,
+        "fr": 2,
+        "de": 2,
+        "es": 2,
+        "zh": 2470,
+        "ja": 2470,
+        "ko": 2950
+    },
+    "Das Gegenteil von \"straight\" ist \"": {
+        "en": 1,
+        "fr": 211,
+        "de": 525,
+        "es": 2,
+        "zh": 303,
+        "ja": 2527,
+        "ko": 3054
+    },
+    "Das Gegenteil von \"whole\" ist \"": {
+        "en": 1,
+        "fr": 33,
+        "de": 47,
+        "es": 55,
+        "zh": 545,
+        "ja": 545,
+        "ko": 2327
+    },
+    "Das Gegenteil von \"calm\" ist \"": {
+        "en": 2,
+        "fr": 2,
+        "de": 60,
+        "es": 32,
+        "zh": 1054,
+        "ja": 918,
+        "ko": 3166
+    },
+    "Das Gegenteil von \"correct\" ist \"": {
+        "en": 0,
+        "fr": 0,
+        "de": 118,
+        "es": 3,
+        "zh": 112,
+        "ja": 955,
+        "ko": 356
+    },
+    "Das Gegenteil von \"complex\" ist \"": {
+        "en": 0,
+        "fr": 0,
+        "de": 1,
+        "es": 0,
+        "zh": 36,
+        "ja": 346,
+        "ko": 3313
+    },
+    "Das Gegenteil von \"effective\" ist \"": {
+        "en": 0,
+        "fr": 0,
+        "de": 0,
+        "es": 0,
+        "zh": 227,
+        "ja": 1430,
+        "ko": 4501
+    },
+    "Das Gegenteil von \"famous\" ist \"": {
+        "en": 0,
+        "fr": 55,
+        "de": 2,
+        "es": 65,
+        "zh": 442,
+        "ja": 598,
+        "ko": 3951
+    },
+    "Das Gegenteil von \"generous\" ist \"": {
+        "en": 0,
+        "fr": 627,
+        "de": 1184,
+        "es": 11015,
+        "zh": 46,
+        "ja": 462,
+        "ko": 34097
+    },
+    "Das Gegenteil von \"content\" ist \"": {
+        "en": 3,
+        "fr": 288,
+        "de": 3,
+        "es": 4,
+        "zh": 6745,
+        "ja": 6745,
+        "ko": 12664
+    },
+    "Das Gegenteil von \"healthy\" ist \"": {
+        "en": 0,
+        "fr": 1809,
+        "de": 6,
+        "es": 199,
+        "zh": 1124,
+        "ja": 1026,
+        "ko": 13026
+    },
+    "Das Gegenteil von \"high\" ist \"": {
+        "en": 0,
+        "fr": 249,
+        "de": 72,
+        "es": 119,
+        "zh": 17,
+        "ja": 497,
+        "ko": 370
+    },
+    "Das Gegenteil von \"important\" ist \"": {
+        "en": 0,
+        "fr": 5,
+        "de": 0,
+        "es": 8,
+        "zh": 2210,
+        "ja": 1984,
+        "ko": 5093
+    },
+    "Das Gegenteil von \"innocent\" ist \"": {
+        "en": 0,
+        "fr": 2065,
+        "de": 18,
+        "es": 25,
+        "zh": 1582,
+        "ja": 1582,
+        "ko": 4437
+    },
+    "Das Gegenteil von \"known\" ist \"": {
+        "en": 0,
+        "fr": 171,
+        "de": 2,
+        "es": 1013,
+        "zh": 54,
+        "ja": 54,
+        "ko": 835
+    },
+    "Das Gegenteil von \"male\" ist \"": {
+        "en": 0,
+        "fr": 170,
+        "de": 9,
+        "es": 7,
+        "zh": 236,
+        "ja": 1830,
+        "ko": 2323
+    },
+    "Das Gegenteil von \"normal\" ist \"": {
+        "en": 1,
+        "fr": 5,
+        "de": 1,
+        "es": 5,
+        "zh": 299,
+        "ja": 458,
+        "ko": 3148
+    },
+    "Das Gegenteil von \"possible\" ist \"": {
+        "en": 0,
+        "fr": 0,
+        "de": 4,
+        "es": 3,
+        "zh": 20,
+        "ja": 20,
+        "ko": 346
+    },
+    "Das Gegenteil von \"private\" ist \"": {
+        "en": 0,
+        "fr": 0,
+        "de": 1,
+        "es": 22,
+        "zh": 188,
+        "ja": 188,
+        "ko": 409
+    },
+    "Das Gegenteil von \"right\" ist \"": {
+        "en": 1,
+        "fr": 935,
+        "de": 104,
+        "es": 28,
+        "zh": 226,
+        "ja": 4056,
+        "ko": 14443
+    },
+    "Das Gegenteil von \"simple\" ist \"": {
+        "en": 2,
+        "fr": 2,
+        "de": 1,
+        "es": 542,
+        "zh": 112,
+        "ja": 207,
+        "ko": 141
+    },
+    "Das Gegenteil von \"sweet\" ist \"": {
+        "en": 0,
+        "fr": 221,
+        "de": 0,
+        "es": 142,
+        "zh": 443,
+        "ja": 443,
+        "ko": 3750
+    },
+    "Das Gegenteil von \"visible\" ist \"": {
+        "en": 0,
+        "fr": 0,
+        "de": 78,
+        "es": 0,
+        "zh": 54,
+        "ja": 1283,
+        "ko": 3321
+    },
+    "Das Gegenteil von \"warm\" ist \"": {
+        "en": 0,
+        "fr": 27,
+        "de": 2,
+        "es": 19,
+        "zh": 117,
+        "ja": 545,
+        "ko": 7293
+    },
+    "Das Gegenteil von \"smooth\" ist \"": {
+        "en": 0,
+        "fr": 28,
+        "de": 1304,
+        "es": 676,
+        "zh": 706,
+        "ja": 706,
+        "ko": 12807
+    },
+    "Das Gegenteil von \"thin\" ist \"": {
+        "en": 0,
+        "fr": 1258,
+        "de": 47,
+        "es": 55,
+        "zh": 198,
+        "ja": 198,
+        "ko": 5021
+    },
+    "Das Gegenteil von \"tall\" ist \"": {
+        "en": 0,
+        "fr": 45,
+        "de": 11,
+        "es": 374,
+        "zh": 31,
+        "ja": 9796,
+        "ko": 11171
+    },
+    "Das Gegenteil von \"married\" ist \"": {
+        "en": 0,
+        "fr": 3323,
+        "de": 1,
+        "es": 18,
+        "zh": 84,
+        "ja": 233,
+        "ko": 942
+    },
+    "Das Gegenteil von \"optimistic\" ist \"": {
+        "en": 0,
+        "fr": 0,
+        "de": 0,
+        "es": 0,
+        "zh": 100,
+        "ja": 100,
+        "ko": 1915
+    },
+    "Das Gegenteil von \"permanent\" ist \"": {
+        "en": 0,
+        "fr": 3,
+        "de": 3,
+        "es": 15,
+        "zh": 296,
+        "ja": 559,
+        "ko": 5096
+    },
+    "Das Gegenteil von \"present\" ist \"": {
+        "en": 0,
+        "fr": 1,
+        "de": 38,
+        "es": 11,
+        "zh": 37,
+        "ja": 551,
+        "ko": 943
+    },
+    "Das Gegenteil von \"public\" ist \"": {
+        "en": 0,
+        "fr": 1,
+        "de": 1,
+        "es": 2,
+        "zh": 325,
+        "ja": 25106,
+        "ko": 16736
+    },
+    "Das Gegenteil von \"real\" ist \"": {
+        "en": 1,
+        "fr": 19,
+        "de": 7,
+        "es": 19,
+        "zh": 104,
+        "ja": 882,
+        "ko": 1072
+    },
+    "Das Gegenteil von \"responsible\" ist \"": {
+        "en": 0,
+        "fr": 0,
+        "de": 1,
+        "es": 0,
+        "zh": 1036,
+        "ja": 428,
+        "ko": 983
+    },
+    "Das Gegenteil von \"single\" ist \"": {
+        "en": 0,
+        "fr": 178,
+        "de": 7,
+        "es": 363,
+        "zh": 17276,
+        "ja": 4456,
+        "ko": 5194
+    },
+    "Das Gegenteil von \"sour\" ist \"": {
+        "en": 0,
+        "fr": 64,
+        "de": 1,
+        "es": 17,
+        "zh": 305,
+        "ja": 470,
+        "ko": 756
+    },
+    "Das Gegenteil von \"useful\" ist \"": {
+        "en": 0,
+        "fr": 5,
+        "de": 14,
+        "es": 5,
+        "zh": 891,
+        "ja": 139,
+        "ko": 77
+    },
+    "Das Gegenteil von \"vertical\" ist \"": {
+        "en": 0,
+        "fr": 0,
+        "de": 0,
+        "es": 0,
+        "zh": 23,
+        "ja": 7501,
+        "ko": 7501
+    },
+    "Das Gegenteil von \"well\" ist \"": {
+        "en": 3,
+        "fr": 8,
+        "de": 259,
+        "es": 8,
+        "zh": 10008,
+        "ja": 6122,
+        "ko": 5485
+    },
+    "Das Gegenteil von \"winning\" ist \"": {
+        "en": 0,
+        "fr": 56,
+        "de": 20,
+        "es": 56,
+        "zh": 981,
+        "ja": 4258,
+        "ko": 1847
+    },
+    "Das Gegenteil von \"unkind\" ist \"": {
+        "en": 46,
+        "fr": 27,
+        "de": 0,
+        "es": 1911,
+        "zh": 1158,
+        "ja": 1214,
+        "ko": 11097
+    },
+    "Das Gegenteil von \"cowardly\" ist \"": {
+        "en": 0,
+        "fr": 1,
+        "de": 11,
+        "es": 35,
+        "zh": 119,
+        "ja": 119,
+        "ko": 16397
+    }
+}

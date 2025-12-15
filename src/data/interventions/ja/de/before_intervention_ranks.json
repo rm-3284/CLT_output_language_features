@@ -1,0 +1,866 @@
+{
+    "\u300cgut\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 81,
+        "fr": 645,
+        "de": 375,
+        "es": 438,
+        "zh": 330,
+        "ja": 5,
+        "ko": 1317
+    },
+    "\u300cgl\u00fccklich\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 2,
+        "fr": 457,
+        "de": 4,
+        "es": 457,
+        "zh": 1,
+        "ja": 28,
+        "ko": 41
+    },
+    "\u300cgro\u00df\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 5293,
+        "fr": 15,
+        "de": 0,
+        "es": 5139,
+        "zh": 1631,
+        "ja": 7245,
+        "ko": 75160
+    },
+    "\u300chei\u00df\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 1,
+        "fr": 19,
+        "de": 0,
+        "es": 8,
+        "zh": 9,
+        "ja": 76,
+        "ko": 8894
+    },
+    "\u300cschnell\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 5,
+        "fr": 25,
+        "de": 0,
+        "es": 32,
+        "zh": 146,
+        "ja": 155,
+        "ko": 137
+    },
+    "\u300cleicht\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 10,
+        "fr": 329,
+        "de": 373,
+        "es": 1137,
+        "zh": 0,
+        "ja": 1,
+        "ko": 5813
+    },
+    "\u300ceinfach\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 45,
+        "fr": 45,
+        "de": 6,
+        "es": 1667,
+        "zh": 183,
+        "ja": 1,
+        "ko": 545
+    },
+    "\u300cneu\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 2,
+        "fr": 1042,
+        "de": 114,
+        "es": 311,
+        "zh": 6,
+        "ja": 540,
+        "ko": 2086
+    },
+    "\u300cwahr\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 2,
+        "fr": 168,
+        "de": 0,
+        "es": 17,
+        "zh": 579,
+        "ja": 166,
+        "ko": 3306
+    },
+    "\u300clebendig\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 3,
+        "fr": 472,
+        "de": 106,
+        "es": 151,
+        "zh": 0,
+        "ja": 0,
+        "ko": 90
+    },
+    "\u300cvoll\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 1,
+        "fr": 1868,
+        "de": 8,
+        "es": 208,
+        "zh": 0,
+        "ja": 0,
+        "ko": 43
+    },
+    "\u300chell\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 2909,
+        "fr": 172,
+        "de": 57472,
+        "es": 1553,
+        "zh": 5088,
+        "ja": 37589,
+        "ko": 41488
+    },
+    "\u300cstark\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 3,
+        "fr": 185,
+        "de": 306,
+        "es": 1531,
+        "zh": 99,
+        "ja": 372,
+        "ko": 11133
+    },
+    "\u300csauber\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 2,
+        "fr": 15415,
+        "de": 1,
+        "es": 133,
+        "zh": 279,
+        "ja": 8,
+        "ko": 3540
+    },
+    "\u300coffen\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 0,
+        "fr": 169,
+        "de": 13,
+        "es": 15166,
+        "zh": 538,
+        "ja": 15,
+        "ko": 425
+    },
+    "\u300creich\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 2,
+        "fr": 145,
+        "de": 1069,
+        "es": 21,
+        "zh": 17,
+        "ja": 1,
+        "ko": 23795
+    },
+    "\u300csch\u00f6n\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 2,
+        "fr": 170241,
+        "de": 7,
+        "es": 686,
+        "zh": 1023,
+        "ja": 201,
+        "ko": 7214
+    },
+    "\u300clang\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 1321,
+        "fr": 10300,
+        "de": 16755,
+        "es": 1901,
+        "zh": 212,
+        "ja": 11308,
+        "ko": 22048
+    },
+    "\u300cbreit\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 21,
+        "fr": 12538,
+        "de": 727,
+        "es": 3911,
+        "zh": 416,
+        "ja": 64,
+        "ko": 724
+    },
+    "\u300chart\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 4,
+        "fr": 4600,
+        "de": 1157,
+        "es": 4492,
+        "zh": 2539,
+        "ja": 2872,
+        "ko": 6492
+    },
+    "\u300ctrocken\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 10,
+        "fr": 23,
+        "de": 1200,
+        "es": 13,
+        "zh": 0,
+        "ja": 0,
+        "ko": 949
+    },
+    "\u300claut\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 0,
+        "fr": 72,
+        "de": 23,
+        "es": 72,
+        "zh": 14,
+        "ja": 1,
+        "ko": 8477
+    },
+    "\u300cfr\u00fch\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 1,
+        "fr": 47,
+        "de": 4,
+        "es": 34,
+        "zh": 40,
+        "ja": 93,
+        "ko": 264
+    },
+    "\u300cnah\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 2321,
+        "fr": 29262,
+        "de": 17101,
+        "es": 1293,
+        "zh": 13657,
+        "ja": 26929,
+        "ko": 12269
+    },
+    "\u300ctief\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 5,
+        "fr": 7917,
+        "de": 155,
+        "es": 212,
+        "zh": 2,
+        "ja": 2,
+        "ko": 2045
+    },
+    "\u300cschlecht\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 2,
+        "fr": 199,
+        "de": 0,
+        "es": 222,
+        "zh": 250,
+        "ja": 8,
+        "ko": 170
+    },
+    "\u300ctraurig\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 4,
+        "fr": 29,
+        "de": 0,
+        "es": 308,
+        "zh": 565,
+        "ja": 2247,
+        "ko": 2977
+    },
+    "\u300cklein\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 0,
+        "fr": 67,
+        "de": 8,
+        "es": 4,
+        "zh": 1,
+        "ja": 3,
+        "ko": 143
+    },
+    "\u300ckalt\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 0,
+        "fr": 363,
+        "de": 9,
+        "es": 13,
+        "zh": 17,
+        "ja": 10,
+        "ko": 968
+    },
+    "\u300clangsam\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 22,
+        "fr": 5,
+        "de": 0,
+        "es": 157,
+        "zh": 1999,
+        "ja": 62,
+        "ko": 897
+    },
+    "\u300cschwer\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 5,
+        "fr": 239,
+        "de": 0,
+        "es": 631,
+        "zh": 16,
+        "ja": 3416,
+        "ko": 10683
+    },
+    "\u300cschwierig\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 1,
+        "fr": 78,
+        "de": 2,
+        "es": 476,
+        "zh": 0,
+        "ja": 4,
+        "ko": 18
+    },
+    "\u300calt\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 149,
+        "fr": 12943,
+        "de": 1096,
+        "es": 22235,
+        "zh": 334,
+        "ja": 1591,
+        "ko": 6129
+    },
+    "\u300cfalsch\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 1,
+        "fr": 3,
+        "de": 0,
+        "es": 164,
+        "zh": 40,
+        "ja": 30,
+        "ko": 20577
+    },
+    "\u300ctot\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 3567,
+        "fr": 3689,
+        "de": 19605,
+        "es": 47454,
+        "zh": 252,
+        "ja": 9297,
+        "ko": 33459
+    },
+    "\u300cleer\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 1521,
+        "fr": 8000,
+        "de": 8912,
+        "es": 1196,
+        "zh": 15640,
+        "ja": 3639,
+        "ko": 1313
+    },
+    "\u300cdunkel\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 3,
+        "fr": 31,
+        "de": 0,
+        "es": 31,
+        "zh": 227,
+        "ja": 12,
+        "ko": 277
+    },
+    "\u300cschwach\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 1,
+        "fr": 65,
+        "de": 3,
+        "es": 124,
+        "zh": 102,
+        "ja": 29,
+        "ko": 39
+    },
+    "\u300cschmutzig\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 0,
+        "fr": 1766,
+        "de": 2,
+        "es": 1803,
+        "zh": 83,
+        "ja": 11,
+        "ko": 101
+    },
+    "\u300cgeschlossen\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 8,
+        "fr": 3233,
+        "de": 1107,
+        "es": 382,
+        "zh": 43,
+        "ja": 0,
+        "ko": 882
+    },
+    "\u300carm\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 8892,
+        "fr": 180840,
+        "de": 28844,
+        "es": 206,
+        "zh": 17853,
+        "ja": 24743,
+        "ko": 7333
+    },
+    "\u300ch\u00e4sslich\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 59,
+        "fr": 113,
+        "de": 0,
+        "es": 551,
+        "zh": 22232,
+        "ja": 1775,
+        "ko": 8835
+    },
+    "\u300ckurz\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 2,
+        "fr": 2,
+        "de": 1,
+        "es": 62,
+        "zh": 5,
+        "ja": 43,
+        "ko": 1124
+    },
+    "\u300ceng\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 6384,
+        "fr": 4372,
+        "de": 5449,
+        "es": 108277,
+        "zh": 18417,
+        "ja": 24676,
+        "ko": 33209
+    },
+    "\u300cweich\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 6,
+        "fr": 220,
+        "de": 59,
+        "es": 64,
+        "zh": 2,
+        "ja": 2,
+        "ko": 2170
+    },
+    "\u300cnass\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 1523,
+        "fr": 8545,
+        "de": 10629,
+        "es": 74645,
+        "zh": 7917,
+        "ja": 1656,
+        "ko": 24472
+    },
+    "\u300cleise\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 0,
+        "fr": 9222,
+        "de": 396,
+        "es": 452,
+        "zh": 2,
+        "ja": 4,
+        "ko": 5523
+    },
+    "\u300csp\u00e4t\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 4,
+        "fr": 48,
+        "de": 2,
+        "es": 889,
+        "zh": 5,
+        "ja": 457,
+        "ko": 7946
+    },
+    "\u300cfern\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 305,
+        "fr": 713,
+        "de": 17682,
+        "es": 63643,
+        "zh": 14645,
+        "ja": 29196,
+        "ko": 24607
+    },
+    "\u300cflach\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 410,
+        "fr": 1529,
+        "de": 572,
+        "es": 1529,
+        "zh": 60,
+        "ja": 53,
+        "ko": 10276
+    },
+    "\u300cjung\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 0,
+        "fr": 2422,
+        "de": 1280,
+        "es": 368,
+        "zh": 8,
+        "ja": 8,
+        "ko": 1340
+    },
+    "\u300cfreundlich\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 13,
+        "fr": 3393,
+        "de": 2,
+        "es": 401,
+        "zh": 0,
+        "ja": 0,
+        "ko": 531
+    },
+    "\u300cmutig\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 117,
+        "fr": 108,
+        "de": 842,
+        "es": 117,
+        "zh": 712,
+        "ja": 35,
+        "ko": 2631
+    },
+    "\u300cweise\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 73,
+        "fr": 405,
+        "de": 41,
+        "es": 332,
+        "zh": 33,
+        "ja": 33,
+        "ko": 3499
+    },
+    "\u300ch\u00f6flich\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 12,
+        "fr": 250,
+        "de": 101,
+        "es": 3827,
+        "zh": 0,
+        "ja": 1,
+        "ko": 1278
+    },
+    "\u300cgeduldig\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 28,
+        "fr": 28,
+        "de": 38,
+        "es": 28,
+        "zh": 2,
+        "ja": 42,
+        "ko": 24833
+    },
+    "\u300cehrlich\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 59,
+        "fr": 271,
+        "de": 5,
+        "es": 11849,
+        "zh": 14,
+        "ja": 14,
+        "ko": 6046
+    },
+    "\u300csicher\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 2,
+        "fr": 106,
+        "de": 0,
+        "es": 5,
+        "zh": 41,
+        "ja": 6,
+        "ko": 2641
+    },
+    "\u300caktiv\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 3,
+        "fr": 0,
+        "de": 0,
+        "es": 0,
+        "zh": 17,
+        "ja": 17,
+        "ko": 189
+    },
+    "\u300cgerade\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 104,
+        "fr": 335,
+        "de": 3698,
+        "es": 242,
+        "zh": 2597,
+        "ja": 205,
+        "ko": 15406
+    },
+    "\u300cganz\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 89,
+        "fr": 434,
+        "de": 31,
+        "es": 394,
+        "zh": 130,
+        "ja": 130,
+        "ko": 2768
+    },
+    "\u300cruhig\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 216,
+        "fr": 216,
+        "de": 49,
+        "es": 1786,
+        "zh": 883,
+        "ja": 13,
+        "ko": 6641
+    },
+    "\u300crichtig\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 77,
+        "fr": 198,
+        "de": 3,
+        "es": 26,
+        "zh": 1130,
+        "ja": 0,
+        "ko": 2154
+    },
+    "\u300ckomplex\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 3,
+        "fr": 3,
+        "de": 64,
+        "es": 3,
+        "zh": 23,
+        "ja": 1,
+        "ko": 313
+    },
+    "\u300ceffektiv\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 0,
+        "fr": 0,
+        "de": 0,
+        "es": 0,
+        "zh": 39,
+        "ja": 3,
+        "ko": 71
+    },
+    "\u300cber\u00fchmt\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 40,
+        "fr": 679,
+        "de": 0,
+        "es": 347,
+        "zh": 134,
+        "ja": 251,
+        "ko": 2217
+    },
+    "\u300cgro\u00dfz\u00fcgig\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 143,
+        "fr": 8005,
+        "de": 121,
+        "es": 31655,
+        "zh": 85,
+        "ja": 14,
+        "ko": 45350
+    },
+    "\u300czufrieden\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 2,
+        "fr": 37,
+        "de": 4,
+        "es": 37,
+        "zh": 0,
+        "ja": 0,
+        "ko": 40
+    },
+    "\u300cgesund\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 1,
+        "fr": 4339,
+        "de": 0,
+        "es": 149,
+        "zh": 11,
+        "ja": 8,
+        "ko": 11571
+    },
+    "\u300choch\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 4,
+        "fr": 348,
+        "de": 1,
+        "es": 236,
+        "zh": 7,
+        "ja": 336,
+        "ko": 342
+    },
+    "\u300cwichtig\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 0,
+        "fr": 7,
+        "de": 0,
+        "es": 38,
+        "zh": 75,
+        "ja": 353,
+        "ko": 519
+    },
+    "\u300cunschuldig\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 0,
+        "fr": 2724,
+        "de": 20,
+        "es": 72,
+        "zh": 3,
+        "ja": 3,
+        "ko": 935
+    },
+    "\u300cbekannt\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 2,
+        "fr": 1643,
+        "de": 0,
+        "es": 4118,
+        "zh": 3,
+        "ja": 3,
+        "ko": 170
+    },
+    "\u300cm\u00e4nnlich\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 10,
+        "fr": 538,
+        "de": 1,
+        "es": 9,
+        "zh": 17,
+        "ja": 82,
+        "ko": 531
+    },
+    "\u300cnormal\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 0,
+        "fr": 28,
+        "de": 0,
+        "es": 28,
+        "zh": 54,
+        "ja": 1,
+        "ko": 3116
+    },
+    "\u300cm\u00f6glich\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 3,
+        "fr": 3,
+        "de": 27,
+        "es": 9,
+        "zh": 0,
+        "ja": 0,
+        "ko": 576
+    },
+    "\u300cprivat\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 0,
+        "fr": 0,
+        "de": 18,
+        "es": 25,
+        "zh": 3,
+        "ja": 3,
+        "ko": 56
+    },
+    "\u300cs\u00fc\u00df\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 34,
+        "fr": 10038,
+        "de": 34,
+        "es": 2909,
+        "zh": 2,
+        "ja": 2,
+        "ko": 10007
+    },
+    "\u300csichtbar\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 4,
+        "fr": 4,
+        "de": 8,
+        "es": 4,
+        "zh": 0,
+        "ja": 10,
+        "ko": 3493
+    },
+    "\u300cwarm\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 0,
+        "fr": 158,
+        "de": 18,
+        "es": 158,
+        "zh": 3,
+        "ja": 2,
+        "ko": 4092
+    },
+    "\u300cglatt\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 2,
+        "fr": 42,
+        "de": 248,
+        "es": 113,
+        "zh": 3,
+        "ja": 3,
+        "ko": 4227
+    },
+    "\u300cd\u00fcnn\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 72,
+        "fr": 1457,
+        "de": 155,
+        "es": 943,
+        "zh": 1,
+        "ja": 1,
+        "ko": 10069
+    },
+    "\u300cverheiratet\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 1,
+        "fr": 5679,
+        "de": 1,
+        "es": 76,
+        "zh": 8,
+        "ja": 8,
+        "ko": 273
+    },
+    "\u300coptimistisch\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 0,
+        "fr": 0,
+        "de": 0,
+        "es": 0,
+        "zh": 1,
+        "ja": 1,
+        "ko": 487
+    },
+    "\u300cpermanent\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 0,
+        "fr": 21,
+        "de": 21,
+        "es": 7,
+        "zh": 108,
+        "ja": 4,
+        "ko": 1076
+    },
+    "\u300cgegenw\u00e4rtig\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 26,
+        "fr": 408,
+        "de": 1,
+        "es": 122,
+        "zh": 146,
+        "ja": 17,
+        "ko": 5766
+    },
+    "\u300c\u00f6ffentlich\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 1,
+        "fr": 9,
+        "de": 9,
+        "es": 2,
+        "zh": 30,
+        "ja": 169,
+        "ko": 10152
+    },
+    "\u300cecht\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 3,
+        "fr": 10,
+        "de": 2,
+        "es": 200,
+        "zh": 5,
+        "ja": 0,
+        "ko": 1858
+    },
+    "\u300cverantwortlich\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 6,
+        "fr": 6,
+        "de": 0,
+        "es": 6,
+        "zh": 243,
+        "ja": 11,
+        "ko": 1622
+    },
+    "\u300cledig\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 179,
+        "fr": 51513,
+        "de": 209,
+        "es": 24905,
+        "zh": 1523,
+        "ja": 17,
+        "ko": 7173
+    },
+    "\u300csauer\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 0,
+        "fr": 30,
+        "de": 3,
+        "es": 625,
+        "zh": 262,
+        "ja": 43,
+        "ko": 5358
+    },
+    "\u300cn\u00fctzlich\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 20,
+        "fr": 5,
+        "de": 1,
+        "es": 5,
+        "zh": 551,
+        "ja": 135,
+        "ko": 261
+    },
+    "\u300cvertikal\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 1,
+        "fr": 1,
+        "de": 1,
+        "es": 1,
+        "zh": 0,
+        "ja": 1106,
+        "ko": 1106
+    },
+    "\u300cgewinnend\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 5,
+        "fr": 3850,
+        "de": 1,
+        "es": 3850,
+        "zh": 89,
+        "ja": 6,
+        "ko": 145
+    },
+    "\u300cunfreundlich\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 335,
+        "fr": 117,
+        "de": 4,
+        "es": 9322,
+        "zh": 52,
+        "ja": 0,
+        "ko": 116
+    },
+    "\u300cfeige\u300d\u306e\u53cd\u5bfe\u306f\u300c": {
+        "en": 1899,
+        "fr": 5188,
+        "de": 890,
+        "es": 1028,
+        "zh": 6730,
+        "ja": 6730,
+        "ko": 7843
+    }
+}
