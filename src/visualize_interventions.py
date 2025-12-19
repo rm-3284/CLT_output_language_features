@@ -265,7 +265,7 @@ def plot_dict(data, filename, title):
             # Ensure text is slightly moved away from the bar edge
             # using 'xytext' with 'textcoords' is more reliable than just y_position
         )
-    plt.title(f"{filename}")
+    plt.title(f"{title}")
     plt.tight_layout()
     plt.savefig(filename)
     plt.close()
