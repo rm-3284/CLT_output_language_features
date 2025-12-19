@@ -39,6 +39,7 @@ def plot_three_level_grouped_facet_by_run_color(df: pd.DataFrame,
     2. Middle (Method): Separated by X-axis position.
     3. Inner (Run/Language): Separated by Color (Hue).
     """
+    plt.figure(figsize=(14, 8))
     sns.set_theme(style="whitegrid")
     
     # 1. Define Order (Ensure correct custom order for Experiments)
@@ -75,21 +76,30 @@ def plot_three_level_grouped_facet_by_run_color(df: pd.DataFrame,
     )
     
     # 4. Add Custom Enhancements
-    # The legend now shows the Run/Language colors
-    g.add_legend(title=run_col, loc='upper right') 
+    # Adjust loc and bbox_to_anchor to move the legend outside the axes
+    g.add_legend(
+        title=run_col, 
+        loc='center left', 
+        bbox_to_anchor=(1, 0.5), # Moves it to the far right of the figure
+        frameon=True             # Adds a border to make it distinct
+    ) 
     
-    # Set axis labels for the individual plots
+    # 5. Fix: Iterate through all axes to rotate x-ticks
+    for ax in g.axes.flat:
+        ax.tick_params(axis='x', labelrotation=45)
+        # Extra fix: Ensure the 'right' alignment for rotated text
+        for label in ax.get_xticklabels():
+            label.set_horizontalalignment('right')
+    
+    # Adjust titles and layout
     g.set_axis_labels(method_col, score_label) 
-    
-    # Set titles for the columns (Experiments)
     g.set_titles(col_template="{col_name} Experiment", size=14) 
+    g.fig.suptitle(f'Language-Colored Individual {score_label} Scores', fontsize=16, y=1.05)
     
-    # Set the overall title
-    g.fig.suptitle(f'Language-Colored Individual {score_label} Scores', fontsize=16, y=1.02)
+    # Use subplots_adjust to make room for the moved legend on the right
+    plt.subplots_adjust(right=0.85, top=0.9)
     
-    # 5. Save and return
-    plt.tight_layout()
-    g.savefig(output_filename)
+    g.savefig(output_filename, bbox_inches='tight') # bbox_inches='tight' is key!
     plt.close()
     
     print(f"Plot saved successfully to {output_filename}")
@@ -126,7 +136,7 @@ def plot_method_language_comparison_with_labels(df: pd.DataFrame,
     on top of each bar.
     """
     sns.set_theme(style="whitegrid")
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(14, 6))
     
     # Get the current axes object
     ax = plt.gca()
@@ -209,12 +219,57 @@ def plot_method_language_comparison_with_labels(df: pd.DataFrame,
     y_max = max_score + (y_range * 0.1) # Add 10% buffer
     ax.set_ylim(y_min, y_max)
     
-    
+    plt.xticks(rotation=45, ha='right')
     plt.tight_layout()
     plt.savefig(output_filename)
     plt.close()
     
     print(f"Plot saved successfully to {output_filename}")
+
+def plot_dict(data, filename, title):
+    sns.set_theme(style="whitegrid")
+    plt.figure(figsize=(8, 5))
+    ax = sns.barplot(
+        x=list(data.keys()), 
+        y=list(data.values()), 
+        hue=list(data.keys()), 
+        palette="viridis", 
+        legend=False
+    )
+    for p in ax.patches:
+        score_value = p.get_height()
+        
+        # Skip very small values to keep the chart clean
+        if abs(score_value) < 0.005: 
+            continue
+
+        x_position = p.get_x() + p.get_width() / 2
+        
+        # DYNAMIC LOGIC FOR NEGATIVES:
+        if score_value >= 0:
+            # Positive bars: text goes above, alignment is 'bottom'
+            va_align = 'bottom'
+            offset = 3 # points above
+        else:
+            # Negative bars: text goes below, alignment is 'top'
+            va_align = 'top'
+            offset = -3 # points below
+
+        ax.text(
+            x_position, 
+            score_value, 
+            f'{score_value:.2f}', 
+            ha='center', 
+            va=va_align, 
+            fontsize=9,
+            # Ensure text is slightly moved away from the bar edge
+            # using 'xytext' with 'textcoords' is more reliable than just y_position
+        )
+    plt.title(f"{filename}")
+    plt.tight_layout()
+    plt.savefig(filename)
+    plt.close()
+    print(f"Plot saved successfully to {filename}")
 
 if __name__ == "__main__":
     current_file_path = __file__
@@ -225,11 +280,41 @@ if __name__ == "__main__":
     langs = list(lang_to_flores_key.keys())
 
     methods = ['description', 'frequency', 'value']
-    experiments = ['ablation', 'amplification', 'intervention']
+    experiments = ['ablation', 'ablation_everything_except', 'amplification', 'amplification_everything_except', 'intervention']
     for prompt_lang in os.listdir(data_directory):
         for adj_lang in os.listdir(os.path.join(data_directory, prompt_lang)):
             dir_path = os.path.join(data_directory, prompt_lang, adj_lang)
-            
+
+            # before intervention
+            before_intervention_logits_list = dict() # key: lang, val: logits
+            with open(os.path.join(dir_path, f"{methods[0]}_based_{experiments[0]}_logits_and_ranks.json"), 'r') as f:
+                tmp_d = json.load(f)
+            for lang in langs:
+                before_intervention_logits_list[lang] = list()
+            for _, val in tmp_d.items():
+                for _, d in val.items():
+                    for lang, v in d.items():
+                        before_intervention_logits_list[lang].append(v[0])
+            before_intervention_rank_list = dict()
+            with open(os.path.join(dir_path, "before_intervention_ranks.json"), 'r') as f:
+                tmp_d = json.load(f)
+            for lang in langs:
+                before_intervention_rank_list[lang] = list()
+            for _, val in tmp_d.items():
+                for lang, v in val.items():
+                    before_intervention_rank_list[lang].append(v)
+            before_intervention_logit = dict()
+            for k, v in before_intervention_logits_list.items():
+                before_intervention_logit[k] = sum(v) / len(v)
+            before_intervention_rank = dict()
+            for k, v in before_intervention_rank_list.items():
+                before_intervention_rank[k] = sum(v) / len(v)
+            filename = "before_intervention_logit"
+            plot_dict(before_intervention_logit, os.path.join(dir_path, f'{filename}.png'), filename)
+            filename = "before_intervention_rank"
+            plot_dict(before_intervention_rank, os.path.join(dir_path, f'{filename}.png'), filename)
+
+            # after intervention
             logit_dict = dict()
             rank_dict = dict()
             for experiment in experiments:
@@ -247,19 +332,19 @@ if __name__ == "__main__":
                         logit_list[lang] = list()
                         rank_list[lang] = list()
                     for _, vals in tmp_d.items():
-                        if experiment == 'ablation':
-                            # prompt_lang ablation
+                        if experiment == 'ablation' or experiment == 'amplification_everything_except':
+                            # prompt_lang ablation or everything amp except prompt lang
                             for l, d in vals[prompt_lang].items():
                                 logit_list[l].append(d[1])
-                        elif experiment == 'amplification':
-                            # any lang amplification
+                        elif experiment == 'amplification' or experiment == 'ablation_everything_except':
+                            # adj lang amplification or ablation except adj lang
                             for l in langs:
-                                logit_list[l].append(vals[l][l][1])
-                                rank_list[l].append(vals[l][l][2])
+                                logit_list[l].append(vals[adj_lang][l][1])
+                                rank_list[l].append(vals[adj_lang][l][2])
                         else:
-                            # prompt_lang_ablation + any lang amplification
+                            # prompt_lang_ablation + adj lang amplification
                             for l in langs:
-                                logit_list[l].append(vals[prompt_lang][l][l][1])
+                                logit_list[l].append(vals[prompt_lang][adj_lang][l][1])
                     for key, val in logit_list.items():
                         logit_dict[experiment][method][key] = sum(val) / len(val)
                     
