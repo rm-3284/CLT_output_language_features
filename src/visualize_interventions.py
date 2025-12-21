@@ -2,6 +2,7 @@ import json
 import os
 import pandas as pd
 import seaborn as sns
+import statistics
 import matplotlib.pyplot as plt
 from typing import Dict, Any, List
 
@@ -12,8 +13,7 @@ from intervention import (
 from template import lang_to_flores_key
 
 # Re-using the transformation function from the previous step (it's essential)
-def transform_dict_to_dataframe(data_dict: Dict[str, Dict[str, Dict[str, float]]], 
-                               score_column_name: str = 'Score') -> pd.DataFrame:
+def transform_dict_to_dataframe(data_dict: Dict[str, Dict[str, Dict[str, Dict[str, float]]]]) -> pd.DataFrame:
     records = []
     for experiment, methods in data_dict.items():
         for method, scores in methods.items():
@@ -22,9 +22,14 @@ def transform_dict_to_dataframe(data_dict: Dict[str, Dict[str, Dict[str, float]]
                     'Experiment': experiment,
                     'Method': method,
                     'Run': run_name,
-                    score_column_name: score
+                    'mean': score['mean'],
+                    'stdev': score['stdev']
                 })
     return pd.DataFrame(records)
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 def plot_three_level_grouped_facet_by_run_color(df: pd.DataFrame, 
                                                 experiment_col: str, 
@@ -34,10 +39,8 @@ def plot_three_level_grouped_facet_by_run_color(df: pd.DataFrame,
                                                 score_label: str,
                                                 output_filename: str):
     """
-    Generates a scatter plot with three levels of grouping:
-    1. Outer (Experiment): Separated by Facet.
-    2. Middle (Method): Separated by X-axis position.
-    3. Inner (Run/Language): Separated by Color (Hue).
+    Generates a swarmplot faceted by Experiment, layering numerical 
+    mean and standard deviation labels over the points.
     """
     plt.figure(figsize=(14, 8))
     sns.set_theme(style="whitegrid")
@@ -100,12 +103,14 @@ def plot_three_level_grouped_facet_by_run_color(df: pd.DataFrame,
     plt.subplots_adjust(right=0.85, top=0.9)
     
     g.savefig(output_filename, bbox_inches='tight') # bbox_inches='tight' is key!
-    plt.close()
-    
-    print(f"Plot saved successfully to {output_filename}")
 
-def transform_nested_dict_to_dataframe(data_dict: Dict[str, Dict[str, float]], 
-                                       score_column_name: str = 'Score') -> pd.DataFrame:
+    df.to_csv(output_filename.replace('.png', '.csv'), index=False)
+    
+    plt.close()
+    print(f"Plot and Table saved to {os.path.dirname(output_filename)}")
+    plt.close()
+
+def transform_nested_dict_to_dataframe(data_dict: Dict[str, Dict[str, Dict[str, float]]], ) -> pd.DataFrame:
     """
     Transforms the nested dictionary structure data[method][lang] = float 
     into a long-format Pandas DataFrame suitable for plotting.
@@ -119,7 +124,8 @@ def transform_nested_dict_to_dataframe(data_dict: Dict[str, Dict[str, float]],
             records.append({
                 'Method': method,
                 'Language': language,
-                score_column_name: score
+                'mean': score['mean'],
+                'stdev': score['stdev']
             })
             
     return pd.DataFrame(records)
@@ -143,44 +149,36 @@ def plot_method_language_comparison_with_labels(df: pd.DataFrame,
 
     # Create the Grouped Bar Plot
     # X-axis is the Language, and groups (HUE) are the Methods.
+
+    # 3. Create the Plot
     sns.barplot(
-        data=df,
-        x=language_col,
-        y=score_col,
-        hue=method_col,
-        palette='viridis',
-        errorbar=None, # Ensure no error bars are plotted
-        ax=ax
+        data=df, x=language_col, y=score_col, hue=method_col,
+        palette='viridis', errorbar=None, ax=ax
     )
-    
-    # --- ADD DATA LABELS ---
-    
-    # Iterate over the bar containers (patches)
-    for p in ax.patches:
-        # Determine the height of the bar (the score value)
-        score_value = p.get_height()
-        
-        # Determine the position of the text
-        x_position = p.get_x() + p.get_width() / 2  # Center the text horizontally
-        y_position = score_value  # Position vertically at the top of the bar
 
-        # Format the score value (e.g., to 2 decimal places)
-        # Adjust the format string as needed (e.g., '{:.1f}' for 1 decimal)
+    # 4. Iterate over patches and the calculated stats simultaneously
+    for p, (_, row) in zip(ax.patches, df.iterrows()):
+        mean_val = row['mean']
+        std_val = row['stdev']
 
-        if abs(score_value) < 0.005: 
-            # If it's zero, skip drawing the label
+        if pd.isna(mean_val) or abs(mean_val) < 0.005:
             continue
-        text_format = '{:.2f}' 
-        text_to_display = text_format.format(score_value)
-        
-        # Add the text label
+
+        # Format the string to show Mean and (±STDEV)
+        # \n creates a new line to keep the label from getting too wide
+        text_to_display = f"{mean_val:.2f}\n(±{std_val:.2f})"
+
+        # Determine vertical alignment (above for positive, below for negative)
+        va_align = 'bottom' if mean_val >= 0 else 'top'
+
         ax.text(
-            x_position, 
-            y_position, 
-            text_to_display, 
-            ha='center', # Horizontal alignment: center
-            va='bottom', # Vertical alignment: position text just above the bar
-            fontsize=9
+            p.get_x() + p.get_width() / 2,
+            mean_val,
+            text_to_display,
+            ha='center',
+            va=va_align,
+            fontsize=8,
+            fontweight='bold'
         )
     
     # 1. Determine data limits
@@ -280,14 +278,14 @@ if __name__ == "__main__":
     langs = list(lang_to_flores_key.keys())
 
     methods = ['description', 'frequency', 'value']
-    experiments = ['ablation', 'ablation_everything_except', 'amplification', 'amplification_everything_except', 'intervention']
+    experiments = ['original', 'ablation', 'ablation_everything_except', 'amplification', 'intervention']
     for prompt_lang in os.listdir(data_directory):
         for adj_lang in os.listdir(os.path.join(data_directory, prompt_lang)):
             dir_path = os.path.join(data_directory, prompt_lang, adj_lang)
 
             # before intervention
             before_intervention_logits_list = dict() # key: lang, val: logits
-            with open(os.path.join(dir_path, f"{methods[0]}_based_{experiments[0]}_logits_and_ranks.json"), 'r') as f:
+            with open(os.path.join(dir_path, f"{methods[0]}_based_{experiments[1]}_logits_and_ranks.json"), 'r') as f:
                 tmp_d = json.load(f)
             for lang in langs:
                 before_intervention_logits_list[lang] = list()
@@ -322,7 +320,10 @@ if __name__ == "__main__":
                 for method in methods:
                     logit_dict[experiment][method] = dict()
 
-                    file_name = f"{method}_based_{experiment}_logits_and_ranks.json"
+                    if experiment == 'original':
+                        file_name = f"{method}_based_{experiments[1]}_logits_and_ranks.json"
+                    else:
+                        file_name = f"{method}_based_{experiment}_logits_and_ranks.json"
                     with open(os.path.join(dir_path, file_name), 'r') as f:
                         tmp_d = json.load(f)
 
@@ -331,8 +332,13 @@ if __name__ == "__main__":
                     for lang in langs:
                         logit_list[lang] = list()
                         rank_list[lang] = list()
+                    
                     for _, vals in tmp_d.items():
-                        if experiment == 'ablation' or experiment == 'amplification_everything_except':
+                        if experiment == 'original':
+                            # just get the original
+                            for l, d in vals[prompt_lang].items():
+                                logit_list[l].append(d[0])
+                        elif experiment == 'ablation' or experiment == 'amplification_everything_except':
                             # prompt_lang ablation or everything amp except prompt lang
                             for l, d in vals[prompt_lang].items():
                                 logit_list[l].append(d[1])
@@ -341,30 +347,36 @@ if __name__ == "__main__":
                             for l in langs:
                                 logit_list[l].append(vals[adj_lang][l][1])
                                 rank_list[l].append(vals[adj_lang][l][2])
-                        else:
+                        elif experiment == 'intervention':
                             # prompt_lang_ablation + adj lang amplification
                             for l in langs:
                                 logit_list[l].append(vals[prompt_lang][adj_lang][l][1])
+                        else:
+                            raise KeyError('invalid experiment name')
                     for key, val in logit_list.items():
-                        logit_dict[experiment][method][key] = sum(val) / len(val)
+                        mean = statistics.mean(val)
+                        stdev = statistics.stdev(val)
+                        logit_dict[experiment][method][key] = {'mean': mean, 'stdev': stdev}
                     
                     if experiment == 'amplification':
                         rank_dict[method] = dict()
                         for key, val in rank_list.items():
-                            rank_dict[method][key] = sum(val) / len(val)
+                            mean = statistics.mean(val)
+                            stdev = statistics.stdev(val)
+                            rank_dict[method][key] = {'mean': mean, 'stdev': stdev}
 
-            df = transform_dict_to_dataframe(logit_dict, 'logit_diff')
+            df = transform_dict_to_dataframe(logit_dict)
             #print(df)
             file_name = 'intervention_logits.png'
             out_path = os.path.join(dir_path, file_name)
             title = f"Prompt {prompt_lang}, Adj {adj_lang}, interventions"
             plot_three_level_grouped_facet_by_run_color(
-                df, 'Method', 'Experiment', 'Run', 'logit_diff', 'logit difference',
+                df, 'Method', 'Experiment', 'Run', 'mean', 'logit difference',
                 out_path
             )
 
-            df2 = transform_nested_dict_to_dataframe(rank_dict, 'rank')
+            df2 = transform_nested_dict_to_dataframe(rank_dict)
             #print(df2)
             file_name = 'intervention_rank.png'
             outpath = os.path.join(dir_path, file_name)
-            plot_method_language_comparison_with_labels(df2, 'Method', 'Language', 'rank', 'rank', outpath)
+            plot_method_language_comparison_with_labels(df2, 'Method', 'Language', 'mean', 'rank', outpath)
