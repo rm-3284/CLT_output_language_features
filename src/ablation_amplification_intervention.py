@@ -13,6 +13,45 @@ from intervention import (
     )
 from template import lang_to_flores_key, base_strings
 
+def direction_ablation_helper(model: ReplacementModel, layer_idx: int, target_features: list[int], prompt):
+    W_all = model.transcoders[layer_idx].W_dec # (n_features, d_model)
+    #print(W_all.shape)
+    W_I = W_all.T[:, target_features]
+    # (W_I^T * W_I)^-1 * W_I^T
+    W_I_pinv = torch.linalg.pinv(W_I.to(torch.float32)).to(torch.bfloat16) # (k, d_model)
+    #print(W_I_pinv.shape)
+    _, activation_cache = model.get_activations(prompt) # (layer, pos, n_features)
+    z = activation_cache[layer_idx, ...] # (pos, n_features)
+    #print(z.shape)
+    h_hat = torch.matmul(z, W_all) # (pos, d_model)
+    #print(h_hat.shape)
+    proj_z_I = torch.matmul(h_hat, W_I_pinv.T) # (seq, k)
+    adjusted_activations = z[..., target_features] - proj_z_I # (seq, k)
+
+    intervention_list = list()
+    for i, k in enumerate(target_features):
+        val = adjusted_activations[-1, i]
+        val = val.item() if isinstance(val, torch.Tensor) else val
+        element = (layer_idx, -1, k, val)
+        intervention_list.append(element)
+    return intervention_list
+    
+def direction_ablation_layer_determine(features: dict[str, list[tuple[Feature, float]]], lang) -> tuple[int, list[int]]:
+    features_list = features[lang]
+    features_set = dict()
+    for i in range(26):
+        features_set[i] = set()
+    for f, _ in features_list:
+        features_set[f.layer].add(f.feature_idx)
+    
+    max_idx = -1
+    max_length = -1
+    for k, v in features_set.items():
+        if len(v) >= max_length:
+            max_idx = k
+    return max_idx, list(features_set[max_idx])
+    
+
 def description_based_features(dir_name: str, languages: list[str], threshold: float=0.1) -> dict[str, list[str]]:
     lang_features = dict()
     for lang in languages:
@@ -127,7 +166,11 @@ def perform_intervention(
     ablations_outputs = dict()
     for intervention_lang in langs:
         ablations_dict[intervention_lang] = dict()
-        ablation_outputs, ablation_logits = model_intervention(prompt, model, ablation[intervention_lang])
+        #ablation_outputs, ablation_logits = model_intervention(prompt, model, ablation[intervention_lang])
+        layer, features = ablation[intervention_lang]
+        intervention_list = direction_ablation_helper(model, layer, features, prompt)
+        ablation_outputs, ablation_logits = model_intervention(prompt, model, intervention_list)
+
         ablations_outputs[intervention_lang] = ablation_outputs
         for measure_lang in langs:
             target = get_best_base(ablation_logits, ans[measure_lang], model)
@@ -138,16 +181,16 @@ def perform_intervention(
 
     amplifications_dict = dict()
     amplifications_outputs = dict()
-    for intervention_lang in langs:
-        amplifications_dict[intervention_lang] = dict()
-        amplification_outputs, amplification_logits = model_intervention(prompt, model, amplification[intervention_lang])
-        amplifications_outputs[intervention_lang] = amplification_outputs
-        for measure_lang in langs:
-            target = get_best_base(amplification_logits, ans[measure_lang], model)
-            o_diff, n_diff, _ = logit_diff_single(logits, amplification_logits, target, base, model)
-            n_rank = get_best_rank(amplification_logits, ans[measure_lang], model)
-
-            amplifications_dict[intervention_lang][measure_lang] = (o_diff, n_diff, n_rank)
+    #for intervention_lang in langs:
+    #    amplifications_dict[intervention_lang] = dict()
+    #    amplification_outputs, amplification_logits = model_intervention(prompt, model, amplification[intervention_lang])
+    #    amplifications_outputs[intervention_lang] = amplification_outputs
+    #    for measure_lang in langs:
+    #        target = get_best_base(amplification_logits, ans[measure_lang], model)
+    #        o_diff, n_diff, _ = logit_diff_single(logits, amplification_logits, target, base, model)
+    #        n_rank = get_best_rank(amplification_logits, ans[measure_lang], model)
+    #
+    #       amplifications_dict[intervention_lang][measure_lang] = (o_diff, n_diff, n_rank)
 
     interventions_dict = dict()
     interventions_outputs = dict()
@@ -155,7 +198,10 @@ def perform_intervention(
         interventions_dict[ablation_lang] = dict()
         interventions_outputs[ablation_lang] = dict()
         for amplification_lang in langs:
-            intervention_list = ablation_and_amplification(ablation[ablation_lang], amplification[amplification_lang])
+            #intervention_list = ablation_and_amplification(ablation[ablation_lang], amplification[amplification_lang])
+            layer, features = ablation[ablation_lang]
+            intervention_list = ablation_and_amplification(direction_ablation_helper(model, layer, features, prompt), amplification[amplification_lang])
+
             interventions_dict[ablation_lang][amplification_lang] = dict()
             intervention_outputs, intervention_logits = model_intervention(prompt, model, intervention_list)
             interventions_outputs[amplification_lang] = intervention_outputs
@@ -280,12 +326,19 @@ if __name__ == "__main__":
     freq_ablations = dict()
     freq_amplifications = dict()
     for lang in langs:
-        desc_ablations[lang] = ablation(desc_interventions, lang)
+        #desc_ablations[lang] = ablation(desc_interventions, lang)
+        desc_ablations[lang] = direction_ablation_layer_determine(desc_interventions, lang)
         desc_amplifications[lang] = amplification(desc_interventions, lang)
-        val_ablations[lang] = ablation(val_interventions, lang)
+        #val_ablations[lang] = ablation(val_interventions, lang)
+        val_ablations[lang] = direction_ablation_layer_determine(val_interventions, lang)
         val_amplifications[lang] = amplification(val_interventions, lang)
-        freq_ablations[lang] = ablation(freq_interventions, lang)
+        #freq_ablations[lang] = ablation(freq_interventions, lang)
+        freq_ablations[lang] = direction_ablation_layer_determine(freq_interventions, lang)
         freq_amplifications[lang] = amplification(freq_interventions, lang)
+
+    print(desc_ablations)
+    print(val_ablations)
+    print(freq_ablations)
 
     # ablation + amplification experiments
     output_dir = os.path.join(data_directory, "interventions")
@@ -301,9 +354,13 @@ if __name__ == "__main__":
             adj_lang_out_dir = os.path.join(lang_out_dir, adj_lang)
             os.makedirs(adj_lang_out_dir, exist_ok=True)
 
-            desc_based = {'ablation': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification': {'outputs': {}, 'logits_and_ranks': {}}, 'intervention': {'outputs': {}, 'logits_and_ranks': {}}, 'ablation_everything_except': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification_everything_except': {'outputs': {}, 'logits_and_ranks': {}}}
-            val_based = {'ablation': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification': {'outputs': {}, 'logits_and_ranks': {}}, 'intervention': {'outputs': {}, 'logits_and_ranks': {}}, 'ablation_everything_except': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification_everything_except': {'outputs': {}, 'logits_and_ranks': {}}}
-            freq_based = {'ablation': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification': {'outputs': {}, 'logits_and_ranks': {}}, 'intervention': {'outputs': {}, 'logits_and_ranks': {}}, 'ablation_everything_except': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification_everything_except': {'outputs': {}, 'logits_and_ranks': {}}}
+            #desc_based = {'ablation': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification': {'outputs': {}, 'logits_and_ranks': {}}, 'intervention': {'outputs': {}, 'logits_and_ranks': {}}, 'direction_ablation_everything_except': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification_everything_except': {'outputs': {}, 'logits_and_ranks': {}}}
+            #val_based = {'ablation': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification': {'outputs': {}, 'logits_and_ranks': {}}, 'intervention': {'outputs': {}, 'logits_and_ranks': {}}, 'direction_ablation_everything_except': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification_everything_except': {'outputs': {}, 'logits_and_ranks': {}}}
+            #freq_based = {'ablation': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification': {'outputs': {}, 'logits_and_ranks': {}}, 'intervention': {'outputs': {}, 'logits_and_ranks': {}}, 'direction_ablation_everything_except': {'outputs': {}, 'logits_and_ranks': {}}, 'amplification_everything_except': {'outputs': {}, 'logits_and_ranks': {}}}
+            desc_based = {'direction_ablation': {'outputs': {}, 'logits_and_ranks': {}}, 'direction_intervention': {'outputs': {}, 'logits_and_ranks': {}}}
+            val_based = {'direction_ablation': {'outputs': {}, 'logits_and_ranks': {}}, 'direction_intervention': {'outputs': {}, 'logits_and_ranks': {}}}
+            freq_based = {'direction_ablation': {'outputs': {}, 'logits_and_ranks': {}}, 'direction_intervention': {'outputs': {}, 'logits_and_ranks': {}}}
+
 
             before_intervention = {'outputs': {}, 'ranks': {}}
             for adj, ans in big_data:
@@ -332,63 +389,63 @@ if __name__ == "__main__":
                  interventions_outputs, interventions_dict
                  ) = perform_intervention(prompt, model, logits, adj_lang, ans, desc_ablations, desc_amplifications, langs)
                 
-                (
-                 ablations_et_dict, ablations_et_outputs,
-                 amplification_et_dict, amplification_et_outputs
-                 ) = perform_everything_intervention(prompt, model, logits, adj_lang, ans, desc_ablations, desc_amplifications, langs)
+                #(
+                # ablations_et_dict, ablations_et_outputs,
+                # amplification_et_dict, amplification_et_outputs
+                # ) = perform_everything_intervention(prompt, model, logits, adj_lang, ans, desc_ablations, desc_amplifications, langs)
                 
-                desc_based['ablation']['outputs'][prompt] = ablations_outputs
-                desc_based['ablation']['logits_and_ranks'][prompt] = ablations_dict
-                desc_based['amplification']['outputs'][prompt] = amplifications_outputs
-                desc_based['amplification']['logits_and_ranks'][prompt] = amplifications_dict
-                desc_based['intervention']['outputs'][prompt] = interventions_outputs
-                desc_based['intervention']['logits_and_ranks'][prompt] = interventions_dict
-                desc_based['ablation_everything_except']['outputs'][prompt] = ablations_et_outputs
-                desc_based['ablation_everything_except']['logits_and_ranks'][prompt] = ablations_et_dict
-                desc_based['amplification_everything_except']['outputs'][prompt] = amplification_et_outputs
-                desc_based['amplification_everything_except']['logits_and_ranks'][prompt] = amplification_et_dict
+                desc_based['direction_ablation']['outputs'][prompt] = ablations_outputs
+                desc_based['direction_ablation']['logits_and_ranks'][prompt] = ablations_dict
+                #desc_based['amplification']['outputs'][prompt] = amplifications_outputs
+                #desc_based['amplification']['logits_and_ranks'][prompt] = amplifications_dict
+                desc_based['direction_intervention']['outputs'][prompt] = interventions_outputs
+                desc_based['direction_intervention']['logits_and_ranks'][prompt] = interventions_dict
+                #desc_based['ablation_everything_except']['outputs'][prompt] = ablations_et_outputs
+                #desc_based['ablation_everything_except']['logits_and_ranks'][prompt] = ablations_et_dict
+                #desc_based['amplification_everything_except']['outputs'][prompt] = amplification_et_outputs
+                #desc_based['amplification_everything_except']['logits_and_ranks'][prompt] = amplification_et_dict
                 
                 (
                  ablations_dict, ablations_outputs, 
                  amplifications_dict, amplifications_outputs, 
                  interventions_outputs, interventions_dict
                  ) = perform_intervention(prompt, model, logits, adj_lang, ans, val_ablations, val_amplifications, langs)
-                (
-                 ablations_et_dict, ablations_et_outputs,
-                 amplification_et_dict, amplification_et_outputs
-                 ) = perform_everything_intervention(prompt, model, logits, adj_lang, ans, val_ablations, val_amplifications, langs)
+                #(
+                # ablations_et_dict, ablations_et_outputs,
+                # amplification_et_dict, amplification_et_outputs
+                # ) = perform_everything_intervention(prompt, model, logits, adj_lang, ans, val_ablations, val_amplifications, langs)
                 
-                val_based['ablation']['outputs'][prompt] = ablations_outputs
-                val_based['ablation']['logits_and_ranks'][prompt] = ablations_dict
-                val_based['amplification']['outputs'][prompt] = amplifications_outputs
-                val_based['amplification']['logits_and_ranks'][prompt] = amplifications_dict
-                val_based['intervention']['outputs'][prompt] = interventions_outputs
-                val_based['intervention']['logits_and_ranks'][prompt] = interventions_dict
-                val_based['ablation_everything_except']['outputs'][prompt] = ablations_et_outputs
-                val_based['ablation_everything_except']['logits_and_ranks'][prompt] = ablations_et_dict
-                val_based['amplification_everything_except']['outputs'][prompt] = amplification_et_outputs
-                val_based['amplification_everything_except']['logits_and_ranks'][prompt] = amplification_et_dict
+                val_based['direction_ablation']['outputs'][prompt] = ablations_outputs
+                val_based['direction_ablation']['logits_and_ranks'][prompt] = ablations_dict
+                #val_based['amplification']['outputs'][prompt] = amplifications_outputs
+                #val_based['amplification']['logits_and_ranks'][prompt] = amplifications_dict
+                val_based['direction_intervention']['outputs'][prompt] = interventions_outputs
+                val_based['direction_intervention']['logits_and_ranks'][prompt] = interventions_dict
+                #val_based['ablation_everything_except']['outputs'][prompt] = ablations_et_outputs
+                #val_based['ablation_everything_except']['logits_and_ranks'][prompt] = ablations_et_dict
+                #val_based['amplification_everything_except']['outputs'][prompt] = amplification_et_outputs
+                #val_based['amplification_everything_except']['logits_and_ranks'][prompt] = amplification_et_dict
                 
                 (
                  ablations_dict, ablations_outputs, 
                  amplifications_dict, amplifications_outputs, 
                  interventions_outputs, interventions_dict
                  ) = perform_intervention(prompt, model, logits, adj_lang, ans, freq_ablations, freq_amplifications, langs)
-                (
-                 ablations_et_dict, ablations_et_outputs,
-                 amplification_et_dict, amplification_et_outputs
-                 ) = perform_everything_intervention(prompt, model, logits, adj_lang, ans, val_ablations, val_amplifications, langs)
+                #(
+                # ablations_et_dict, ablations_et_outputs,
+                # amplification_et_dict, amplification_et_outputs
+                # ) = perform_everything_intervention(prompt, model, logits, adj_lang, ans, val_ablations, val_amplifications, langs)
                 
-                freq_based['ablation']['outputs'][prompt] = ablations_outputs
-                freq_based['ablation']['logits_and_ranks'][prompt] = ablations_dict
-                freq_based['amplification']['outputs'][prompt] = amplifications_outputs
-                freq_based['amplification']['logits_and_ranks'][prompt] = amplifications_dict
-                freq_based['intervention']['outputs'][prompt] = interventions_outputs
-                freq_based['intervention']['logits_and_ranks'][prompt] = interventions_dict
-                freq_based['ablation_everything_except']['outputs'][prompt] = ablations_et_outputs
-                freq_based['ablation_everything_except']['logits_and_ranks'][prompt] = ablations_et_dict
-                freq_based['amplification_everything_except']['outputs'][prompt] = amplification_et_outputs
-                freq_based['amplification_everything_except']['logits_and_ranks'][prompt] = amplification_et_dict
+                freq_based['direction_ablation']['outputs'][prompt] = ablations_outputs
+                freq_based['direction_ablation']['logits_and_ranks'][prompt] = ablations_dict
+                #freq_based['amplification']['outputs'][prompt] = amplifications_outputs
+                #freq_based['amplification']['logits_and_ranks'][prompt] = amplifications_dict
+                freq_based['direction_intervention']['outputs'][prompt] = interventions_outputs
+                freq_based['direction_intervention']['logits_and_ranks'][prompt] = interventions_dict
+                #freq_based['ablation_everything_except']['outputs'][prompt] = ablations_et_outputs
+                #freq_based['ablation_everything_except']['logits_and_ranks'][prompt] = ablations_et_dict
+                #freq_based['amplification_everything_except']['outputs'][prompt] = amplification_et_outputs
+                #freq_based['amplification_everything_except']['logits_and_ranks'][prompt] = amplification_et_dict
 
             for key, val in before_intervention.items():
                 file_name = f'before_intervention_{key}.json'
