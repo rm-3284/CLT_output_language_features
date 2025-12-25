@@ -14,6 +14,13 @@ from intervention import (
 from template import lang_to_flores_key, base_strings
 
 def direction_ablation_helper(model: ReplacementModel, layer_idx: int, target_features: list[int], prompt):
+    # the projection can be calculated as follows. v = W_dec[feature, :]
+    # W_all @ feature_activation = original_vector
+    # We want original_vector - original_vector \cdot v / || v || for several v
+    # V = W_dec [features, :] --> original_vector \cdot v is V^T @ original vector
+    # Also, to convert it back, we need W_all^{-1}
+
+    """
     W_all = model.transcoders[layer_idx].W_dec # (n_features, d_model)
     #print(W_all.shape)
     W_I = W_all.T[:, target_features]
@@ -34,6 +41,25 @@ def direction_ablation_helper(model: ReplacementModel, layer_idx: int, target_fe
         val = val.item() if isinstance(val, torch.Tensor) else val
         element = (layer_idx, -1, k, val)
         intervention_list.append(element)
+    return intervention_list"""
+
+    transcoder = model.transcoders[layer_idx]
+    W_all = transcoder.W_dec
+    b_dec = transcoder.b_dec
+    _, activation_cache = model.get_activations(prompt)
+
+    z = activation_cache[layer_idx, -1, :]
+    W_I = W_all.T[:, target_features]
+    W_I_pinv = torch.linalg.pinv(W_I.to(torch.float32)).to(W_all.dtype)
+    h_hat = (z @ W_all) + b_dec
+    proj_coefficients = torch.matmul(h_hat, W_I_pinv.T)
+    current_target_acts = z[target_features]
+    adjusted_activations = current_target_acts - proj_coefficients
+    
+    intervention_list = []
+    for i, feature_idx in enumerate(target_features):
+        val = adjusted_activations[i].item()
+        intervention_list.append((layer_idx, -1, feature_idx, val))
     return intervention_list
     
 def direction_ablation_layer_determine(features: dict[str, list[tuple[Feature, float]]], lang) -> tuple[int, list[int]]:
