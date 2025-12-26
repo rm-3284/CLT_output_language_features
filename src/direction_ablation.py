@@ -150,7 +150,10 @@ def interventions_to_dict(interventions: dict[str, list[tuple[Feature, float]]],
             feature_dict[layer].append(feature)
         except KeyError:
             feature_dict[layer] = [feature]
-    return feature_dict
+    result = dict()
+    for k, v in feature_dict.items():
+        result[k] = torch.tensor(v)
+    return result
 
 def parse_args():
     parser = argparse.ArgumentParser(
