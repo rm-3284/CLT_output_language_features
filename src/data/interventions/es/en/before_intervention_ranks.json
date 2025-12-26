@@ -1,246 +1,246 @@
 {
     "Lo opuesto de \"good\" es \"": {
         "en": 0,
-        "fr": 114,
-        "de": 218,
+        "fr": 122,
+        "de": 205,
         "es": 11,
-        "zh": 231,
-        "ja": 1575,
-        "ko": 4666
+        "zh": 233,
+        "ja": 1603,
+        "ko": 4453
     },
     "Lo opuesto de \"happy\" es \"": {
         "en": 0,
-        "fr": 8,
-        "de": 49,
-        "es": 8,
-        "zh": 1416,
-        "ja": 456,
-        "ko": 898
+        "fr": 7,
+        "de": 46,
+        "es": 7,
+        "zh": 1470,
+        "ja": 467,
+        "ko": 882
     },
     "Lo opuesto de \"big\" es \"": {
         "en": 0,
-        "fr": 19,
-        "de": 34,
+        "fr": 18,
+        "de": 33,
         "es": 3,
-        "zh": 26,
-        "ja": 1161,
-        "ko": 793
+        "zh": 24,
+        "ja": 1096,
+        "ko": 759
     },
     "Lo opuesto de \"hot\" es \"": {
         "en": 0,
         "fr": 16,
-        "de": 45,
+        "de": 47,
         "es": 19,
-        "zh": 126,
-        "ja": 4064,
-        "ko": 6572
+        "zh": 128,
+        "ja": 4097,
+        "ko": 6779
     },
     "Lo opuesto de \"fast\" es \"": {
         "en": 0,
         "fr": 21,
-        "de": 367,
-        "es": 27,
-        "zh": 153,
-        "ja": 1860,
-        "ko": 3252
+        "de": 374,
+        "es": 30,
+        "zh": 154,
+        "ja": 1885,
+        "ko": 3379
     },
     "Lo opuesto de \"light\" es \"": {
         "en": 0,
-        "fr": 216,
-        "de": 1118,
-        "es": 110,
-        "zh": 272,
-        "ja": 1685,
-        "ko": 1801
+        "fr": 210,
+        "de": 1138,
+        "es": 115,
+        "zh": 263,
+        "ja": 1624,
+        "ko": 1853
     },
     "Lo opuesto de \"easy\" es \"": {
         "en": 0,
         "fr": 26,
-        "de": 1470,
+        "de": 1434,
         "es": 8,
         "zh": 293,
-        "ja": 1149,
-        "ko": 5463
+        "ja": 1127,
+        "ko": 5357
     },
     "Lo opuesto de \"new\" es \"": {
         "en": 0,
-        "fr": 46,
-        "de": 385,
-        "es": 124,
-        "zh": 396,
-        "ja": 595,
-        "ko": 9188
+        "fr": 48,
+        "de": 407,
+        "es": 130,
+        "zh": 389,
+        "ja": 593,
+        "ko": 9179
     },
     "Lo opuesto de \"true\" es \"": {
         "en": 0,
         "fr": 21,
         "de": 3,
         "es": 2,
-        "zh": 79,
-        "ja": 31261,
-        "ko": 1682
+        "zh": 82,
+        "ja": 31266,
+        "ko": 1691
     },
     "Lo opuesto de \"alive\" es \"": {
         "en": 0,
-        "fr": 130,
-        "de": 8019,
+        "fr": 122,
+        "de": 7789,
         "es": 27,
-        "zh": 56,
-        "ja": 56,
-        "ko": 301
+        "zh": 54,
+        "ja": 54,
+        "ko": 288
     },
     "Lo opuesto de \"full\" es \"": {
         "en": 0,
-        "fr": 688,
+        "fr": 697,
         "de": 151,
         "es": 12,
-        "zh": 565,
-        "ja": 565,
-        "ko": 680
+        "zh": 575,
+        "ja": 575,
+        "ko": 667
     },
     "Lo opuesto de \"bright\" es \"": {
         "en": 0,
-        "fr": 16,
-        "de": 175,
-        "es": 95,
+        "fr": 18,
+        "de": 178,
+        "es": 97,
         "zh": 47,
-        "ja": 274,
-        "ko": 1298
+        "ja": 253,
+        "ko": 1300
     },
     "Lo opuesto de \"strong\" es \"": {
         "en": 0,
-        "fr": 33,
-        "de": 183,
-        "es": 67,
+        "fr": 37,
+        "de": 188,
+        "es": 58,
         "zh": 16,
-        "ja": 371,
-        "ko": 5820
+        "ja": 386,
+        "ko": 5701
     },
     "Lo opuesto de \"clean\" es \"": {
         "en": 0,
-        "fr": 624,
-        "de": 333,
-        "es": 35,
-        "zh": 126,
-        "ja": 863,
-        "ko": 3313
+        "fr": 630,
+        "de": 336,
+        "es": 34,
+        "zh": 144,
+        "ja": 915,
+        "ko": 3332
     },
     "Lo opuesto de \"open\" es \"": {
         "en": 0,
         "fr": 51,
-        "de": 476,
+        "de": 473,
         "es": 2,
-        "zh": 2320,
+        "zh": 2399,
         "ja": 416,
-        "ko": 826
+        "ko": 830
     },
     "Lo opuesto de \"rich\" es \"": {
         "en": 0,
         "fr": 13,
-        "de": 558,
+        "de": 560,
         "es": 1,
-        "zh": 196,
-        "ja": 155,
-        "ko": 6116
+        "zh": 173,
+        "ja": 157,
+        "ko": 6092
     },
     "Lo opuesto de \"beautiful\" es \"": {
         "en": 0,
-        "fr": 12074,
-        "de": 1875,
-        "es": 11,
-        "zh": 65,
-        "ja": 83,
-        "ko": 19949
+        "fr": 12013,
+        "de": 1927,
+        "es": 12,
+        "zh": 69,
+        "ja": 87,
+        "ko": 20027
     },
     "Lo opuesto de \"long\" es \"": {
         "en": 0,
-        "fr": 213,
+        "fr": 208,
         "de": 17,
-        "es": 4,
-        "zh": 125,
-        "ja": 1826,
-        "ko": 453
+        "es": 5,
+        "zh": 127,
+        "ja": 1827,
+        "ko": 451
     },
     "Lo opuesto de \"wide\" es \"": {
         "en": 0,
-        "fr": 2773,
-        "de": 802,
-        "es": 281,
-        "zh": 58,
-        "ja": 598,
-        "ko": 512
+        "fr": 2736,
+        "de": 795,
+        "es": 292,
+        "zh": 52,
+        "ja": 564,
+        "ko": 529
     },
     "Lo opuesto de \"hard\" es \"": {
         "en": 0,
-        "fr": 4455,
-        "de": 414,
-        "es": 44,
-        "zh": 137,
-        "ja": 2165,
-        "ko": 11122
+        "fr": 4397,
+        "de": 404,
+        "es": 39,
+        "zh": 146,
+        "ja": 2181,
+        "ko": 11183
     },
     "Lo opuesto de \"dry\" es \"": {
         "en": 0,
         "fr": 12,
-        "de": 1540,
+        "de": 1562,
         "es": 2,
-        "zh": 436,
-        "ja": 436,
-        "ko": 4872
+        "zh": 439,
+        "ja": 439,
+        "ko": 4963
     },
     "Lo opuesto de \"loud\" es \"": {
         "en": 0,
-        "fr": 14,
-        "de": 49,
-        "es": 14,
-        "zh": 446,
-        "ja": 1129,
-        "ko": 3524
+        "fr": 12,
+        "de": 50,
+        "es": 12,
+        "zh": 456,
+        "ja": 1119,
+        "ko": 3485
     },
     "Lo opuesto de \"early\" es \"": {
         "en": 0,
-        "fr": 32,
-        "de": 469,
+        "fr": 34,
+        "de": 491,
         "es": 52,
-        "zh": 54,
-        "ja": 1333,
-        "ko": 83
+        "zh": 56,
+        "ja": 1300,
+        "ko": 87
     },
     "Lo opuesto de \"near\" es \"": {
         "en": 0,
-        "fr": 488,
-        "de": 21,
+        "fr": 462,
+        "de": 23,
         "es": 35,
-        "zh": 17,
-        "ja": 1156,
-        "ko": 1360
+        "zh": 16,
+        "ja": 1182,
+        "ko": 1362
     },
     "Lo opuesto de \"deep\" es \"": {
         "en": 0,
-        "fr": 6398,
-        "de": 131,
+        "fr": 6304,
+        "de": 142,
         "es": 2,
         "zh": 12,
         "ja": 12,
-        "ko": 795
+        "ko": 830
     },
     "Lo opuesto de \"bad\" es \"": {
         "en": 0,
-        "fr": 32,
-        "de": 595,
+        "fr": 31,
+        "de": 576,
         "es": 1,
-        "zh": 254,
-        "ja": 1775,
-        "ko": 517
+        "zh": 269,
+        "ja": 1837,
+        "ko": 535
     },
     "Lo opuesto de \"sad\" es \"": {
         "en": 0,
         "fr": 3,
-        "de": 38,
+        "de": 40,
         "es": 1,
-        "zh": 1563,
-        "ja": 2078,
-        "ko": 1768
+        "zh": 1587,
+        "ja": 2059,
+        "ko": 1818
     },
     "Lo opuesto de \"small\" es \"": {
         "en": 0,
@@ -248,26 +248,26 @@
         "de": 22,
         "es": 3,
         "zh": 64,
-        "ja": 587,
-        "ko": 312
+        "ja": 594,
+        "ko": 316
     },
     "Lo opuesto de \"cold\" es \"": {
         "en": 0,
         "fr": 51,
-        "de": 26,
+        "de": 25,
         "es": 2,
         "zh": 33,
-        "ja": 1006,
-        "ko": 1848
+        "ja": 1013,
+        "ko": 1863
     },
     "Lo opuesto de \"slow\" es \"": {
         "en": 0,
         "fr": 10,
-        "de": 460,
+        "de": 454,
         "es": 12,
         "zh": 81,
-        "ja": 114,
-        "ko": 1431
+        "ja": 115,
+        "ko": 1410
     },
     "Lo opuesto de \"heavy\" es \"": {
         "en": 0,
@@ -275,404 +275,404 @@
         "de": 109,
         "es": 32,
         "zh": 28,
-        "ja": 784,
-        "ko": 8245
+        "ja": 780,
+        "ko": 8222
     },
     "Lo opuesto de \"difficult\" es \"": {
         "en": 0,
         "fr": 2,
-        "de": 60,
+        "de": 63,
         "es": 5,
-        "zh": 68,
-        "ja": 307,
-        "ko": 167
+        "zh": 75,
+        "ja": 308,
+        "ko": 166
     },
     "Lo opuesto de \"old\" es \"": {
         "en": 0,
         "fr": 7,
-        "de": 201,
+        "de": 194,
         "es": 3,
-        "zh": 93,
-        "ja": 145,
-        "ko": 207
+        "zh": 95,
+        "ja": 147,
+        "ko": 211
     },
     "Lo opuesto de \"false\" es \"": {
         "en": 0,
-        "fr": 18,
-        "de": 248,
+        "fr": 19,
+        "de": 255,
         "es": 1,
         "zh": 55,
-        "ja": 3561,
-        "ko": 6123
+        "ja": 3425,
+        "ko": 5866
     },
     "Lo opuesto de \"dead\" es \"": {
         "en": 0,
         "fr": 11,
-        "de": 24,
+        "de": 23,
         "es": 3,
         "zh": 48,
-        "ja": 364,
-        "ko": 186
+        "ja": 372,
+        "ko": 169
     },
     "Lo opuesto de \"empty\" es \"": {
         "en": 0,
-        "fr": 27,
-        "de": 33,
+        "fr": 28,
+        "de": 32,
         "es": 11,
-        "zh": 142,
+        "zh": 143,
         "ja": 265,
-        "ko": 3731
+        "ko": 3751
     },
     "Lo opuesto de \"dark\" es \"": {
         "en": 0,
         "fr": 20,
-        "de": 895,
+        "de": 904,
         "es": 3,
-        "zh": 310,
-        "ja": 325,
-        "ko": 151
+        "zh": 309,
+        "ja": 329,
+        "ko": 153
     },
     "Lo opuesto de \"weak\" es \"": {
         "en": 0,
-        "fr": 63,
-        "de": 37,
+        "fr": 64,
+        "de": 38,
         "es": 10,
         "zh": 25,
-        "ja": 147,
+        "ja": 152,
         "ko": 27
     },
     "Lo opuesto de \"dirty\" es \"": {
         "en": 0,
-        "fr": 170,
+        "fr": 161,
         "de": 165,
         "es": 2,
-        "zh": 289,
-        "ja": 1684,
-        "ko": 795
+        "zh": 294,
+        "ja": 1565,
+        "ko": 820
     },
     "Lo opuesto de \"closed\" es \"": {
         "en": 0,
         "fr": 42,
-        "de": 942,
+        "de": 980,
         "es": 12,
-        "zh": 274,
+        "zh": 273,
         "ja": 361,
-        "ko": 1299
+        "ko": 1333
     },
     "Lo opuesto de \"poor\" es \"": {
         "en": 0,
         "fr": 12,
-        "de": 88,
+        "de": 89,
         "es": 18,
-        "zh": 75,
-        "ja": 1219,
-        "ko": 1682
+        "zh": 76,
+        "ja": 1310,
+        "ko": 1659
     },
     "Lo opuesto de \"ugly\" es \"": {
         "en": 0,
         "fr": 7,
-        "de": 1066,
+        "de": 1108,
         "es": 17,
-        "zh": 845,
-        "ja": 647,
-        "ko": 2269
+        "zh": 862,
+        "ja": 627,
+        "ko": 2302
     },
     "Lo opuesto de \"short\" es \"": {
         "en": 0,
         "fr": 0,
-        "de": 305,
+        "de": 314,
         "es": 1,
-        "zh": 22,
-        "ja": 1477,
-        "ko": 1115
+        "zh": 17,
+        "ja": 1503,
+        "ko": 1139
     },
     "Lo opuesto de \"narrow\" es \"": {
         "en": 0,
         "fr": 6,
-        "de": 248,
-        "es": 48,
+        "de": 254,
+        "es": 49,
         "zh": 29,
-        "ja": 280,
-        "ko": 107
+        "ja": 271,
+        "ko": 106
     },
     "Lo opuesto de \"soft\" es \"": {
         "en": 0,
-        "fr": 39,
-        "de": 192,
+        "fr": 41,
+        "de": 190,
         "es": 12,
-        "zh": 205,
-        "ja": 205,
-        "ko": 5523
+        "zh": 204,
+        "ja": 204,
+        "ko": 5547
     },
     "Lo opuesto de \"wet\" es \"": {
         "en": 0,
         "fr": 175,
-        "de": 853,
-        "es": 44,
-        "zh": 678,
-        "ja": 976,
-        "ko": 62461
+        "de": 857,
+        "es": 54,
+        "zh": 679,
+        "ja": 983,
+        "ko": 62066
     },
     "Lo opuesto de \"quiet\" es \"": {
         "en": 0,
-        "fr": 843,
-        "de": 712,
+        "fr": 871,
+        "de": 707,
         "es": 9,
-        "zh": 224,
-        "ja": 547,
-        "ko": 11375
+        "zh": 233,
+        "ja": 578,
+        "ko": 11262
     },
     "Lo opuesto de \"late\" es \"": {
         "en": 0,
-        "fr": 45,
-        "de": 51,
-        "es": 102,
+        "fr": 43,
+        "de": 48,
+        "es": 101,
         "zh": 89,
-        "ja": 5021,
-        "ko": 14401
+        "ja": 5121,
+        "ko": 14200
     },
     "Lo opuesto de \"far\" es \"": {
         "en": 0,
-        "fr": 43,
-        "de": 260,
+        "fr": 44,
+        "de": 255,
         "es": 2,
-        "zh": 201,
-        "ja": 3771,
-        "ko": 30442
+        "zh": 206,
+        "ja": 3699,
+        "ko": 29957
     },
     "Lo opuesto de \"shallow\" es \"": {
         "en": 0,
         "fr": 1,
-        "de": 255,
+        "de": 252,
         "es": 1,
-        "zh": 118,
-        "ja": 1154,
-        "ko": 151
+        "zh": 125,
+        "ja": 1135,
+        "ko": 153
     },
     "Lo opuesto de \"young\" es \"": {
         "en": 0,
-        "fr": 51,
-        "de": 363,
-        "es": 11,
-        "zh": 90,
-        "ja": 90,
-        "ko": 312
+        "fr": 50,
+        "de": 374,
+        "es": 12,
+        "zh": 91,
+        "ja": 91,
+        "ko": 303
     },
     "Lo opuesto de \"kind\" es \"": {
         "en": 2,
-        "fr": 230,
+        "fr": 234,
         "de": 11,
         "es": 47,
-        "zh": 2990,
-        "ja": 4846,
-        "ko": 1734
+        "zh": 2848,
+        "ja": 4758,
+        "ko": 1743
     },
     "Lo opuesto de \"brave\" es \"": {
         "en": 0,
-        "fr": 130,
-        "de": 59,
+        "fr": 131,
+        "de": 61,
         "es": 0,
-        "zh": 347,
-        "ja": 2215,
-        "ko": 880
+        "zh": 357,
+        "ja": 2152,
+        "ko": 878
     },
     "Lo opuesto de \"wise\" es \"": {
         "en": 0,
         "fr": 8,
-        "de": 21,
-        "es": 202,
-        "zh": 403,
-        "ja": 403,
-        "ko": 8807
+        "de": 26,
+        "es": 206,
+        "zh": 391,
+        "ja": 391,
+        "ko": 8938
     },
     "Lo opuesto de \"polite\" es \"": {
         "en": 0,
         "fr": 2,
         "de": 6,
         "es": 7,
-        "zh": 1890,
-        "ja": 282,
-        "ko": 2152
+        "zh": 1940,
+        "ja": 249,
+        "ko": 2202
     },
     "Lo opuesto de \"patient\" es \"": {
         "en": 0,
         "fr": 0,
-        "de": 78,
+        "de": 80,
         "es": 0,
-        "zh": 2215,
-        "ja": 41172,
-        "ko": 31963
+        "zh": 2302,
+        "ja": 40518,
+        "ko": 32078
     },
     "Lo opuesto de \"honest\" es \"": {
         "en": 0,
-        "fr": 18,
-        "de": 83,
-        "es": 36,
-        "zh": 556,
-        "ja": 556,
-        "ko": 744
+        "fr": 17,
+        "de": 87,
+        "es": 35,
+        "zh": 554,
+        "ja": 554,
+        "ko": 785
     },
     "Lo opuesto de \"safe\" es \"": {
         "en": 0,
         "fr": 136,
-        "de": 35,
-        "es": 9,
-        "zh": 221,
-        "ja": 312,
-        "ko": 4226
+        "de": 33,
+        "es": 8,
+        "zh": 225,
+        "ja": 309,
+        "ko": 4032
     },
     "Lo opuesto de \"active\" es \"": {
         "en": 0,
         "fr": 1,
         "de": 1,
         "es": 1,
-        "zh": 3993,
-        "ja": 3993,
-        "ko": 5520
+        "zh": 4032,
+        "ja": 4032,
+        "ko": 5569
     },
     "Lo opuesto de \"straight\" es \"": {
-        "en": 4,
-        "fr": 108,
-        "de": 2741,
+        "en": 3,
+        "fr": 113,
+        "de": 2814,
         "es": 1,
-        "zh": 841,
-        "ja": 5087,
-        "ko": 3657
+        "zh": 812,
+        "ja": 5044,
+        "ko": 3529
     },
     "Lo opuesto de \"whole\" es \"": {
         "en": 0,
         "fr": 36,
-        "de": 195,
-        "es": 32,
-        "zh": 663,
-        "ja": 663,
-        "ko": 1552
+        "de": 193,
+        "es": 33,
+        "zh": 622,
+        "ja": 622,
+        "ko": 1511
     },
     "Lo opuesto de \"calm\" es \"": {
         "en": 2,
         "fr": 2,
-        "de": 159,
-        "es": 32,
-        "zh": 1105,
-        "ja": 645,
-        "ko": 1613
+        "de": 158,
+        "es": 33,
+        "zh": 1097,
+        "ja": 638,
+        "ko": 1619
     },
     "Lo opuesto de \"correct\" es \"": {
         "en": 0,
         "fr": 0,
-        "de": 30,
+        "de": 22,
         "es": 1,
-        "zh": 71,
-        "ja": 1123,
-        "ko": 1836
+        "zh": 79,
+        "ja": 1121,
+        "ko": 1845
     },
     "Lo opuesto de \"complex\" es \"": {
         "en": 0,
         "fr": 0,
-        "de": 46,
+        "de": 42,
         "es": 0,
-        "zh": 172,
-        "ja": 353,
-        "ko": 2606
+        "zh": 164,
+        "ja": 363,
+        "ko": 2522
     },
     "Lo opuesto de \"effective\" es \"": {
         "en": 0,
         "fr": 0,
         "de": 0,
         "es": 0,
-        "zh": 119,
-        "ja": 808,
-        "ko": 3575
+        "zh": 122,
+        "ja": 828,
+        "ko": 3660
     },
     "Lo opuesto de \"famous\" es \"": {
         "en": 1,
-        "fr": 69,
+        "fr": 68,
         "de": 5,
         "es": 20,
-        "zh": 331,
-        "ja": 548,
-        "ko": 1380
+        "zh": 333,
+        "ja": 586,
+        "ko": 1354
     },
     "Lo opuesto de \"generous\" es \"": {
         "en": 0,
-        "fr": 350,
-        "de": 6325,
-        "es": 2139,
+        "fr": 358,
+        "de": 6156,
+        "es": 2124,
         "zh": 51,
-        "ja": 1138,
-        "ko": 25418
+        "ja": 1153,
+        "ko": 25903
     },
     "Lo opuesto de \"content\" es \"": {
-        "en": 2,
-        "fr": 82,
-        "de": 2,
+        "en": 3,
+        "fr": 77,
+        "de": 3,
         "es": 10,
-        "zh": 2865,
-        "ja": 2865,
-        "ko": 4214
+        "zh": 2958,
+        "ja": 2958,
+        "ko": 4009
     },
     "Lo opuesto de \"healthy\" es \"": {
         "en": 0,
-        "fr": 1157,
-        "de": 49,
+        "fr": 1232,
+        "de": 52,
         "es": 6,
-        "zh": 577,
-        "ja": 577,
-        "ko": 8943
+        "zh": 587,
+        "ja": 587,
+        "ko": 9028
     },
     "Lo opuesto de \"high\" es \"": {
         "en": 0,
-        "fr": 166,
-        "de": 589,
-        "es": 12,
+        "fr": 141,
+        "de": 573,
+        "es": 11,
         "zh": 17,
-        "ja": 425,
-        "ko": 368
+        "ja": 431,
+        "ko": 372
     },
     "Lo opuesto de \"important\" es \"": {
         "en": 7,
         "fr": 0,
         "de": 7,
         "es": 7,
-        "zh": 1580,
-        "ja": 3810,
-        "ko": 1771
+        "zh": 1598,
+        "ja": 3594,
+        "ko": 1797
     },
     "Lo opuesto de \"innocent\" es \"": {
         "en": 0,
-        "fr": 739,
-        "de": 933,
+        "fr": 696,
+        "de": 892,
         "es": 2,
-        "zh": 488,
-        "ja": 488,
-        "ko": 16409
+        "zh": 510,
+        "ja": 510,
+        "ko": 15636
     },
     "Lo opuesto de \"known\" es \"": {
         "en": 0,
-        "fr": 107,
+        "fr": 108,
         "de": 2,
-        "es": 955,
-        "zh": 52,
-        "ja": 52,
-        "ko": 952
+        "es": 948,
+        "zh": 53,
+        "ja": 53,
+        "ko": 945
     },
     "Lo opuesto de \"male\" es \"": {
         "en": 0,
         "fr": 75,
-        "de": 197,
+        "de": 202,
         "es": 4,
-        "zh": 99,
-        "ja": 3987,
-        "ko": 844
+        "zh": 100,
+        "ja": 4072,
+        "ko": 829
     },
     "Lo opuesto de \"normal\" es \"": {
         "en": 0,
         "fr": 3,
         "de": 0,
         "es": 3,
-        "zh": 1255,
-        "ja": 1354,
-        "ko": 11796
+        "zh": 1286,
+        "ja": 1426,
+        "ko": 11408
     },
     "Lo opuesto de \"possible\" es \"": {
         "en": 0,
@@ -681,97 +681,97 @@
         "es": 2,
         "zh": 15,
         "ja": 15,
-        "ko": 252
+        "ko": 248
     },
     "Lo opuesto de \"private\" es \"": {
         "en": 0,
         "fr": 0,
-        "de": 66,
-        "es": 14,
-        "zh": 416,
-        "ja": 416,
-        "ko": 130
+        "de": 67,
+        "es": 12,
+        "zh": 413,
+        "ja": 413,
+        "ko": 126
     },
     "Lo opuesto de \"right\" es \"": {
         "en": 1,
-        "fr": 1764,
-        "de": 73,
-        "es": 36,
-        "zh": 577,
-        "ja": 11096,
-        "ko": 18292
+        "fr": 1705,
+        "de": 71,
+        "es": 33,
+        "zh": 600,
+        "ja": 10883,
+        "ko": 18249
     },
     "Lo opuesto de \"simple\" es \"": {
         "en": 2,
         "fr": 2,
-        "de": 967,
+        "de": 980,
         "es": 1,
-        "zh": 128,
-        "ja": 535,
-        "ko": 960
+        "zh": 133,
+        "ja": 513,
+        "ko": 944
     },
     "Lo opuesto de \"sweet\" es \"": {
         "en": 0,
-        "fr": 185,
+        "fr": 183,
         "de": 1,
-        "es": 52,
-        "zh": 839,
-        "ja": 839,
-        "ko": 6612
+        "es": 53,
+        "zh": 812,
+        "ja": 812,
+        "ko": 6395
     },
     "Lo opuesto de \"visible\" es \"": {
         "en": 0,
         "fr": 0,
-        "de": 6689,
+        "de": 6615,
         "es": 0,
-        "zh": 410,
-        "ja": 3889,
-        "ko": 6882
+        "zh": 398,
+        "ja": 3987,
+        "ko": 6698
     },
     "Lo opuesto de \"warm\" es \"": {
         "en": 0,
-        "fr": 16,
-        "de": 15,
+        "fr": 15,
+        "de": 16,
         "es": 11,
-        "zh": 62,
-        "ja": 460,
-        "ko": 9212
+        "zh": 68,
+        "ja": 455,
+        "ko": 8967
     },
     "Lo opuesto de \"smooth\" es \"": {
         "en": 0,
         "fr": 5,
         "de": 6148,
-        "es": 220,
-        "zh": 886,
-        "ja": 886,
-        "ko": 3642
+        "es": 222,
+        "zh": 921,
+        "ja": 921,
+        "ko": 3632
     },
     "Lo opuesto de \"thin\" es \"": {
         "en": 0,
-        "fr": 338,
-        "de": 520,
-        "es": 20,
-        "zh": 138,
-        "ja": 138,
-        "ko": 4932
+        "fr": 320,
+        "de": 508,
+        "es": 23,
+        "zh": 136,
+        "ja": 136,
+        "ko": 4944
     },
     "Lo opuesto de \"tall\" es \"": {
         "en": 0,
-        "fr": 12,
-        "de": 268,
+        "fr": 13,
+        "de": 264,
         "es": 1,
         "zh": 95,
-        "ja": 28798,
-        "ko": 14364
+        "ja": 28928,
+        "ko": 14732
     },
     "Lo opuesto de \"married\" es \"": {
         "en": 0,
-        "fr": 1003,
+        "fr": 967,
         "de": 1,
         "es": 3,
-        "zh": 134,
-        "ja": 347,
-        "ko": 2741
+        "zh": 131,
+        "ja": 336,
+        "ko": 2705
     },
     "Lo opuesto de \"optimistic\" es \"": {
         "en": 0,
@@ -780,115 +780,115 @@
         "es": 0,
         "zh": 78,
         "ja": 78,
-        "ko": 7928
+        "ko": 7918
     },
     "Lo opuesto de \"permanent\" es \"": {
         "en": 0,
         "fr": 5,
         "de": 5,
         "es": 3,
-        "zh": 1091,
-        "ja": 1182,
-        "ko": 8268
+        "zh": 1151,
+        "ja": 1271,
+        "ko": 8553
     },
     "Lo opuesto de \"present\" es \"": {
         "en": 0,
         "fr": 1,
-        "de": 63,
-        "es": 2,
-        "zh": 128,
-        "ja": 2270,
-        "ko": 3011
+        "de": 64,
+        "es": 3,
+        "zh": 120,
+        "ja": 2322,
+        "ko": 3067
     },
     "Lo opuesto de \"public\" es \"": {
         "en": 0,
         "fr": 2,
         "de": 2,
         "es": 1,
-        "zh": 386,
-        "ja": 24039,
-        "ko": 19700
+        "zh": 398,
+        "ja": 23458,
+        "ko": 18942
     },
     "Lo opuesto de \"real\" es \"": {
-        "en": 9,
+        "en": 8,
         "fr": 2,
         "de": 12,
         "es": 2,
-        "zh": 559,
-        "ja": 2179,
-        "ko": 4981
+        "zh": 562,
+        "ja": 2060,
+        "ko": 4986
     },
     "Lo opuesto de \"responsible\" es \"": {
         "en": 0,
         "fr": 0,
         "de": 3,
         "es": 0,
-        "zh": 484,
-        "ja": 195,
-        "ko": 485
+        "zh": 487,
+        "ja": 199,
+        "ko": 488
     },
     "Lo opuesto de \"single\" es \"": {
         "en": 0,
         "fr": 92,
-        "de": 265,
+        "de": 260,
         "es": 35,
-        "zh": 23733,
-        "ja": 1342,
-        "ko": 5883
+        "zh": 22828,
+        "ja": 1322,
+        "ko": 5959
     },
     "Lo opuesto de \"sour\" es \"": {
         "en": 0,
-        "fr": 33,
+        "fr": 38,
         "de": 1,
         "es": 4,
-        "zh": 139,
-        "ja": 677,
-        "ko": 1660
+        "zh": 146,
+        "ja": 667,
+        "ko": 1641
     },
     "Lo opuesto de \"useful\" es \"": {
         "en": 0,
-        "fr": 2,
+        "fr": 1,
         "de": 57,
-        "es": 2,
-        "zh": 502,
-        "ja": 367,
-        "ko": 256
+        "es": 1,
+        "zh": 518,
+        "ja": 361,
+        "ko": 230
     },
     "Lo opuesto de \"vertical\" es \"": {
         "en": 0,
         "fr": 0,
         "de": 0,
         "es": 0,
-        "zh": 98,
-        "ja": 5985,
-        "ko": 5985
+        "zh": 101,
+        "ja": 6007,
+        "ko": 6007
     },
     "Lo opuesto de \"well\" es \"": {
         "en": 2,
         "fr": 7,
-        "de": 979,
+        "de": 1014,
         "es": 7,
-        "zh": 6004,
-        "ja": 6311,
-        "ko": 4232
+        "zh": 5996,
+        "ja": 6139,
+        "ko": 4348
     },
     "Lo opuesto de \"winning\" es \"": {
         "en": 0,
         "fr": 6,
-        "de": 32,
+        "de": 33,
         "es": 6,
-        "zh": 1562,
-        "ja": 4165,
-        "ko": 1961
+        "zh": 1596,
+        "ja": 4117,
+        "ko": 1998
     },
     "Lo opuesto de \"unkind\" es \"": {
         "en": 0,
-        "fr": 44,
-        "de": 56,
-        "es": 158,
-        "zh": 200,
-        "ja": 856,
-        "ko": 886
+        "fr": 47,
+        "de": 61,
+        "es": 163,
+        "zh": 211,
+        "ja": 839,
+        "ko": 900
     },
     "Lo opuesto de \"cowardly\" es \"": {
         "en": 0,
@@ -897,6 +897,6 @@
         "es": 10,
         "zh": 40,
         "ja": 40,
-        "ko": 8086
+        "ko": 7980
     }
 }

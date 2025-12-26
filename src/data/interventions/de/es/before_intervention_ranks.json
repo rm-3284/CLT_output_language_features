@@ -1,840 +1,840 @@
 {
     "Das Gegenteil von \"bueno\" ist \"": {
         "en": 10,
-        "fr": 47,
+        "fr": 45,
         "de": 142,
         "es": 1,
-        "zh": 1963,
-        "ja": 24232,
-        "ko": 16722
+        "zh": 2051,
+        "ja": 24381,
+        "ko": 16367
     },
     "Das Gegenteil von \"feliz\" ist \"": {
         "en": 12,
         "fr": 0,
-        "de": 103,
-        "es": 0,
-        "zh": 2181,
-        "ja": 2881,
-        "ko": 856
+        "de": 105,
+        "es": 1,
+        "zh": 2194,
+        "ja": 2912,
+        "ko": 861
     },
     "Das Gegenteil von \"grande\" ist \"": {
         "en": 6,
         "fr": 1,
         "de": 7,
         "es": 3,
-        "zh": 233,
-        "ja": 2361,
-        "ko": 3759
+        "zh": 232,
+        "ja": 2282,
+        "ko": 3625
     },
     "Das Gegenteil von \"caliente\" ist \"": {
         "en": 5,
         "fr": 4,
-        "de": 219,
+        "de": 221,
         "es": 0,
-        "zh": 706,
-        "ja": 7556,
-        "ko": 2208
+        "zh": 702,
+        "ja": 7758,
+        "ko": 2269
     },
     "Das Gegenteil von \"r\u00e1pido\" ist \"": {
         "en": 33,
         "fr": 4,
-        "de": 175,
+        "de": 176,
         "es": 1,
-        "zh": 949,
-        "ja": 12664,
-        "ko": 12348
+        "zh": 922,
+        "ja": 12372,
+        "ko": 12419
     },
     "Das Gegenteil von \"ligero\" ist \"": {
         "en": 1,
         "fr": 9,
-        "de": 201,
+        "de": 208,
         "es": 0,
-        "zh": 556,
-        "ja": 2635,
-        "ko": 4546
+        "zh": 545,
+        "ja": 2663,
+        "ko": 4449
     },
     "Das Gegenteil von \"f\u00e1cil\" ist \"": {
-        "en": 14,
+        "en": 13,
         "fr": 10,
-        "de": 592,
+        "de": 594,
         "es": 0,
         "zh": 351,
-        "ja": 4086,
-        "ko": 3714
+        "ja": 4101,
+        "ko": 3729
     },
     "Das Gegenteil von \"nuevo\" ist \"": {
         "en": 2,
-        "fr": 34,
-        "de": 178,
+        "fr": 33,
+        "de": 167,
         "es": 1,
-        "zh": 1054,
-        "ja": 2873,
-        "ko": 6348
+        "zh": 1018,
+        "ja": 2774,
+        "ko": 6427
     },
     "Das Gegenteil von \"verdadero\" ist \"": {
-        "en": 5,
+        "en": 4,
         "fr": 11,
         "de": 1,
         "es": 0,
-        "zh": 379,
-        "ja": 4301,
-        "ko": 11523
+        "zh": 365,
+        "ja": 4111,
+        "ko": 11141
     },
     "Das Gegenteil von \"vivo\" ist \"": {
-        "en": 0,
-        "fr": 11,
-        "de": 765,
-        "es": 33,
+        "en": 1,
+        "fr": 10,
+        "de": 736,
+        "es": 31,
         "zh": 125,
         "ja": 125,
-        "ko": 1067
+        "ko": 1051
     },
     "Das Gegenteil von \"lleno\" ist \"": {
         "en": 91,
-        "fr": 243,
+        "fr": 267,
         "de": 93,
         "es": 1,
-        "zh": 7053,
-        "ja": 7053,
-        "ko": 1166
+        "zh": 7246,
+        "ja": 7246,
+        "ko": 1198
     },
     "Das Gegenteil von \"brillante\" ist \"": {
         "en": 14,
         "fr": 16,
         "de": 13,
-        "es": 1036,
-        "zh": 4886,
-        "ja": 5309,
-        "ko": 7764
+        "es": 1099,
+        "zh": 4903,
+        "ja": 5328,
+        "ko": 7800
     },
     "Das Gegenteil von \"fuerte\" ist \"": {
         "en": 14,
         "fr": 24,
         "de": 0,
         "es": 13,
-        "zh": 1652,
+        "zh": 1651,
         "ja": 1589,
-        "ko": 14511
+        "ko": 14760
     },
     "Das Gegenteil von \"limpio\" ist \"": {
-        "en": 47,
-        "fr": 1572,
-        "de": 1328,
+        "en": 51,
+        "fr": 1640,
+        "de": 1326,
         "es": 0,
-        "zh": 1282,
-        "ja": 5321,
-        "ko": 23571
+        "zh": 1316,
+        "ja": 5299,
+        "ko": 23494
     },
     "Das Gegenteil von \"abierto\" ist \"": {
         "en": 4,
-        "fr": 88,
-        "de": 200,
+        "fr": 84,
+        "de": 195,
         "es": 0,
-        "zh": 1513,
-        "ja": 1390,
-        "ko": 1296
+        "zh": 1482,
+        "ja": 1381,
+        "ko": 1241
     },
     "Das Gegenteil von \"rico\" ist \"": {
         "en": 1,
         "fr": 2,
-        "de": 328,
+        "de": 303,
         "es": 0,
-        "zh": 276,
-        "ja": 432,
-        "ko": 8574
+        "zh": 242,
+        "ja": 405,
+        "ko": 8084
     },
     "Das Gegenteil von \"hermoso\" ist \"": {
-        "en": 13,
-        "fr": 24592,
-        "de": 12202,
+        "en": 12,
+        "fr": 24804,
+        "de": 12323,
         "es": 0,
-        "zh": 402,
-        "ja": 339,
-        "ko": 19000
+        "zh": 407,
+        "ja": 307,
+        "ko": 19430
     },
     "Das Gegenteil von \"largo\" ist \"": {
-        "en": 18,
-        "fr": 3328,
-        "de": 387,
-        "es": 25,
-        "zh": 2691,
-        "ja": 28761,
-        "ko": 12999
+        "en": 17,
+        "fr": 3389,
+        "de": 390,
+        "es": 21,
+        "zh": 2575,
+        "ja": 28238,
+        "ko": 13140
     },
     "Das Gegenteil von \"ancho\" ist \"": {
-        "en": 389,
-        "fr": 1899,
-        "de": 236,
+        "en": 398,
+        "fr": 1895,
+        "de": 208,
         "es": 552,
-        "zh": 14020,
-        "ja": 18934,
-        "ko": 12999
+        "zh": 13876,
+        "ja": 18738,
+        "ko": 12868
     },
     "Das Gegenteil von \"duro\" ist \"": {
         "en": 4,
-        "fr": 812,
-        "de": 156,
+        "fr": 821,
+        "de": 158,
         "es": 2,
-        "zh": 2013,
-        "ja": 7903,
-        "ko": 9209
+        "zh": 2024,
+        "ja": 7950,
+        "ko": 8975
     },
     "Das Gegenteil von \"seco\" ist \"": {
         "en": 3,
-        "fr": 332,
-        "de": 3896,
+        "fr": 354,
+        "de": 3918,
         "es": 17,
-        "zh": 4248,
-        "ja": 4248,
-        "ko": 8959
+        "zh": 4278,
+        "ja": 4278,
+        "ko": 9019
     },
     "Das Gegenteil von \"ruidoso\" ist \"": {
         "en": 6,
         "fr": 1,
-        "de": 128,
+        "de": 125,
         "es": 0,
-        "zh": 1082,
-        "ja": 2580,
-        "ko": 6135
+        "zh": 1049,
+        "ja": 2578,
+        "ko": 6318
     },
     "Das Gegenteil von \"temprano\" ist \"": {
         "en": 38,
         "fr": 2,
         "de": 220,
         "es": 0,
-        "zh": 1269,
-        "ja": 10300,
-        "ko": 1473
+        "zh": 1246,
+        "ja": 10054,
+        "ko": 1396
     },
     "Das Gegenteil von \"cerca\" ist \"": {
         "en": 14,
-        "fr": 63,
-        "de": 76,
-        "es": 152,
-        "zh": 280,
-        "ja": 6427,
-        "ko": 43455
+        "fr": 62,
+        "de": 75,
+        "es": 153,
+        "zh": 285,
+        "ja": 6067,
+        "ko": 41516
     },
     "Das Gegenteil von \"profundo\" ist \"": {
         "en": 4,
-        "fr": 715,
-        "de": 41,
+        "fr": 673,
+        "de": 40,
         "es": 1,
-        "zh": 46,
-        "ja": 46,
-        "ko": 1143
+        "zh": 47,
+        "ja": 47,
+        "ko": 1112
     },
     "Das Gegenteil von \"malo\" ist \"": {
-        "en": 49,
+        "en": 50,
         "fr": 4,
-        "de": 598,
+        "de": 576,
         "es": 0,
-        "zh": 1226,
-        "ja": 6175,
-        "ko": 3858
+        "zh": 1237,
+        "ja": 6251,
+        "ko": 3688
     },
     "Das Gegenteil von \"triste\" ist \"": {
         "en": 9,
-        "fr": 67,
+        "fr": 63,
         "de": 0,
-        "es": 141,
-        "zh": 686,
-        "ja": 9263,
-        "ko": 8097
+        "es": 136,
+        "zh": 661,
+        "ja": 9381,
+        "ko": 8346
     },
     "Das Gegenteil von \"peque\u00f1o\" ist \"": {
-        "en": 10,
+        "en": 9,
         "fr": 2,
-        "de": 17,
+        "de": 18,
         "es": 0,
-        "zh": 4370,
-        "ja": 4434,
-        "ko": 2796
+        "zh": 4261,
+        "ja": 4463,
+        "ko": 2818
     },
     "Das Gegenteil von \"fr\u00edo\" ist \"": {
-        "en": 14,
-        "fr": 40,
+        "en": 16,
+        "fr": 44,
         "de": 7,
         "es": 0,
-        "zh": 215,
-        "ja": 3584,
-        "ko": 1530
+        "zh": 224,
+        "ja": 3715,
+        "ko": 1583
     },
     "Das Gegenteil von \"lento\" ist \"": {
-        "en": 36,
+        "en": 39,
         "fr": 0,
-        "de": 902,
+        "de": 924,
         "es": 8,
-        "zh": 4451,
-        "ja": 526,
-        "ko": 2310
+        "zh": 4335,
+        "ja": 535,
+        "ko": 2311
     },
     "Das Gegenteil von \"pesado\" ist \"": {
         "en": 2,
-        "fr": 9,
-        "de": 355,
+        "fr": 11,
+        "de": 354,
         "es": 1,
         "zh": 144,
-        "ja": 3032,
-        "ko": 23521
+        "ja": 3003,
+        "ko": 23724
     },
     "Das Gegenteil von \"dif\u00edcil\" ist \"": {
         "en": 4,
         "fr": 1,
-        "de": 145,
+        "de": 137,
         "es": 0,
-        "zh": 387,
-        "ja": 1045,
-        "ko": 466
+        "zh": 386,
+        "ja": 1016,
+        "ko": 428
     },
     "Das Gegenteil von \"viejo\" ist \"": {
-        "en": 14,
-        "fr": 17,
-        "de": 408,
+        "en": 15,
+        "fr": 18,
+        "de": 417,
         "es": 0,
-        "zh": 2167,
-        "ja": 4481,
-        "ko": 1013
+        "zh": 2196,
+        "ja": 4530,
+        "ko": 1058
     },
     "Das Gegenteil von \"falso\" ist \"": {
         "en": 10,
         "fr": 3,
-        "de": 134,
+        "de": 136,
         "es": 2,
-        "zh": 532,
-        "ja": 11699,
-        "ko": 10515
+        "zh": 543,
+        "ja": 11688,
+        "ko": 10502
     },
     "Das Gegenteil von \"muerto\" ist \"": {
         "en": 4,
         "fr": 1,
         "de": 17,
         "es": 0,
-        "zh": 352,
-        "ja": 1581,
-        "ko": 770
+        "zh": 347,
+        "ja": 1565,
+        "ko": 761
     },
     "Das Gegenteil von \"vac\u00edo\" ist \"": {
         "en": 1,
-        "fr": 33,
-        "de": 32,
+        "fr": 30,
+        "de": 29,
         "es": 0,
-        "zh": 1841,
-        "ja": 3208,
-        "ko": 36762
+        "zh": 1821,
+        "ja": 3401,
+        "ko": 37299
     },
     "Das Gegenteil von \"oscuro\" ist \"": {
-        "en": 19,
-        "fr": 3,
-        "de": 961,
+        "en": 18,
+        "fr": 2,
+        "de": 976,
         "es": 0,
-        "zh": 713,
-        "ja": 608,
-        "ko": 220
+        "zh": 724,
+        "ja": 623,
+        "ko": 218
     },
     "Das Gegenteil von \"d\u00e9bil\" ist \"": {
-        "en": 30,
+        "en": 33,
         "fr": 1,
-        "de": 382,
-        "es": 52,
-        "zh": 774,
-        "ja": 4391,
-        "ko": 594
+        "de": 399,
+        "es": 53,
+        "zh": 804,
+        "ja": 4318,
+        "ko": 613
     },
     "Das Gegenteil von \"sucio\" ist \"": {
-        "en": 10,
-        "fr": 46,
-        "de": 299,
+        "en": 11,
+        "fr": 51,
+        "de": 322,
         "es": 0,
-        "zh": 6814,
-        "ja": 8157,
-        "ko": 1724
+        "zh": 6926,
+        "ja": 8286,
+        "ko": 1743
     },
     "Das Gegenteil von \"cerrado\" ist \"": {
         "en": 18,
         "fr": 15,
-        "de": 1966,
+        "de": 2041,
         "es": 0,
-        "zh": 2538,
-        "ja": 5264,
-        "ko": 1293
+        "zh": 2569,
+        "ja": 5487,
+        "ko": 1260
     },
     "Das Gegenteil von \"pobre\" ist \"": {
         "en": 12,
         "fr": 3,
-        "de": 54,
+        "de": 63,
         "es": 0,
-        "zh": 261,
-        "ja": 2399,
-        "ko": 742
+        "zh": 247,
+        "ja": 2407,
+        "ko": 728
     },
     "Das Gegenteil von \"feo\" ist \"": {
-        "en": 47,
+        "en": 48,
         "fr": 11,
-        "de": 1412,
-        "es": 1,
-        "zh": 4456,
-        "ja": 5796,
-        "ko": 3790
+        "de": 1389,
+        "es": 2,
+        "zh": 4487,
+        "ja": 5832,
+        "ko": 3721
     },
     "Das Gegenteil von \"corto\" ist \"": {
         "en": 1,
         "fr": 1,
-        "de": 212,
+        "de": 196,
         "es": 0,
-        "zh": 131,
-        "ja": 2289,
-        "ko": 1212
+        "zh": 128,
+        "ja": 2360,
+        "ko": 1202
     },
     "Das Gegenteil von \"estrecho\" ist \"": {
-        "en": 70,
-        "fr": 301,
-        "de": 249,
-        "es": 29,
-        "zh": 452,
-        "ja": 2511,
-        "ko": 725
+        "en": 75,
+        "fr": 303,
+        "de": 250,
+        "es": 26,
+        "zh": 451,
+        "ja": 2500,
+        "ko": 719
     },
     "Das Gegenteil von \"suave\" ist \"": {
-        "en": 23,
-        "fr": 242,
-        "de": 88,
-        "es": 52,
-        "zh": 8092,
-        "ja": 8092,
-        "ko": 18425
+        "en": 22,
+        "fr": 238,
+        "de": 85,
+        "es": 51,
+        "zh": 8382,
+        "ja": 8382,
+        "ko": 18663
     },
     "Das Gegenteil von \"mojado\" ist \"": {
-        "en": 12,
+        "en": 11,
         "fr": 4,
-        "de": 82,
+        "de": 86,
         "es": 0,
-        "zh": 1456,
-        "ja": 5634,
-        "ko": 44635
+        "zh": 1425,
+        "ja": 5632,
+        "ko": 43550
     },
     "Das Gegenteil von \"tranquilo\" ist \"": {
-        "en": 666,
-        "fr": 369,
-        "de": 4878,
-        "es": 14,
-        "zh": 8416,
-        "ja": 27786,
-        "ko": 48281
+        "en": 691,
+        "fr": 368,
+        "de": 4972,
+        "es": 15,
+        "zh": 8320,
+        "ja": 28222,
+        "ko": 48336
     },
     "Das Gegenteil von \"tarde\" ist \"": {
-        "en": 40,
-        "fr": 19,
-        "de": 21,
-        "es": 1,
-        "zh": 307,
-        "ja": 24241,
-        "ko": 41088
+        "en": 37,
+        "fr": 21,
+        "de": 20,
+        "es": 0,
+        "zh": 304,
+        "ja": 24664,
+        "ko": 41679
     },
     "Das Gegenteil von \"lejos\" ist \"": {
-        "en": 19,
+        "en": 21,
         "fr": 0,
-        "de": 45,
-        "es": 10,
-        "zh": 918,
-        "ja": 21910,
-        "ko": 65113
+        "de": 41,
+        "es": 14,
+        "zh": 923,
+        "ja": 22317,
+        "ko": 68614
     },
     "Das Gegenteil von \"superficial\" ist \"": {
         "en": 0,
         "fr": 4,
         "de": 3,
         "es": 4,
-        "zh": 976,
-        "ja": 1175,
-        "ko": 719
+        "zh": 944,
+        "ja": 1185,
+        "ko": 730
     },
     "Das Gegenteil von \"joven\" ist \"": {
         "en": 6,
-        "fr": 51,
-        "de": 801,
+        "fr": 57,
+        "de": 808,
         "es": 0,
-        "zh": 1297,
-        "ja": 1297,
-        "ko": 1224
+        "zh": 1315,
+        "ja": 1315,
+        "ko": 1244
     },
     "Das Gegenteil von \"amable\" ist \"": {
-        "en": 191,
-        "fr": 682,
-        "de": 22,
+        "en": 192,
+        "fr": 688,
+        "de": 23,
         "es": 9,
-        "zh": 2940,
-        "ja": 2940,
-        "ko": 2341
+        "zh": 2945,
+        "ja": 2945,
+        "ko": 2288
     },
     "Das Gegenteil von \"valiente\" ist \"": {
         "en": 0,
-        "fr": 168,
+        "fr": 156,
         "de": 5,
         "es": 0,
-        "zh": 821,
-        "ja": 1059,
+        "zh": 817,
+        "ja": 1039,
         "ko": 312
     },
     "Das Gegenteil von \"sabio\" ist \"": {
         "en": 14,
-        "fr": 12,
+        "fr": 13,
         "de": 24,
-        "es": 26,
-        "zh": 762,
-        "ja": 762,
-        "ko": 8714
+        "es": 25,
+        "zh": 741,
+        "ja": 741,
+        "ko": 8886
     },
     "Das Gegenteil von \"educado\" ist \"": {
         "en": 17,
         "fr": 17,
         "de": 22,
         "es": 3,
-        "zh": 1835,
-        "ja": 1339,
-        "ko": 3174
+        "zh": 1879,
+        "ja": 1273,
+        "ko": 3157
     },
     "Das Gegenteil von \"paciente\" ist \"": {
         "en": 3,
         "fr": 3,
-        "de": 73,
+        "de": 70,
         "es": 3,
-        "zh": 2327,
-        "ja": 60478,
-        "ko": 31213
+        "zh": 2310,
+        "ja": 61055,
+        "ko": 31952
     },
     "Das Gegenteil von \"honesto\" ist \"": {
         "en": 5,
         "fr": 12,
-        "de": 37,
+        "de": 36,
         "es": 57,
-        "zh": 2282,
-        "ja": 2282,
+        "zh": 2357,
+        "ja": 2357,
         "ko": 3917
     },
     "Das Gegenteil von \"seguro\" ist \"": {
-        "en": 6,
+        "en": 7,
         "fr": 142,
-        "de": 26,
+        "de": 28,
         "es": 1,
-        "zh": 212,
-        "ja": 923,
-        "ko": 4520
+        "zh": 215,
+        "ja": 929,
+        "ko": 4532
     },
     "Das Gegenteil von \"activo\" ist \"": {
         "en": 3,
         "fr": 0,
         "de": 0,
         "es": 0,
-        "zh": 19344,
-        "ja": 19344,
-        "ko": 22839
+        "zh": 19621,
+        "ja": 19621,
+        "ko": 22684
     },
     "Das Gegenteil von \"recto\" ist \"": {
-        "en": 4349,
-        "fr": 192,
-        "de": 4152,
-        "es": 1766,
-        "zh": 73557,
-        "ja": 58488,
-        "ko": 87483
+        "en": 4236,
+        "fr": 180,
+        "de": 4220,
+        "es": 1787,
+        "zh": 72840,
+        "ja": 57869,
+        "ko": 87486
     },
     "Das Gegenteil von \"entero\" ist \"": {
-        "en": 214,
-        "fr": 424,
-        "de": 700,
-        "es": 27,
-        "zh": 10245,
-        "ja": 5200,
-        "ko": 9359
+        "en": 229,
+        "fr": 431,
+        "de": 699,
+        "es": 28,
+        "zh": 10286,
+        "ja": 5083,
+        "ko": 9403
     },
     "Das Gegenteil von \"calmado\" ist \"": {
         "en": 1,
         "fr": 1,
-        "de": 295,
+        "de": 282,
         "es": 0,
         "zh": 753,
-        "ja": 2509,
-        "ko": 8131
+        "ja": 2398,
+        "ko": 8053
     },
     "Das Gegenteil von \"correcto\" ist \"": {
         "en": 14,
-        "fr": 833,
+        "fr": 818,
         "de": 16,
         "es": 0,
-        "zh": 3183,
-        "ja": 1615,
-        "ko": 4649
+        "zh": 3189,
+        "ja": 1600,
+        "ko": 4598
     },
     "Das Gegenteil von \"complejo\" ist \"": {
         "en": 0,
         "fr": 0,
-        "de": 30,
+        "de": 29,
         "es": 0,
-        "zh": 191,
-        "ja": 471,
-        "ko": 6461
+        "zh": 189,
+        "ja": 461,
+        "ko": 6485
     },
     "Das Gegenteil von \"efectivo\" ist \"": {
         "en": 2,
         "fr": 2,
         "de": 2,
         "es": 2,
-        "zh": 210,
-        "ja": 936,
-        "ko": 3839
+        "zh": 223,
+        "ja": 930,
+        "ko": 3688
     },
     "Das Gegenteil von \"famoso\" ist \"": {
         "en": 10,
-        "fr": 29,
+        "fr": 33,
         "de": 31,
         "es": 2,
-        "zh": 1219,
-        "ja": 5868,
-        "ko": 4699
+        "zh": 1205,
+        "ja": 5783,
+        "ko": 4762
     },
     "Das Gegenteil von \"generoso\" ist \"": {
-        "en": 18,
-        "fr": 136,
-        "de": 146,
-        "es": 1479,
-        "zh": 477,
-        "ja": 1650,
-        "ko": 43004
+        "en": 13,
+        "fr": 128,
+        "de": 148,
+        "es": 1429,
+        "zh": 492,
+        "ja": 1597,
+        "ko": 42946
     },
     "Das Gegenteil von \"contento\" ist \"": {
         "en": 12,
         "fr": 3,
         "de": 12,
         "es": 2,
-        "zh": 1104,
-        "ja": 1104,
+        "zh": 1110,
+        "ja": 1110,
         "ko": 1413
     },
     "Das Gegenteil von \"saludable\" ist \"": {
         "en": 9,
-        "fr": 257,
+        "fr": 260,
         "de": 18,
         "es": 5,
-        "zh": 1077,
-        "ja": 1077,
-        "ko": 3296
+        "zh": 1086,
+        "ja": 1086,
+        "ko": 3333
     },
     "Das Gegenteil von \"alto\" ist \"": {
-        "en": 2246,
-        "fr": 1243,
-        "de": 960,
+        "en": 2240,
+        "fr": 1315,
+        "de": 986,
         "es": 2,
-        "zh": 27470,
-        "ja": 58506,
-        "ko": 32342
+        "zh": 26803,
+        "ja": 58938,
+        "ko": 32581
     },
     "Das Gegenteil von \"importante\" ist \"": {
         "en": 24,
         "fr": 1,
         "de": 24,
-        "es": 59,
-        "zh": 1124,
-        "ja": 2926,
-        "ko": 2025
+        "es": 56,
+        "zh": 1175,
+        "ja": 2894,
+        "ko": 1987
     },
     "Das Gegenteil von \"inocente\" ist \"": {
         "en": 2,
-        "fr": 2439,
-        "de": 4,
-        "es": 79,
-        "zh": 7561,
-        "ja": 7561,
-        "ko": 5401
+        "fr": 2302,
+        "de": 8,
+        "es": 70,
+        "zh": 7581,
+        "ja": 7581,
+        "ko": 5085
     },
     "Das Gegenteil von \"conocido\" ist \"": {
-        "en": 11,
-        "fr": 12,
-        "de": 13,
+        "en": 12,
+        "fr": 13,
+        "de": 15,
         "es": 1,
-        "zh": 3673,
-        "ja": 3673,
-        "ko": 1024
+        "zh": 3698,
+        "ja": 3698,
+        "ko": 1003
     },
     "Das Gegenteil von \"masculino\" ist \"": {
-        "en": 8,
+        "en": 10,
         "fr": 6,
         "de": 638,
         "es": 2,
-        "zh": 247,
-        "ja": 4106,
-        "ko": 1543
+        "zh": 246,
+        "ja": 4127,
+        "ko": 1530
     },
     "Das Gegenteil von \"normal\" ist \"": {
         "en": 1,
-        "fr": 5,
+        "fr": 4,
         "de": 1,
-        "es": 5,
-        "zh": 299,
-        "ja": 458,
-        "ko": 3148
+        "es": 4,
+        "zh": 292,
+        "ja": 481,
+        "ko": 3158
     },
     "Das Gegenteil von \"posible\" ist \"": {
         "en": 0,
         "fr": 0,
-        "de": 43,
+        "de": 38,
         "es": 1,
-        "zh": 72,
-        "ja": 72,
-        "ko": 378
+        "zh": 73,
+        "ja": 73,
+        "ko": 386
     },
     "Das Gegenteil von \"privado\" ist \"": {
         "en": 1,
         "fr": 1,
         "de": 17,
         "es": 2,
-        "zh": 2247,
-        "ja": 2247,
-        "ko": 39
+        "zh": 2239,
+        "ja": 2239,
+        "ko": 41
     },
     "Das Gegenteil von \"sencillo\" ist \"": {
         "en": 5,
         "fr": 5,
-        "de": 964,
+        "de": 961,
         "es": 3,
         "zh": 278,
-        "ja": 984,
-        "ko": 3941
+        "ja": 942,
+        "ko": 3948
     },
     "Das Gegenteil von \"dulce\" ist \"": {
-        "en": 13,
-        "fr": 12,
-        "de": 2,
-        "es": 1,
-        "zh": 245,
-        "ja": 245,
-        "ko": 3410
+        "en": 11,
+        "fr": 14,
+        "de": 1,
+        "es": 2,
+        "zh": 243,
+        "ja": 243,
+        "ko": 3512
     },
     "Das Gegenteil von \"visible\" ist \"": {
         "en": 0,
         "fr": 0,
-        "de": 78,
+        "de": 76,
         "es": 0,
-        "zh": 54,
-        "ja": 1283,
-        "ko": 3321
+        "zh": 52,
+        "ja": 1261,
+        "ko": 3391
     },
     "Das Gegenteil von \"c\u00e1lido\" ist \"": {
-        "en": 11,
+        "en": 9,
         "fr": 2,
-        "de": 127,
+        "de": 119,
         "es": 0,
-        "zh": 722,
-        "ja": 949,
-        "ko": 15986
+        "zh": 696,
+        "ja": 940,
+        "ko": 15873
     },
     "Das Gegenteil von \"liso\" ist \"": {
-        "en": 13,
+        "en": 12,
         "fr": 1,
-        "de": 1375,
-        "es": 221,
-        "zh": 2754,
-        "ja": 2754,
-        "ko": 12306
+        "de": 1428,
+        "es": 210,
+        "zh": 2842,
+        "ja": 2842,
+        "ko": 12728
     },
     "Das Gegenteil von \"delgado\" ist \"": {
-        "en": 17,
-        "fr": 479,
-        "de": 2483,
-        "es": 40,
-        "zh": 9249,
-        "ja": 9249,
-        "ko": 26806
+        "en": 19,
+        "fr": 466,
+        "de": 2544,
+        "es": 49,
+        "zh": 9440,
+        "ja": 9440,
+        "ko": 26748
     },
     "Das Gegenteil von \"casado\" ist \"": {
-        "en": 5,
-        "fr": 880,
-        "de": 5,
+        "en": 6,
+        "fr": 903,
+        "de": 6,
         "es": 0,
-        "zh": 425,
-        "ja": 2674,
-        "ko": 4127
+        "zh": 417,
+        "ja": 2671,
+        "ko": 3991
     },
     "Das Gegenteil von \"optimista\" ist \"": {
         "en": 0,
         "fr": 0,
         "de": 0,
         "es": 0,
-        "zh": 331,
-        "ja": 331,
-        "ko": 4188
+        "zh": 339,
+        "ja": 339,
+        "ko": 4111
     },
     "Das Gegenteil von \"permanente\" ist \"": {
-        "en": 46,
-        "fr": 1,
-        "de": 1,
-        "es": 53,
-        "zh": 788,
-        "ja": 3567,
-        "ko": 31923
+        "en": 50,
+        "fr": 0,
+        "de": 0,
+        "es": 56,
+        "zh": 795,
+        "ja": 3575,
+        "ko": 31996
     },
     "Das Gegenteil von \"presente\" ist \"": {
         "en": 33,
         "fr": 0,
-        "de": 29,
+        "de": 30,
         "es": 2,
-        "zh": 632,
-        "ja": 2463,
-        "ko": 921
+        "zh": 609,
+        "ja": 2503,
+        "ko": 936
     },
     "Das Gegenteil von \"p\u00fablico\" ist \"": {
         "en": 3,
         "fr": 1,
         "de": 1,
         "es": 0,
-        "zh": 2692,
-        "ja": 27990,
-        "ko": 17764
+        "zh": 2702,
+        "ja": 28655,
+        "ko": 18539
     },
     "Das Gegenteil von \"real\" ist \"": {
         "en": 1,
         "fr": 19,
-        "de": 7,
+        "de": 6,
         "es": 19,
-        "zh": 104,
-        "ja": 882,
-        "ko": 1072
+        "zh": 102,
+        "ja": 854,
+        "ko": 1044
     },
     "Das Gegenteil von \"responsable\" ist \"": {
         "en": 0,
         "fr": 0,
         "de": 3,
         "es": 0,
-        "zh": 3488,
-        "ja": 294,
-        "ko": 767
+        "zh": 3435,
+        "ja": 300,
+        "ko": 775
     },
     "Das Gegenteil von \"soltero\" ist \"": {
-        "en": 32,
+        "en": 30,
         "fr": 29,
-        "de": 147,
+        "de": 145,
         "es": 0,
-        "zh": 4173,
-        "ja": 1946,
-        "ko": 3814
+        "zh": 4342,
+        "ja": 1971,
+        "ko": 3873
     },
     "Das Gegenteil von \"agrio\" ist \"": {
-        "en": 174,
-        "fr": 154,
+        "en": 171,
+        "fr": 151,
         "de": 26,
         "es": 77,
-        "zh": 10456,
-        "ja": 35547,
-        "ko": 24884
+        "zh": 10325,
+        "ja": 36609,
+        "ko": 24671
     },
     "Das Gegenteil von \"\u00fatil\" ist \"": {
-        "en": 2,
+        "en": 1,
         "fr": 0,
-        "de": 70,
+        "de": 74,
         "es": 0,
-        "zh": 1025,
-        "ja": 2447,
-        "ko": 3214
+        "zh": 987,
+        "ja": 2454,
+        "ko": 3246
     },
     "Das Gegenteil von \"vertical\" ist \"": {
         "en": 0,
@@ -842,43 +842,43 @@
         "de": 0,
         "es": 0,
         "zh": 23,
-        "ja": 7501,
-        "ko": 7501
+        "ja": 7439,
+        "ko": 7439
     },
     "Das Gegenteil von \"bien\" ist \"": {
-        "en": 140,
+        "en": 143,
         "fr": 0,
-        "de": 110,
+        "de": 114,
         "es": 0,
-        "zh": 6934,
-        "ja": 13304,
-        "ko": 6476
+        "zh": 6982,
+        "ja": 13560,
+        "ko": 6549
     },
     "Das Gegenteil von \"ganador\" ist \"": {
-        "en": 852,
+        "en": 856,
         "fr": 0,
         "de": 12,
         "es": 0,
-        "zh": 12500,
-        "ja": 2038,
-        "ko": 355
+        "zh": 12479,
+        "ja": 2029,
+        "ko": 333
     },
     "Das Gegenteil von \"desagradable\" ist \"": {
-        "en": 1433,
+        "en": 1472,
         "fr": 38,
-        "de": 988,
-        "es": 16,
-        "zh": 3284,
-        "ja": 17088,
-        "ko": 11907
+        "de": 997,
+        "es": 20,
+        "zh": 3145,
+        "ja": 17010,
+        "ko": 12025
     },
     "Das Gegenteil von \"cobarde\" ist \"": {
         "en": 4,
         "fr": 3,
         "de": 1,
-        "es": 27,
-        "zh": 774,
-        "ja": 774,
-        "ko": 14807
+        "es": 28,
+        "zh": 765,
+        "ja": 765,
+        "ko": 15074
     }
 }
