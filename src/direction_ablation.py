@@ -1,9 +1,35 @@
 import transformers.utils.generic
-def no_op_decorator(*args, **kwargs): 
-    def internal_wrapper(func): 
-        return func 
+import transformers.models.gemma2.modeling_gemma2
+import torch
+
+# 1. FIX FOR "check_model_inputs" CRASH
+#    This allows nnsight proxies to pass through without signature checks
+def no_op_decorator(*args, **kwargs):
+    def internal_wrapper(func):
+        return func
     return internal_wrapper
 transformers.utils.generic.check_model_inputs = no_op_decorator
+
+# 2. FIX FOR "RoPE" DIMENSION MISMATCH (8 vs 256)
+#    This forces the correct shape broadcasting for Gemma 2 attention
+def fixed_apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
+    # Ensure cos/sin have the correct dimensions to broadcast over heads
+    if cos.dim() == 2:
+        cos = cos.unsqueeze(0)
+    if sin.dim() == 2:
+        sin = sin.unsqueeze(0)
+        
+    # Unsqueeze the head dimension (dim 1)
+    cos = cos.unsqueeze(unsqueeze_dim)
+    sin = sin.unsqueeze(unsqueeze_dim)
+
+    # Standard RoPE application using the fixed shapes
+    q_embed = (q * cos) + (transformers.models.gemma2.modeling_gemma2.rotate_half(q) * sin)
+    k_embed = (k * cos) + (transformers.models.gemma2.modeling_gemma2.rotate_half(k) * sin)
+    return q_embed, k_embed
+
+# Apply the patch to the library
+transformers.models.gemma2.modeling_gemma2.apply_rotary_pos_emb = fixed_apply_rotary_pos_emb
 
 import argparse
 import json
