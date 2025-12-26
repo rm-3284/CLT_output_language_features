@@ -72,7 +72,7 @@ def project_orthogonally(residual_stream, directions):
     
     # Tikhonov Regularization
     try:
-        G_inv = torch.linalg.inv(G + 1e-6 * torch.eye(G.shape, device=G.device))
+        G_inv = torch.linalg.inv(G + 1e-6 * torch.eye(G.shape[0], device=G.device))
     except RuntimeError:
         G_inv = torch.linalg.pinv(G)
         
