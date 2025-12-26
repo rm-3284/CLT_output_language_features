@@ -146,8 +146,10 @@ def interventions_to_dict(interventions: dict[str, list[tuple[Feature, float]]],
     for f, _ in interventions[lang]:
         layer = f.layer
         feature = f.feature_idx
-        cur = feature_dict.get(layer, list())
-        feature_dict[layer] = cur.append(feature)
+        try:
+            feature_dict[layer].append(feature)
+        except KeyError:
+            feature_dict[layer] = [feature]
     return feature_dict
 
 def parse_args():
