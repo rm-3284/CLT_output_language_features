@@ -1,6 +1,8 @@
 import transformers.utils.generic
-def no_op_decorator(func):
-    return func
+def no_op_decorator(*args, **kwargs): 
+    def internal_wrapper(func): 
+        return func 
+    return internal_wrapper
 transformers.utils.generic.check_model_inputs = no_op_decorator
 
 import argparse
