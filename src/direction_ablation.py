@@ -186,7 +186,7 @@ if __name__ == "__main__":
     # load the model
     model_name = 'google/gemma-2-2b'
     transcoder_name = "gemma"
-    model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16)
+    model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16, attn_implementation="sdpa")
 
     # relevant directories
     current_file_path = __file__
