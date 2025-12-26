@@ -1,3 +1,8 @@
+import transformers.utils.generic
+def no_op_decorator(func):
+    return func
+transformers.utils.generic.check_model_inputs = no_op_decorator
+
 import argparse
 import json
 import nnsight
