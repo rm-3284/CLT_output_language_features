@@ -44,12 +44,13 @@ def direction_ablation_helper(model: ReplacementModel, layer_idx: int, target_fe
     return intervention_list"""
 
     transcoder = model.transcoders[layer_idx]
-    W_all = transcoder.W_dec
-    b_dec = transcoder.b_dec
-    _, activation_cache = model.get_activations(prompt)
+    W_all = transcoder.W_dec # (n_features, d_model)
+    b_dec = transcoder.b_dec # (d_model)
+    _, activation_cache = model.get_activations(prompt) # (layer, pos, n_features)
 
-    z = activation_cache[layer_idx, -1, :]
-    W_I = W_all.T[:, target_features]
+    z = activation_cache[layer_idx, -1, :] # (n_features)
+    W_I = W_all.T[:, target_features] # (d_model, k)
+    # (W_I^T W_I)^{-1} W_I^T
     W_I_pinv = torch.linalg.pinv(W_I.to(torch.float32)).to(W_all.dtype)
     h_hat = (z @ W_all) + b_dec
     proj_coefficients = torch.matmul(h_hat, W_I_pinv.T)
@@ -323,6 +324,8 @@ if __name__ == "__main__":
     model_name = 'google/gemma-2-2b'
     transcoder_name = "gemma"
     model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16)
+
+    direction_ablation_helper(model, 25, [452, 24522], "Hello world.")
 
     # relevant directories
     current_file_path = __file__
