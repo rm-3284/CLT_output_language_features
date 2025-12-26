@@ -79,6 +79,7 @@ def project_orthogonally(residual_stream, directions):
     # alpha = (D^T D)^-1 D^T x
     # x:, D^T: -> x @ D^T :
     # projections = (x @ D^T) @ G_inv
+    directions = directions.to(dtype=residual_stream.dtype)
     inner_products = torch.matmul(residual_stream, directions.T)
     coefficients = torch.matmul(inner_products, G_inv)
     
