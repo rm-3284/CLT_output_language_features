@@ -144,7 +144,7 @@ def run_ablation_experiment(model_name, prompt, directions_map, device="cuda"):
                 
                 ablated_states = project_orthogonally(hidden_states, dirs)
                 
-                layer.output = ablated_states
+                layer.output[0] = ablated_states
                 
                 # log for debug
                 print(f"Layer {i}: Ablated {dirs.shape} directions.")
