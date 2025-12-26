@@ -141,7 +141,7 @@ def perform_intervention(
     return result_logits, result_output
         
 
-def interventions_to_dict(interventions: dict[str, list[tuple[Feature, float]]], lang: str) -> dict[int, list[int]]:
+def interventions_to_dict(interventions: dict[str, list[tuple[Feature, float]]], lang: str, model) -> dict[int, list[int]]:
     feature_dict = dict()
     for f, _ in interventions[lang]:
         layer = f.layer
@@ -150,10 +150,8 @@ def interventions_to_dict(interventions: dict[str, list[tuple[Feature, float]]],
             feature_dict[layer].append(feature)
         except KeyError:
             feature_dict[layer] = [feature]
-    result = dict()
-    for k, v in feature_dict.items():
-        result[k] = torch.tensor(v)
-    return result
+    
+    return extract_directions(model, feature_dict)
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -210,9 +208,9 @@ if __name__ == "__main__":
     freq_ablations = dict()
     freq_amplifications = dict()
     for lang in langs:
-        desc_ablations[lang] = interventions_to_dict(desc_interventions, lang)
-        val_ablations[lang] = interventions_to_dict(val_interventions, lang)
-        freq_ablations[lang] = interventions_to_dict(freq_interventions, lang)
+        desc_ablations[lang] = interventions_to_dict(desc_interventions, lang, model)
+        val_ablations[lang] = interventions_to_dict(val_interventions, lang, model)
+        freq_ablations[lang] = interventions_to_dict(freq_interventions, lang, model)
 
     # ablation + amplification experiments
     output_dir = os.path.join(data_directory, "interventions")
