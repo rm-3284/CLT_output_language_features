@@ -106,7 +106,6 @@ def run_ablation_experiment(model_name, prompt, directions_map, device="cuda"):
                 
                 # access to the residual stream
                 # layer.output is usually a tuple (hidden_states, cache, attentions...)
-                print(layer.outputs)
                 hidden_states = layer.output[0]
                 
                 ablated_states = project_orthogonally(hidden_states, dirs)
