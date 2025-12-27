@@ -133,14 +133,13 @@ def project_orthogonally(residual_stream, directions):
     
     return residual_stream - removal_component
 
-def run_ablation_experiment(model_name, prompt, directions_map, device="cuda"):
+def run_ablation_experiment(model, prompt, directions_map):
     """
     Args:
-        model_name: HuggingFace model id (ex: "gpt2", "meta-llama/Llama-3.1-8B")
+        model: model from nnsight
         prompt: input prompt
         directions_map: {layer_idx: tensor}
     """
-    model = nnsight.LanguageModel(model_name, device_map=device)
     
     target_layers = set(directions_map.keys())
     
@@ -164,7 +163,8 @@ def run_ablation_experiment(model_name, prompt, directions_map, device="cuda"):
                 
                 ablated_states = project_orthogonally(hidden_states, dirs)
                 
-                layer.output[0] = ablated_states
+                layer_output = (ablated_states, ) + layer.output[1:]
+                layer.output = layer_output
                 
                 # log for debug
                 print(f"Layer {i}: Ablated {dirs.shape} directions.")
@@ -175,7 +175,7 @@ def run_ablation_experiment(model_name, prompt, directions_map, device="cuda"):
 
 def perform_intervention(
     prompt: str, model: ReplacementModel, logits: torch.Tensor,
-    adj_lang: str, ans, interventions, langs, model_name, device
+    adj_lang: str, ans, interventions, langs, nnsight_model
 ):
     base = get_best_base(logits, ans[adj_lang], model)
 
@@ -183,9 +183,10 @@ def perform_intervention(
     result_logits = dict()
 
     for intervention_lang in langs:
-        ablation_logits = run_ablation_experiment(model_name, prompt, interventions[intervention_lang], device)
+        ablation_logits = run_ablation_experiment(nnsight_model, prompt, interventions[intervention_lang])
         outputs = get_top_outputs(ablation_logits, model)
         result_output[intervention_lang] = outputs
+        result_logits[intervention_lang] = dict()
         for measure_lang in langs:
             target = get_best_base(ablation_logits, ans[measure_lang], model)
             o_diff, n_diff, _ = logit_diff_single(logits, ablation_logits, target, base, model)
@@ -233,6 +234,8 @@ if __name__ == "__main__":
     model_name = 'google/gemma-2-2b'
     transcoder_name = "gemma"
     model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16, attn_implementation="sdpa")
+
+    nnsight_model = nnsight.LanguageModel(model_name, device_map=device)
 
     # relevant directories
     current_file_path = __file__
@@ -302,7 +305,7 @@ if __name__ == "__main__":
                 
                 ( 
                  ablations_dict, ablations_outputs, 
-                 ) = perform_intervention(prompt, model, logits, adj_lang, ans, desc_ablations, langs, model_name, device)
+                 ) = perform_intervention(prompt, model, logits, adj_lang, ans, desc_ablations, langs, nnsight_model)
                 
                 
                 desc_based['outputs'][prompt] = ablations_outputs
@@ -311,7 +314,7 @@ if __name__ == "__main__":
                 
                 (
                  ablations_dict, ablations_outputs, 
-                 ) = perform_intervention(prompt, model, logits, adj_lang, ans, val_ablations, langs, model_name, device)
+                 ) = perform_intervention(prompt, model, logits, adj_lang, ans, val_ablations, langs, nnsight_model)
                 
                 val_based['outputs'][prompt] = ablations_outputs
                 val_based['logits_and_ranks'][prompt] = ablations_dict
@@ -319,7 +322,7 @@ if __name__ == "__main__":
                 
                 (
                  ablations_dict, ablations_outputs, 
-                 ) = perform_intervention(prompt, model, logits, adj_lang, ans, freq_ablations, langs, model_name, device)
+                 ) = perform_intervention(prompt, model, logits, adj_lang, ans, freq_ablations, langs, nnsight_model)
                 
                 freq_based['direction_ablation']['outputs'][prompt] = ablations_outputs
                 freq_based['direction_ablation']['logits_and_ranks'][prompt] = ablations_dict
