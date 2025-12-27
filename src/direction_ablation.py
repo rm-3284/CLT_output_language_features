@@ -220,7 +220,7 @@ def interventions_to_dict_everything_ablation(interventions: dict[str, list[tupl
                 feature_dict[layer].append(feature)
             except KeyError:
                 feature_dict[layer] = [feature]
-    return extract_directions(mode, feature_dict)
+    return extract_directions(model, feature_dict)
 
 def parse_args():
     parser = argparse.ArgumentParser(
