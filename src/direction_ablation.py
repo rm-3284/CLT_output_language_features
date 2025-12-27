@@ -331,16 +331,16 @@ if __name__ == "__main__":
             for key, val in desc_based.items():
                 file_name = f'description_based_direction_ablation_across_layers_{key}.json'
                 with open(os.path.join(adj_lang_out_dir, file_name), 'w') as f:
-                    json.dump(val2, f, indent=4)
+                    json.dump(val, f, indent=4)
 
             for key, val in val_based.items():
                 file_name = f'value_based_direction_ablation_across_layers_{key}.json'
                 with open(os.path.join(adj_lang_out_dir, file_name), 'w') as f:
-                    json.dump(val2, f, indent=4)
+                    json.dump(val, f, indent=4)
 
             for key, val in freq_based.items():
                 file_name = f'frequency_based_direction_ablation_across_layers_{key}.json'
                 with open(os.path.join(adj_lang_out_dir, file_name), 'w') as f:
-                    json.dump(val2, f, indent=4)
+                    json.dump(val, f, indent=4)
 
 
