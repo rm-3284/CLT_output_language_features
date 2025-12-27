@@ -1,35 +1,55 @@
-import transformers.utils.generic
-import transformers.models.gemma2.modeling_gemma2
+# ==============================================================================
+# ROBUST PATCH: Fixes Gemma 2 issues regardless of import order
+# ==============================================================================
 import torch
+import transformers.models.gemma2.modeling_gemma2
 
-# 1. FIX FOR "check_model_inputs" CRASH
-#    This allows nnsight proxies to pass through without signature checks
-def no_op_decorator(*args, **kwargs):
-    def internal_wrapper(func):
-        return func
-    return internal_wrapper
-transformers.utils.generic.check_model_inputs = no_op_decorator
+# 1. FIX THE "check_model_inputs" CRASH
+#    Instead of patching the decorator, we unwrap the already-decorated method.
+#    This removes the strict check from the class itself.
+try:
+    model_class = transformers.models.gemma2.modeling_gemma2.Gemma2Model
+    # Check if the forward method is wrapped (decorated)
+    if hasattr(model_class.forward, "__wrapped__"):
+        print(" [Patch] Removing strict signature check from Gemma2Model...")
+        # Restore the original, unchecked forward method
+        model_class.forward = model_class.forward.__wrapped__
+except Exception as e:
+    print(f" [Patch Warning] Could not unwrap Gemma2Model: {e}")
 
-# 2. FIX FOR "RoPE" DIMENSION MISMATCH (8 vs 256)
-#    This forces the correct shape broadcasting for Gemma 2 attention
+# 2. FIX THE "RoPE" SHAPE MISMATCH (8 vs 256)
+#    This replaces the rotary embedding function with a shape-safe version.
 def fixed_apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
-    # Ensure cos/sin have the correct dimensions to broadcast over heads
-    if cos.dim() == 2:
-        cos = cos.unsqueeze(0)
-    if sin.dim() == 2:
-        sin = sin.unsqueeze(0)
-        
-    # Unsqueeze the head dimension (dim 1)
-    cos = cos.unsqueeze(unsqueeze_dim)
-    sin = sin.unsqueeze(unsqueeze_dim)
+    # Detect if q is transposed (Heads at the end instead of HeadDim)
+    # e.g. [..., 256, 8] instead of [..., 8, 256]
+    head_dim = cos.shape[-1]
+    is_transposed = False
+    
+    if q.shape[-1] != head_dim and q.shape[-2] == head_dim:
+        q = q.transpose(-1, -2)
+        k = k.transpose(-1, -2)
+        is_transposed = True
 
-    # Standard RoPE application using the fixed shapes
+    # Fix broadcasting for cos/sin
+    if cos.dim() == 2:
+        cos = cos.unsqueeze(0).unsqueeze(0)
+    elif cos.dim() == 3:
+        cos = cos.unsqueeze(1)
+
+    # Apply RoPE
     q_embed = (q * cos) + (transformers.models.gemma2.modeling_gemma2.rotate_half(q) * sin)
     k_embed = (k * cos) + (transformers.models.gemma2.modeling_gemma2.rotate_half(k) * sin)
+
+    # Restore original shape if we transposed
+    if is_transposed:
+        q_embed = q_embed.transpose(-1, -2)
+        k_embed = k_embed.transpose(-1, -2)
+
     return q_embed, k_embed
 
-# Apply the patch to the library
+print(" [Patch] Applying RoPE shape fix...")
 transformers.models.gemma2.modeling_gemma2.apply_rotary_pos_emb = fixed_apply_rotary_pos_emb
+# ==============================================================================
 
 import argparse
 import json
