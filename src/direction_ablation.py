@@ -208,6 +208,20 @@ def interventions_to_dict(interventions: dict[str, list[tuple[Feature, float]]],
     
     return extract_directions(model, feature_dict)
 
+def interventions_to_dict_everything_ablation(interventions: dict[str, list[tuple[Feature, float]]], lang: str, model) -> dict[int, list[int]]:
+    feature_dict = dict()
+    for l, d in interventions.items():
+        if l == lang:
+            continue
+        for f, _ in d:
+            layer = f.layer
+            feature = f.feature_idx
+            try:
+                feature_dict[layer].append(feature)
+            except KeyError:
+                feature_dict[layer] = [feature]
+    return extract_directions(mode, feature_dict)
+
 def parse_args():
     parser = argparse.ArgumentParser(
         description="Prompt language",
@@ -265,9 +279,9 @@ if __name__ == "__main__":
     freq_ablations = dict()
     freq_amplifications = dict()
     for lang in langs:
-        desc_ablations[lang] = interventions_to_dict(desc_interventions, lang, model)
-        val_ablations[lang] = interventions_to_dict(val_interventions, lang, model)
-        freq_ablations[lang] = interventions_to_dict(freq_interventions, lang, model)
+        desc_ablations[lang] = interventions_to_dict_everything_ablation(desc_interventions, lang, model)
+        val_ablations[lang] = interventions_to_dict_everything_ablation(val_interventions, lang, model)
+        freq_ablations[lang] = interventions_to_dict_everything_ablation(freq_interventions, lang, model)
 
     # ablation + amplification experiments
     output_dir = os.path.join(data_directory, "interventions")
@@ -329,17 +343,17 @@ if __name__ == "__main__":
                 
 
             for key, val in desc_based.items():
-                file_name = f'description_based_direction_ablation_across_layers_{key}.json'
+                file_name = f'description_based_direction_ablation_across_layers_everything_{key}.json'
                 with open(os.path.join(adj_lang_out_dir, file_name), 'w') as f:
                     json.dump(val, f, indent=4)
 
             for key, val in val_based.items():
-                file_name = f'value_based_direction_ablation_across_layers_{key}.json'
+                file_name = f'value_based_direction_ablation_across_layers_everything_{key}.json'
                 with open(os.path.join(adj_lang_out_dir, file_name), 'w') as f:
                     json.dump(val, f, indent=4)
 
             for key, val in freq_based.items():
-                file_name = f'frequency_based_direction_ablation_across_layers_{key}.json'
+                file_name = f'frequency_based_direction_ablation_across_layers_everything_{key}.json'
                 with open(os.path.join(adj_lang_out_dir, file_name), 'w') as f:
                     json.dump(val, f, indent=4)
 
