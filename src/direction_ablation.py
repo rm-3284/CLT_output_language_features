@@ -324,8 +324,8 @@ if __name__ == "__main__":
                  ablations_dict, ablations_outputs, 
                  ) = perform_intervention(prompt, model, logits, adj_lang, ans, freq_ablations, langs, nnsight_model)
                 
-                freq_based['direction_ablation']['outputs'][prompt] = ablations_outputs
-                freq_based['direction_ablation']['logits_and_ranks'][prompt] = ablations_dict
+                freq_based['outputs'][prompt] = ablations_outputs
+                freq_based['logits_and_ranks'][prompt] = ablations_dict
                 
 
             for key, val in desc_based.items():
