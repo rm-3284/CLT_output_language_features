@@ -2,14 +2,16 @@ from datasets import load_dataset
 import glob
 import json
 import matplotlib.pyplot as plt
+import math
 import os
 import pandas as pd
 import requests
+import seaborn as sns
 import torch
 
 from circuit_tracer_import import attribute, ReplacementModel
 from device_setup import device
-from template import lang_to_flores_key, identifiers
+from template import lang_to_flores_key, identifiers, lang_dict
 
 def get_activation(
         prompt: str, 
@@ -306,6 +308,95 @@ def code_switch_analysis(
         result[key] = (mean1, mean2, mean3)
     return result
 
+def plot_linguistic_activations_on_ax(
+    ax,  # <--- NEW ARGUMENT
+    activation_data: dict[str, tuple[float, float, float]],
+    feature_type_label: str = "Feature name",
+    title: str = "Feature Activations" # Added title argument so each subplot can have a name
+):
+    """
+    Draws the activation plot onto the provided matplotlib Axes 'ax'.
+    Does NOT save or close the figure.
+    """
+    
+    context_map = {
+        0: "Lang B Noun",
+        1: "Lang A Prefix + Lang B Noun",
+        2: "Lang A Prefix + Lang A Noun",
+    }
+
+    # Flatten data
+    rows = []
+    for key, activations in activation_data.items():
+        for i in range(3):
+            rows.append({
+                feature_type_label: key,
+                'Context': context_map[i],
+                'Activation Value': activations[i]
+            })
+    df = pd.DataFrame(rows)
+
+    # Use Seaborn style (apply globally or locally)
+    sns.set_theme(style="whitegrid")
+
+    # --- Main Plotting Call ---
+    # Note the `ax=ax` argument! This is critical.
+    sns.stripplot(
+        data=df, 
+        x=feature_type_label, 
+        y='Activation Value', 
+        hue='Context',
+        jitter=0.25,
+        size=8,
+        alpha=0.7,
+        palette='Set1',
+        dodge=True,
+        ax=ax  # <--- Draw on the specific subplot
+    )
+
+    # Formatting specific to this subplot
+    ax.set_title(title, fontsize=14)
+    ax.set_ylabel("Activation Value", fontsize=10)
+    ax.set_xlabel(feature_type_label, fontsize=10)
+    
+    # Rotate X-axis labels locally
+    ax.tick_params(axis='x', rotation=45)
+    
+    # Add reference line
+    ax.axhline(0, color='black', linestyle='-', linewidth=1, alpha=0.5)
+
+    # Remove the individual legend to save space (we will add a global one later)
+    # OR keep it if you want legends everywhere. Usually, global is better.
+    if ax.get_legend():
+        ax.get_legend().remove()
+
+def plot_linguistic_activations_multiple(all_datasets, titles, filename, lang):
+    num_plots = len(all_datasets)
+    cols = 2
+    rows = math.ceil(num_plots / cols)
+
+    fig, axes = plt.subplots(rows, cols, figsize=(20, 6 * rows), constrained_layout=True)
+    axes = axes.flatten()
+
+    for i, (data, label) in enumerate(zip(all_datasets, titles)):
+        # Call your function, passing the specific 'ax'
+        plot_linguistic_activations_on_ax(
+            ax=axes[i], 
+            activation_data=data, 
+            title=label
+        )
+
+    for j in range(i + 1, len(axes)):
+        fig.delaxes(axes[j])
+    
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc='upper center', bbox_to_anchor=(0.5, 1.05), 
+           ncol=3, title=f"Linguistic Context on {lang} features", fontsize=12)
+
+    plt.savefig(filename, bbox_inches='tight')
+    plt.close()
+    return
+
 
 if __name__ == "__main__":
     current_file_path = __file__
@@ -388,9 +479,11 @@ if __name__ == "__main__":
         for lang_B in langs:
             if lang_A == lang_B:
                 continue
-            result = code_switch_analysis(v_dict, lang_A, lang_B, prompt_list, model, topk)
+            if os.path.exists(full_path):
+                continue
             file_name = f"code_switch_analysis_{lang_A}_{lang_B}.json"
             full_path = os.path.join(data_directory, file_name)
+            result = code_switch_analysis(v_dict, lang_A, lang_B, prompt_list, model, topk)
             with open(full_path, 'w') as f:
                 json.dump(result, f)
     
@@ -415,31 +508,47 @@ if __name__ == "__main__":
 
         with open(file_path, 'w') as f:
             json.dump(description_dict, f)
-            
-    language_name_in_description = dict()
-    patterns = '??_description.json'
-    matching_files = glob.glob(os.path.join(data_directory, patterns))
-    for file_path in matching_files:
-        filename_with_ext = os.path.basename(file_path)
-        filename_only, file_extension = os.path.splitext(filename_with_ext)
-        first_two_letters = filename_only[:2]
 
-        identifier = identifiers[first_two_letters]
-        with open(file_path, 'r') as f:
-            descriptions = json.load(f)
-        
-        total_count = 0
-        included = 0
-        for _, description in descriptions.items():
-            is_included = any(sub in description for sub in identifier)
-            total_count += 1
-            if is_included:
-                included += 1
-
-        language_name_in_description[first_two_letters] = (included, total_count)
-    
     file_name = 'summary.json'
     file_path = os.path.join(data_directory, file_name)
-    with open(file_path, 'w') as f:
-        json.dump(language_name_in_description, f)
+    if not os.path.exists(file_path):
+        language_name_in_description = dict()
+        patterns = '??_description.json'
+        matching_files = glob.glob(os.path.join(data_directory, patterns))
+        for file_path in matching_files:
+            filename_with_ext = os.path.basename(file_path)
+            filename_only, file_extension = os.path.splitext(filename_with_ext)
+            first_two_letters = filename_only[:2]
+
+            identifier = identifiers[first_two_letters]
+            with open(file_path, 'r') as f:
+                descriptions = json.load(f)
+            
+            total_count = 0
+            included = 0
+            for _, description in descriptions.items():
+                is_included = any(sub in description for sub in identifier)
+                total_count += 1
+                if is_included:
+                    included += 1
+
+            language_name_in_description[first_two_letters] = (included, total_count)
         
+        with open(file_path, 'w') as f:
+            json.dump(language_name_in_description, f)
+    
+    # plots
+    lang_names = lang_dict['en']
+    for prompt_lang in langs:
+        data_list = list()
+        titles = list()
+        for test_lang in langs:
+            if test_lang == prompt_lang:
+                continue
+            file = os.path.join(data_directory, f"code_switch_analysis_{prompt_lang}_{test_lang}.json")
+            with open(file, 'r') as f:
+                data = json.load(f)
+            data_list.append(data)
+            titles.append(f"{lang_names[prompt_lang]}-{lang_names[test_lang]}")
+        filename = f"code_switch_activations_{prompt_lang}.png"
+        plot_linguistic_activations_multiple(data_list, titles, os.path.join(data_directory, filename), lang_names[prompt_lang])
