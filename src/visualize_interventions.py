@@ -38,7 +38,7 @@ def plot_three_level_grouped_facet_by_run_color(df: pd.DataFrame,
     Generates a swarmplot faceted by Experiment, layering numerical 
     mean and standard deviation labels over the points.
     """
-    plt.figure(figsize=(14, 8))
+    plt.figure(figsize=(20, 8))
     sns.set_theme(style="whitegrid")
     
     # 1. Define Order (Ensure correct custom order for Experiments)
@@ -68,7 +68,7 @@ def plot_three_level_grouped_facet_by_run_color(df: pd.DataFrame,
         hue=run_col,        # <--- KEY CHANGE: Use Run/Language for color
         order=method_order,
         palette='tab10',    # 'tab10' provides 10 distinct colors for the 7 languages
-        size=7,
+        size=5,
         legend=True
     )
     
@@ -90,7 +90,7 @@ def plot_three_level_grouped_facet_by_run_color(df: pd.DataFrame,
     
     # Adjust titles and layout
     g.set_axis_labels(method_col, score_label) 
-    g.set_titles(col_template="{col_name} Experiment", size=14) 
+    g.set_titles(col_template="{col_name}", size=14) 
     g.fig.suptitle(f'Language-Colored Individual {score_label} Scores', fontsize=16, y=1.05)
     
     # Use subplots_adjust to make room for the moved legend on the right
@@ -272,7 +272,15 @@ if __name__ == "__main__":
     langs = list(lang_to_flores_key.keys())
 
     methods = ['description', 'frequency', 'value']
-    experiments = ['original', 'direction_ablation_across_layers', 'direction_ablation_across_layers_everything', 'amplification', 'direction_intervention']
+    experiments = ['original', 'direction_ablation_across_layers', 'direction_ablation_across_layers_everything', 'ablation', 'ablation_everything_except', 'amplification', 'intervention', 'direction_intervention']
+    method_to_colname = {'description': 'AnnSel', 'frequency': 'FreqSel', 'value': 'ValSel'}
+    experiments_to_colname = {
+        'original': 'original', 'ablation': 'distractor ablation', 'ablation_everything_except': 'ablation',
+        'direction_ablation_across_layers': 'distractor direction ablation', 'direction_ablation_across_layers_everything': 'distractor ablation',
+        'amplification': 'amplification', 'amplification_everything_except': 'non-distractor amplification', 'intervention': 'intervention',
+        'direction_intervention': 'one-layer direction intervention'
+    }
+
     for prompt_lang in os.listdir(data_directory):
         for adj_lang in os.listdir(os.path.join(data_directory, prompt_lang)):
             dir_path = os.path.join(data_directory, prompt_lang, adj_lang)
@@ -311,9 +319,11 @@ if __name__ == "__main__":
             logit_dict = dict()
             rank_dict = dict()
             for experiment in experiments:
-                logit_dict[experiment] = dict()
+                experiment_key = experiments_to_colname[experiment]
+                logit_dict[experiment_key] = dict()
                 for method in methods:
-                    logit_dict[experiment][method] = dict()
+                    method_key = method_to_colname[method]
+                    logit_dict[experiment_key][method_key] = dict()
 
                     if experiment == 'original':
                         file_name = f"{method}_based_{experiments[1]}_logits_and_ranks.json"
@@ -353,20 +363,20 @@ if __name__ == "__main__":
                     for key, val in logit_list.items():
                         mean = statistics.mean(val)
                         stdev = statistics.stdev(val)
-                        logit_dict[experiment][method][key] = {'mean': mean, 'stdev': stdev}
+                        logit_dict[experiment_key][method_key][key] = {'mean': mean, 'stdev': stdev}
                     
                     if experiment == 'amplification':
-                        rank_dict[method] = dict()
+                        rank_dict[method_key] = dict()
                         for key, val in rank_list.items():
                             mean = statistics.mean(val)
                             stdev = statistics.stdev(val)
-                            rank_dict[method][key] = {'mean': mean, 'stdev': stdev}
+                            rank_dict[method_key][key] = {'mean': mean, 'stdev': stdev}
 
             #pd.set_option('display.max_rows', None)
             #pd.set_option('display.max_columns', None)
             df = transform_dict_to_dataframe(logit_dict)
             #print(df, flush=True)
-            file_name = 'direction_intervention_logits.png'
+            file_name = 'all_interventions.png'
             out_path = os.path.join(dir_path, file_name)
             title = f"Prompt {prompt_lang}, Adj {adj_lang}, interventions"
             plot_three_level_grouped_facet_by_run_color(
