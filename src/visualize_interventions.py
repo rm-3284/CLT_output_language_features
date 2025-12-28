@@ -276,7 +276,7 @@ if __name__ == "__main__":
     method_to_colname = {'description': 'AnnSel', 'frequency': 'FreqSel', 'value': 'ValSel'}
     experiments_to_colname = {
         'original': 'original', 'ablation': 'distractor ablation', 'ablation_everything_except': 'ablation',
-        'direction_ablation_across_layers': 'distractor direction ablation', 'direction_ablation_across_layers_everything': 'distractor ablation',
+        'direction_ablation_across_layers': 'distractor direction ablation', 'direction_ablation_across_layers_everything': 'direction ablation',
         'amplification': 'amplification', 'amplification_everything_except': 'non-distractor amplification', 'intervention': 'intervention',
         'direction_intervention': 'one-layer direction intervention'
     }
