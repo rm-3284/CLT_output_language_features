@@ -1,16 +1,16 @@
 import json
 import os
+import numpy as np
 import pandas as pd
 import seaborn as sns
 import statistics
 import matplotlib.pyplot as plt
 from typing import Dict, Any, List
+import warnings
 
-from intervention import (
-    visualize_bar_2ddict_outer_inter, bar_graph_visualize,
-    create_multi_series_histogram,
-)
 from template import lang_to_flores_key
+
+warnings.filterwarnings("ignore", message="use_inf_as_na")
 
 # Re-using the transformation function from the previous step (it's essential)
 def transform_dict_to_dataframe(data_dict: Dict[str, Dict[str, Dict[str, Dict[str, float]]]]) -> pd.DataFrame:
@@ -27,10 +27,6 @@ def transform_dict_to_dataframe(data_dict: Dict[str, Dict[str, Dict[str, Dict[st
                 })
     return pd.DataFrame(records)
 
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-
 def plot_three_level_grouped_facet_by_run_color(df: pd.DataFrame, 
                                                 experiment_col: str, 
                                                 method_col: str, 
@@ -46,11 +42,9 @@ def plot_three_level_grouped_facet_by_run_color(df: pd.DataFrame,
     sns.set_theme(style="whitegrid")
     
     # 1. Define Order (Ensure correct custom order for Experiments)
-    experiment_order = sorted(df[experiment_col].unique()) 
-    if set(experiment_order) == {'ablation', 'amplification', 'both'}:
-         experiment_order = ['ablation', 'amplification', 'both']
+    experiment_order = sorted(list(set(df[experiment_col].tolist())))
          
-    method_order = sorted(df[method_col].unique())
+    method_order = sorted(list(set(df[method_col])))
     
     # 2. Create the FacetGrid (Outer Grouping: Experiment)
     g = sns.FacetGrid(
@@ -161,7 +155,7 @@ def plot_method_language_comparison_with_labels(df: pd.DataFrame,
         mean_val = row['mean']
         std_val = row['stdev']
 
-        if pd.isna(mean_val) or abs(mean_val) < 0.005:
+        if pd.isna(mean_val):
             continue
 
         # Format the string to show Mean and (±STDEV)
@@ -232,7 +226,7 @@ def plot_dict(data, filename, title):
         y=list(data.values()), 
         hue=list(data.keys()), 
         palette="viridis", 
-        legend=False
+        #legend=False
     )
     for p in ax.patches:
         score_value = p.get_height()
@@ -278,12 +272,13 @@ if __name__ == "__main__":
     langs = list(lang_to_flores_key.keys())
 
     methods = ['description', 'frequency', 'value']
-    experiments = ['original', 'ablation', 'ablation_everything_except', 'amplification', 'intervention']
+    experiments = ['original', 'direction_ablation_across_layers', 'direction_ablation_across_layers_everything', 'amplification', 'direction_intervention']
     for prompt_lang in os.listdir(data_directory):
         for adj_lang in os.listdir(os.path.join(data_directory, prompt_lang)):
             dir_path = os.path.join(data_directory, prompt_lang, adj_lang)
 
             # before intervention
+            """
             before_intervention_logits_list = dict() # key: lang, val: logits
             with open(os.path.join(dir_path, f"{methods[0]}_based_{experiments[1]}_logits_and_ranks.json"), 'r') as f:
                 tmp_d = json.load(f)
@@ -310,7 +305,7 @@ if __name__ == "__main__":
             filename = "before_intervention_logit"
             plot_dict(before_intervention_logit, os.path.join(dir_path, f'{filename}.png'), filename)
             filename = "before_intervention_rank"
-            plot_dict(before_intervention_rank, os.path.join(dir_path, f'{filename}.png'), filename)
+            plot_dict(before_intervention_rank, os.path.join(dir_path, f'{filename}.png'), filename)"""
 
             # after intervention
             logit_dict = dict()
@@ -331,23 +326,25 @@ if __name__ == "__main__":
                     rank_list = dict()
                     for lang in langs:
                         logit_list[lang] = list()
-                        rank_list[lang] = list()
+                        if lang == prompt_lang or lang == adj_lang or lang == 'en':
+                            rank_list[lang] = list()
                     
                     for _, vals in tmp_d.items():
                         if experiment == 'original':
                             # just get the original
                             for l, d in vals[prompt_lang].items():
                                 logit_list[l].append(d[0])
-                        elif experiment == 'ablation' or experiment == 'amplification_everything_except':
+                        elif experiment == 'ablation' or experiment == 'amplification_everything_except' or experiment == 'direction_ablation' or experiment == "direction_ablation_across_layers":
                             # prompt_lang ablation or everything amp except prompt lang
                             for l, d in vals[prompt_lang].items():
                                 logit_list[l].append(d[1])
-                        elif experiment == 'amplification' or experiment == 'ablation_everything_except':
+                        elif experiment == 'amplification' or experiment == 'ablation_everything_except' or experiment == "direction_ablation_across_layers_everything":
                             # adj lang amplification or ablation except adj lang
                             for l in langs:
                                 logit_list[l].append(vals[adj_lang][l][1])
-                                rank_list[l].append(vals[adj_lang][l][2])
-                        elif experiment == 'intervention':
+                                if l == adj_lang or l == prompt_lang or l == 'en':
+                                    rank_list[l].append(vals[adj_lang][l][2])
+                        elif experiment == 'intervention' or experiment == 'direction_intervention':
                             # prompt_lang_ablation + adj lang amplification
                             for l in langs:
                                 logit_list[l].append(vals[prompt_lang][adj_lang][l][1])
@@ -365,9 +362,11 @@ if __name__ == "__main__":
                             stdev = statistics.stdev(val)
                             rank_dict[method][key] = {'mean': mean, 'stdev': stdev}
 
+            #pd.set_option('display.max_rows', None)
+            #pd.set_option('display.max_columns', None)
             df = transform_dict_to_dataframe(logit_dict)
-            #print(df)
-            file_name = 'intervention_logits.png'
+            #print(df, flush=True)
+            file_name = 'direction_intervention_logits.png'
             out_path = os.path.join(dir_path, file_name)
             title = f"Prompt {prompt_lang}, Adj {adj_lang}, interventions"
             plot_three_level_grouped_facet_by_run_color(
@@ -376,7 +375,7 @@ if __name__ == "__main__":
             )
 
             df2 = transform_nested_dict_to_dataframe(rank_dict)
-            #print(df2)
+            #print(df2, flush=True)
             file_name = 'intervention_rank.png'
             outpath = os.path.join(dir_path, file_name)
             plot_method_language_comparison_with_labels(df2, 'Method', 'Language', 'mean', 'rank', outpath)
