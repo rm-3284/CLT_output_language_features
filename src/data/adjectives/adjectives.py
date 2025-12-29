@@ -1081,7 +1081,7 @@ big_data_2 = [
     ),
     (
         {'en': 'vertical', 'fr': 'vertical', 'de': 'vertikal', 'zh': '垂直', 'ja': '垂直な', 'es': 'vertical', 'ko': '수직의'},
-        {'en': ['horizontal'], 'fr': ['horizontal'], 'de': ['horizontal'], 'zh': ['水平'], 'ja': ['수평의'], 'es': ['horizontal'], 'ko': ['수평의']}
+        {'en': ['horizontal'], 'fr': ['horizontal'], 'de': ['horizontal'], 'zh': ['水平'], 'ja': ['水平な'], 'es': ['horizontal'], 'ko': ['수평의']}
     ),
     (
         {'en': 'visible', 'fr': 'visible', 'de': 'sichtbar', 'zh': '可见', 'ja': '目に見える', 'es': 'visible', 'ko': '보이는'},
@@ -1202,7 +1202,7 @@ big_data = [
     [{"en":"single","fr":"célibataire","de":"ledig","zh":"单身","ja":"独身の","es":"soltero","ko":"독신의"},{"en":["married"],"fr":["marié"],"de":["verheiratet"],"zh":["已婚"],"ja":["既婚の","結婚している"],"es":["casado"],"ko":["결혼한"]}],
     [{"en":"sour","fr":"acide","de":"sauer","zh":"酸","ja":"酸っぱい","es":"agrio","ko":"신"},{"en":["sweet"],"fr":["doux"],"de":["süß"],"zh":["甜"],"ja":["甘い"],"es":["dulce"],"ko":["달콤한"]}],
     [{"en":"useful","fr":"utile","de":"nützlich","zh":"有用","ja":"役に立つ","es":"útil","ko":"유용한"},{"en":["useless"],"fr":["inutile"],"de":["nutzlos"],"zh":["没用"],"ja":["役に立たない"],"es":["inútil"],"ko":["쓸모없는"]}],
-    [{"en":"vertical","fr":"vertical","de":"vertikal","zh":"垂直","ja":"垂直な","es":"vertical","ko":"수직의"},{"en":["horizontal"],"fr":["horizontal"],"de":["horizontal"],"zh":["水平"],"ja":["수평의"],"es":["horizontal"],"ko":["수평의"]}],
+    [{"en":"vertical","fr":"vertical","de":"vertikal","zh":"垂直","ja":"垂直な","es":"vertical","ko":"수직의"},{"en":["horizontal"],"fr":["horizontal"],"de":["horizontal"],"zh":["水平"],"ja":["水平な"],"es":["horizontal"],"ko":["수평의"]}],
     [{"en":"well","fr":"bien","de":"gut","zh":"好","ja":"良い","es":"bien","ko":"잘"},{"en":["poorly"],"fr":["mal"],"de":["schlecht"],"zh":["差"],"ja":["悪い"],"es":["mal","pobremente"],"ko":["못","형편없이"]}],
     [{"en":"winning","fr":"gagnant","de":"gewinnend","zh":"获胜","ja":"勝利の","es":"ganador","ko":"승리하는"},{"en":["losing"],"fr":["perdant"],"de":["verlierend"],"zh":["失败"],"ja":["敗北の"],"es":["perdedor"],"ko":["패배하는"]}],
     [{"en":"unkind","fr":"méchant","de":"unfreundlich","zh":"不善良","ja":"意地悪な","es":"desagradable","ko":"불친절한"},{"en":["kind"],"fr":["gentil"],"de":["freundlich"],"zh":["善良"],"ja":["親切な"],"es":["amable"],"ko":["친절한"]}],
