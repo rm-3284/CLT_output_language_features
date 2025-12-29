@@ -164,12 +164,12 @@ if __name__ == "__main__":
         freq_amplifications['everything'][lang] = combine_except_one(freq_amplifications['normal'], lang)
 
     for lang in langs:
-        desc_ablations['direction-ablation'] = interventions_to_dict(desc_interventions, lang, model)
-        desc_ablations['direction-ablation-everything'] = interventions_to_dict_everything_ablation(desc_interventions, lang, model)
-        val_ablations['direction-ablation'] = interventions_to_dict(val_interventions, lang, model)
-        val_ablations['direction-ablation-everything'] = interventions_to_dict_everything_ablation(val_interventions, lang, model)
-        freq_ablations['direction-ablation'] = interventions_to_dict(freq_interventions, lang, model)
-        freq_ablations['direction-ablation-everything'] = interventions_to_dict_everything_ablation(freq_interventions, lang, model)
+        desc_ablations['direction-ablation'][lang] = interventions_to_dict(desc_interventions, lang, model)
+        desc_ablations['direction-ablation-everything'][lang] = interventions_to_dict_everything_ablation(desc_interventions, lang, model)
+        val_ablations['direction-ablation'][lang] = interventions_to_dict(val_interventions, lang, model)
+        val_ablations['direction-ablation-everything'][lang] = interventions_to_dict_everything_ablation(val_interventions, lang, model)
+        freq_ablations['direction-ablation'][lang] = interventions_to_dict(freq_interventions, lang, model)
+        freq_ablations['direction-ablation-everything'][lang] = interventions_to_dict_everything_ablation(freq_interventions, lang, model)
 
     one_layer_ablation = {'desc': dict(), 'val': dict(), 'freq': dict()}
     for lang in langs:

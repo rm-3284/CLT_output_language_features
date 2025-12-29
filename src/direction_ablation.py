@@ -196,7 +196,7 @@ def perform_intervention(
     return result_logits, result_output
         
 
-def interventions_to_dict(interventions: dict[str, list[tuple[Feature, float]]], lang: str, model) -> dict[int, list[int]]:
+def interventions_to_dict(interventions: dict[str, list[tuple[Feature, float]]], lang: str, model) -> dict[int, torch.Tensor]:
     feature_dict = dict()
     for f, _ in interventions[lang]:
         layer = f.layer
