@@ -11,6 +11,7 @@ from ablation_amplification_intervention import (
     combine_except_one,
     description_based_features,
     direction_ablation_layer_determine,
+    direction_ablation_helper,
     freq_based_features,
     mean_value_based_features,
     model_intervention,
@@ -148,24 +149,18 @@ if __name__ == "__main__":
     freq_amplifications = {'normal': dict(), 'everything': dict()}
     for lang in langs:
         desc_ablations['feature'][lang] = ablation(desc_interventions, lang)
-        desc_ablations['one-layer-direction'][lang] = direction_ablation_layer_determine(desc_interventions, lang)
         desc_amplifications['normal'][lang] = amplification(desc_interventions, lang)
         val_ablations['feature'][lang] = ablation(val_interventions, lang)
-        val_ablations['one-layer-direction'][lang] = direction_ablation_layer_determine(val_interventions, lang)
         val_amplifications['normal'][lang] = amplification(val_interventions, lang)
         freq_ablations['feature'][lang] = ablation(freq_interventions, lang)
-        freq_ablations['one-layer-direction'][lang] = direction_ablation_layer_determine(freq_interventions, lang)
         freq_amplifications['normal'][lang] = amplification(freq_interventions, lang)
 
     for lang in langs:
         desc_ablations['feature_everything'][lang] = combine_except_one(desc_ablations['feature'], lang)
-        desc_ablations['one-layer-direction_everything'][lang] = combine_except_one(desc_ablations['one-layer-direction'], lang)
         desc_amplifications['everything'][lang] = combine_except_one(desc_amplifications['normal'], lang)
         val_ablations['feature_everything'][lang] = combine_except_one(val_ablations['feature'], lang)
-        val_ablations['one-layer-direction_everything'][lang] = combine_except_one(val_ablations['one-layer-direction'], lang)
         val_amplifications['everything'][lang] = combine_except_one(val_amplifications['normal'], lang)
         freq_ablations['feature_everything'][lang] = combine_except_one(freq_ablations['feature'], lang)
-        freq_ablations['one-layer-direction_everything'][lang] = combine_except_one(freq_ablations['one-layer-direction'], lang)
         freq_amplifications['everything'][lang] = combine_except_one(freq_amplifications['normal'], lang)
 
     for lang in langs:
@@ -176,10 +171,12 @@ if __name__ == "__main__":
         freq_ablations['direction-ablation'] = interventions_to_dict(freq_interventions, lang, model)
         freq_ablations['direction-ablation-everything'] = interventions_to_dict_everything_ablation(freq_interventions, lang, model)
 
+    one_layer_ablation = {'desc': dict(), 'val': dict(), 'freq': dict()}
+    for lang in langs:
+        one_layer_ablation['desc'][lang] = direction_ablation_layer_determine(desc_interventions, lang)
+        one_layer_ablation['val'][lang] = direction_ablation_layer_determine(val_interventions, lang)
+        one_layer_ablation['freq'][lang] = direction_ablation_layer_determine(freq_interventions, lang)
 
-    print(desc_ablations)
-    print(val_ablations)
-    print(freq_ablations)
 
     # ablation + amplification experiments
     output_dir = os.path.join(data_directory, "interventions")
@@ -214,6 +211,29 @@ if __name__ == "__main__":
             for adj, ans in big_data:
                 adjective = adj[adj_lang]
                 prompt = base.format(adj=adjective)
+
+                # calculate the direction ablations
+                for lang in langs:
+                    layer, features = one_layer_ablation['desc'][lang]
+                    interventions = direction_ablation_helper(model, layer, features, prompt)
+                    desc_ablations['one-layer-direction'][lang] = interventions
+                for lang in langs:
+                    desc_ablations['one-layer-direction_everything'][lang] = combine_except_one(desc_ablations['one-layer-direction'], lang)
+                
+                for lang in langs:
+                    layer, features = one_layer_ablation['val'][lang]
+                    interventions = direction_ablation_helper(model, layer, features, prompt)
+                    val_ablations['one-layer-direction'][lang] = interventions
+                for lang in langs:
+                    val_ablations['one-layer-direction_everything'][lang] = combine_except_one(val_ablations['one-layer-direction'], lang)
+                
+                for lang in langs:
+                    layer, features = one_layer_ablation['freq'][lang]
+                    interventions = direction_ablation_helper(model, layer, features, prompt)
+                    freq_ablations['one-layer-direction'][lang] = interventions
+                for lang in langs:
+                    freq_ablations['one-layer-direction_everything'][lang] = combine_except_one(freq_ablations['one-layer-direction'], lang)
+    
                 
                 # original
                 base_line, logits = model_run(prompt, model)
