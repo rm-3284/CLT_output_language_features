@@ -85,7 +85,7 @@ def feature_ablation_and_amplification(prompt: str, model: ReplacementModel, ans
         results[ablation_lang] = dict()
         for amplification_lang in langs:
             results[ablation_lang][amplification_lang] = dict()
-            interventions = ablation_and_amplification(ablation, amplification)
+            interventions = ablation_and_amplification(ablation[ablation_lang], amplification[amplification_lang])
             new_outputs, logits = model_intervention(prompt, model, interventions)
             result = get_logits_and_ranks(logits, ans, model)
             results[ablation_lang][amplification_lang]['output'] = new_outputs
