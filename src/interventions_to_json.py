@@ -71,6 +71,7 @@ def direction_ablate(prompt: str, model: ReplacementModel,
     ):
     results = dict()
     for intervention_lang in langs:
+        results[intervention_lang] = dict()
         ablation_logits = run_ablation_experiment(nnsight_model, prompt, interventions[intervention_lang])
         result = get_logits_and_ranks(ablation_logits, ans, model)
         outputs = get_top_outputs(ablation_logits, model)
