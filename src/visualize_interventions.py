@@ -281,8 +281,8 @@ if __name__ == "__main__":
         'direction_intervention': 'one-layer direction intervention'
     }
 
-    for prompt_lang in os.listdir(data_directory):
-        for adj_lang in os.listdir(os.path.join(data_directory, prompt_lang)):
+    for prompt_lang in langs:
+        for adj_lang in langs:
             dir_path = os.path.join(data_directory, prompt_lang, adj_lang)
 
             # before intervention
