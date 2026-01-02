@@ -38,7 +38,7 @@ def plot_three_level_grouped_facet_by_run_color(df: pd.DataFrame,
     Generates a swarmplot faceted by Experiment, layering numerical 
     mean and standard deviation labels over the points.
     """
-    plt.figure(figsize=(20, 8))
+    plt.figure(figsize=(20, 10))
     sns.set_theme(style="whitegrid")
     
     # 1. Define Order (Ensure correct custom order for Experiments)
@@ -51,7 +51,7 @@ def plot_three_level_grouped_facet_by_run_color(df: pd.DataFrame,
         df, 
         col=experiment_col,           # Separate plots for each Experiment
         col_order=experiment_order,
-        height=5, 
+        height=8, 
         aspect=0.8,
         sharex=False,
         # 'margin_titles' needs to be here
@@ -263,6 +263,14 @@ def plot_dict(data, filename, title):
     plt.close()
     print(f"Plot saved successfully to {filename}")
 
+def get_best_result(d: dict[str, tuple[float, int, float]]) -> float:
+    # if the logit is highest, that is the best result
+    logit_list = []
+    for word, ls in d.items():
+        logit, rank, prob = ls
+        logit_list.append(logit)
+    return max(logit_list)
+
 if __name__ == "__main__":
     current_file_path = __file__
     current_directory = os.path.dirname(current_file_path)
@@ -272,14 +280,18 @@ if __name__ == "__main__":
     langs = list(lang_to_flores_key.keys())
 
     methods = ['description', 'frequency', 'value']
-    experiments = ['original', 'direction_ablation_across_layers', 'direction_ablation_across_layers_everything', 'ablation', 'ablation_everything_except', 'amplification', 'intervention', 'direction_intervention']
+    #experiments = ['original', 'direction_ablation_across_layers', 'direction_ablation_across_layers_everything', 'direction_ablation', 'ablation', 'ablation_everything_except', 'amplification', 'intervention', 'direction_intervention']
     method_to_colname = {'description': 'AnnSel', 'frequency': 'FreqSel', 'value': 'ValSel'}
-    experiments_to_colname = {
-        'original': 'original', 'ablation': 'distractor ablation', 'ablation_everything_except': 'ablation',
-        'direction_ablation_across_layers': 'distractor direction ablation', 'direction_ablation_across_layers_everything': 'direction ablation',
-        'amplification': 'amplification', 'amplification_everything_except': 'non-distractor amplification', 'intervention': 'intervention',
-        'direction_intervention': 'one-layer direction intervention'
-    }
+    #experiments_to_colname = {
+    #    'original': 'original', 'ablation': 'distractor ablation', 'ablation_everything_except': 'ablation',
+    #    'direction_ablation_across_layers': 'distractor direction ablation', 'direction_ablation_across_layers_everything': 'direction ablation',
+    #    'amplification': 'amplification', 'amplification_everything_except': 'non-distractor amplification', 'intervention': 'intervention',
+    #    'direction_intervention': 'one-layer direction intervention', 'direction_ablation': 'one-layer distractor direction ablation',
+    #}
+    experiments = ['original', 'distractor ablation', 'ablation', 'distractor one-layer direction ablation', 
+                'one-layer direction ablation', 'distractor multi-layer direction ablation', 
+                'multi-layer direction ablation', 'amplification', 'non-distractor amplification', 
+                'feature-intervention', 'one-layer direction intervention',]
 
     for prompt_lang in langs:
         for adj_lang in langs:
@@ -319,26 +331,28 @@ if __name__ == "__main__":
             logit_dict = dict()
             rank_dict = dict()
             for experiment in experiments:
-                experiment_key = experiments_to_colname[experiment]
+                experiment_key = experiment
                 logit_dict[experiment_key] = dict()
                 for method in methods:
                     method_key = method_to_colname[method]
                     logit_dict[experiment_key][method_key] = dict()
 
-                    if experiment == 'original':
-                        file_name = f"{method}_based_{experiments[1]}_logits_and_ranks.json"
-                    else:
-                        file_name = f"{method}_based_{experiment}_logits_and_ranks.json"
+                    #if experiment == 'original':
+                    #    file_name = f"{method}_based_{experiments[1]}_logits_and_ranks.json"
+                    #else:
+                    #    file_name = f"{method}_based_{experiment}_logits_and_ranks.json"
+                    file_name = f"interventions_and_results_{method}.json"
                     with open(os.path.join(dir_path, file_name), 'r') as f:
                         tmp_d = json.load(f)
 
                     logit_list = dict()
-                    rank_list = dict()
+                    #rank_list = dict()
                     for lang in langs:
                         logit_list[lang] = list()
-                        if lang == prompt_lang or lang == adj_lang or lang == 'en':
-                            rank_list[lang] = list()
+                        #if lang == prompt_lang or lang == adj_lang or lang == 'en':
+                        #    rank_list[lang] = list()
                     
+                    """
                     for _, vals in tmp_d.items():
                         if experiment == 'original':
                             # just get the original
@@ -360,17 +374,39 @@ if __name__ == "__main__":
                                 logit_list[l].append(vals[prompt_lang][adj_lang][l][1])
                         else:
                             raise KeyError('invalid experiment name')
+                    """
+                    for prompt, vals in tmp_d[experiment].items():
+                        if experiment == "original":
+                            d = vals["langs"]
+                            
+                        elif experiment == 'distractor ablation' or experiment == 'distractor one-layer direction ablation' or experiment == 'distractor multi-layer direction ablation' or experiment == 'amplification':
+                            # prompt lang ablation or amplification everything except
+                            d = vals[prompt_lang]["langs"]
+                        elif experiment == 'ablation' or experiment == 'one-layer direction ablation' or experiment == 'multi-layer direction ablation' or experiment == 'non-distractor amplification':
+                            # adj lang amplification or ablation everything
+                            d = vals[adj_lang]['langs']
+                        elif experiment == 'feature-intervention' or experiment == 'one-layer direction intervention':
+                            # prompt_lang_ablation + adj lang amplification
+                            d = vals[prompt_lang][adj_lang]["langs"]
+                        else:
+                            raise KeyError('invalid experiment name')
+
+                        base = get_best_result(d[adj_lang])
+                        for l in langs:
+                            target = get_best_result(d[l])
+                            logit_list[l].append(target - base)
+
                     for key, val in logit_list.items():
                         mean = statistics.mean(val)
                         stdev = statistics.stdev(val)
                         logit_dict[experiment_key][method_key][key] = {'mean': mean, 'stdev': stdev}
                     
-                    if experiment == 'amplification':
-                        rank_dict[method_key] = dict()
-                        for key, val in rank_list.items():
-                            mean = statistics.mean(val)
-                            stdev = statistics.stdev(val)
-                            rank_dict[method_key][key] = {'mean': mean, 'stdev': stdev}
+                    #if experiment == 'amplification':
+                    #    rank_dict[method_key] = dict()
+                    #    for key, val in rank_list.items():
+                    #        mean = statistics.mean(val)
+                    #        stdev = statistics.stdev(val)
+                    #        rank_dict[method_key][key] = {'mean': mean, 'stdev': stdev}
 
             #pd.set_option('display.max_rows', None)
             #pd.set_option('display.max_columns', None)
@@ -384,8 +420,8 @@ if __name__ == "__main__":
                 out_path
             )
 
-            df2 = transform_nested_dict_to_dataframe(rank_dict)
+            #df2 = transform_nested_dict_to_dataframe(rank_dict)
             #print(df2, flush=True)
-            file_name = 'intervention_rank.png'
-            outpath = os.path.join(dir_path, file_name)
-            plot_method_language_comparison_with_labels(df2, 'Method', 'Language', 'mean', 'rank', outpath)
+            #file_name = 'intervention_rank.png'
+            #outpath = os.path.join(dir_path, file_name)
+            #plot_method_language_comparison_with_labels(df2, 'Method', 'Language', 'mean', 'rank', outpath)
