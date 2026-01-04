@@ -274,14 +274,14 @@ if __name__ == "__main__":
                 freq_based['multi-layer direction ablation'][prompt] = direction_ablate(prompt, model, ans, freq_ablations['direction-ablation-everything'], langs, nnsight_model)
 
                 # amplification
-                desc_based['amplification'][prompt] = feature_interventions(prompt, model, ans, desc_amplifications['normal'], langs)
-                val_based['amplification'][prompt] = feature_interventions(prompt, model, ans, val_amplifications['normal'], langs)
-                freq_based['amplification'][prompt] = feature_interventions(prompt, model, ans, freq_amplifications['normal'], langs)
+                desc_based['amplification'][prompt] = feature_interventions(prompt, model, ans, desc_amplifications['everything'], langs)
+                val_based['amplification'][prompt] = feature_interventions(prompt, model, ans, val_amplifications['everything'], langs)
+                freq_based['amplification'][prompt] = feature_interventions(prompt, model, ans, freq_amplifications['everything'], langs)
 
                 # non-distractor amplification
-                desc_based['non-distractor amplification'][prompt] = feature_interventions(prompt, model, ans, desc_amplifications['everything'], langs)
-                val_based['non-distractor amplification'][prompt] = feature_interventions(prompt, model, ans, val_amplifications['everything'], langs)
-                freq_based['non-distractor amplification'][prompt] = feature_interventions(prompt, model, ans, freq_amplifications['everything'], langs)
+                desc_based['non-distractor amplification'][prompt] = feature_interventions(prompt, model, ans, desc_amplifications['normal'], langs)
+                val_based['non-distractor amplification'][prompt] = feature_interventions(prompt, model, ans, val_amplifications['normal'], langs)
+                freq_based['non-distractor amplification'][prompt] = feature_interventions(prompt, model, ans, freq_amplifications['normal'], langs)
 
                 # feature-intervention
                 desc_based['feature-intervention'][prompt] = feature_ablation_and_amplification(prompt, model, ans, desc_ablations['feature'], desc_amplifications['normal'], langs)
