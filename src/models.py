@@ -20,3 +20,8 @@ layer_num = {
     'qwen3-4b': 36,
     'gemma-3-4b-it': 34,
 }
+n_features = {
+    'gemma-2-2b': 16384,
+    'qwen3-4b': 163840,
+    'gemma-3-4b-it': 262144,
+}
