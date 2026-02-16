@@ -18,5 +18,5 @@ neuronpedia_urls = {
 layer_num = {
     'gemma-2-2b': 26,
     'qwen3-4b': 36,
-    'gemma-3-4b-it': 35,
+    'gemma-3-4b-it': 34,
 }
