@@ -1,3 +1,4 @@
+import argparse
 from datasets import load_dataset
 import json
 import pandas as pd
@@ -9,6 +10,7 @@ from data.generic_sentences import alphabet_char, filter_sentences
 from device_setup import device
 from feature_extraction import distinct_path_max_bottleneck, prune_paths_by_first_last, pick_last_pos_features
 from template import lang_to_flores_key
+from models import hf_model_names, hf_transcoder_names
 
 def iterate_through_sentences(
         model: ReplacementModel,
@@ -53,17 +55,23 @@ def iterate_through_sentences(
     
     return features
 
+def argsparse():
+    parser = argparse.ArgumentParser(description='Extract features from FLORES dataset')
+    parser.add_argument('--model', type=str, default='gemma-2-2b', choices=hf_model_names.keys(), help='Model to use for feature extraction')
+    return parser.parse_args()
+
 if __name__ == "__main__":
+    args = argsparse()
     current_file_path = __file__
     current_directory = os.path.dirname(current_file_path)
     absolute_directory = os.path.abspath(current_directory)
-    data_directory = os.path.join(absolute_directory, "data/flores_features")
+    data_directory = os.path.join(absolute_directory, "data/flores_features", args.model)
     if not os.path.exists(data_directory):
         os.makedirs(data_directory)
 
-    model_name = 'google/gemma-2-2b'
-    transcoder_name = "gemma"
-    model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16)
+    model_name = args.model
+    transcoder_name = hf_transcoder_names[model_name]
+    model = ReplacementModel.from_pretrained(hf_model_names[model_name], transcoder_name, device=device, dtype=torch.bfloat16)
     for lang, ds_key in lang_to_flores_key.items():
         print(f"Loading {ds_key}")
         ds = load_dataset("openlanguagedata/flores_plus", ds_key, split="dev")

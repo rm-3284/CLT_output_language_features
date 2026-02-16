@@ -1,3 +1,4 @@
+import argparse
 from datasets import load_dataset
 import json
 import math
@@ -11,6 +12,7 @@ from data.generic_sentences import alphabet_char, filter_sentences
 from device_setup import device
 from circuit_tracer_import import Graph, Supernode, Feature, ReplacementModel, attribute
 from template import lang_to_flores_key
+from models import hf_model_names, hf_transcoder_names
 
 def set_features_from_supernodes(*supernodes: Supernode) -> list[Feature]:
     feature_lst = []
@@ -199,18 +201,24 @@ def summarize(features: list[float]) -> tuple[int, int, float, float, float, flo
         median = float('nan')
     return nan_count, len(clean_data), minimum, maximum, mean, median
 
+def argsparse():
+    parser = argparse.ArgumentParser(description='Calculate amplification values for features extracted from FLORES dataset')
+    parser.add_argument('--model', type=str, default='gemma-2-2b', choices=hf_model_names.keys(), help='Model to use for calculating amplification values')
+    return parser.parse_args()
+
 if __name__ == "__main__":
-    model_name = 'google/gemma-2-2b'
-    transcoder_name = "gemma"
-    model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16)
+    args = argsparse()
+    model_name = args.model
+    transcoder_name = hf_transcoder_names[model_name]
+    model = ReplacementModel.from_pretrained(hf_model_names[model_name], transcoder_name, device=device, dtype=torch.bfloat16)
 
     current_file_path = __file__
     current_directory = os.path.dirname(current_file_path)
     absolute_directory = os.path.abspath(current_directory)
     data_directory = os.path.join(absolute_directory, "data")
-    flores_directory = os.path.join(data_directory, "flores_features")
-    lang_specific_directory = os.path.join(data_directory, "language_specific_features")
-    multilingual_features_directory = os.path.join(data_directory, "multilingual_llm_features")
+    flores_directory = os.path.join(data_directory, "flores_features", args.model)
+    lang_specific_directory = os.path.join(data_directory, "language_specific_features", args.model)
+    multilingual_features_directory = os.path.join(data_directory, "multilingual_llm_features", args.model)
 
     amplification_value_directory = os.path.join(data_directory, "amplification_values")
     os.makedirs(amplification_value_directory, exist_ok=True)

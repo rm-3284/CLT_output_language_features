@@ -1,3 +1,4 @@
+import argparse
 from datasets import load_dataset
 import glob
 import json
@@ -10,6 +11,7 @@ from circuit_tracer_import import attribute, ReplacementModel
 from device_setup import device
 from intervention import get_top_outputs
 from template import lang_to_flores_key, langs_big, identifiers
+from models import hf_model_names, hf_transcoder_names, neuronpedia_urls, layer_num
 
 def get_activation_vector(
         prompt: str, 
@@ -200,17 +202,23 @@ def scale_steer_to_A(
 
     return generated
 
+def argsparse():
+    parser = argparse.ArgumentParser(description='Extract language specific features and perform interventions')
+    parser.add_argument('--model', type=str, default='gemma-2-2b', choices=hf_model_names.keys(), help='Model to use for feature extraction and intervention')
+    return parser.parse_args()
+
 if __name__ == "__main__":
+    args = argsparse()
     current_file_path = __file__
     current_directory = os.path.dirname(current_file_path)
     absolute_directory = os.path.abspath(current_directory)
-    data_directory = os.path.join(absolute_directory, "data/language_specific_features")
+    data_directory = os.path.join(absolute_directory, "data/language_specific_features", args.model)
     if not os.path.exists(data_directory):
         os.makedirs(data_directory)
     
-    model_name = 'google/gemma-2-2b'
-    transcoder_name = "gemma"
-    model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16)
+    model_name = args.model
+    transcoder_name = hf_transcoder_names[model_name]
+    model = ReplacementModel.from_pretrained(hf_model_names[model_name], transcoder_name, device=device, dtype=torch.bfloat16)
 
     lang_activation_vec = dict()
     lang_active_examples = dict()
@@ -231,7 +239,7 @@ if __name__ == "__main__":
             ds = ds.shuffle(seed=42)
             df = ds.to_pandas()
             batch = df.loc[:100, 'text'].tolist()
-            activation_vector, active_examples, max_values_dict = get_lang_activation_vector(batch, model)
+            activation_vector, active_examples, max_values_dict = get_lang_activation_vector(batch, model, n_layers=layer_num[model_name])
             torch.save((activation_vector, active_examples), pt_path)
             lang_activation_vec[lang] = activation_vector
             lang_active_examples[lang] = active_examples
@@ -251,7 +259,7 @@ if __name__ == "__main__":
         ) # example_thres is 0.98 for the original paper
         with open(full_path, 'w') as f:
             json.dump(language_specific_features, f)
-    
+    """
     max_new_tokens = 16
     data_list = []
     alphas = [0.1, 0.3, 0.4, 0.5, 0.8]
@@ -269,7 +277,7 @@ if __name__ == "__main__":
         for record in data_list:
             json_line = json.dumps(record, ensure_ascii=False)
             file.write(json_line + '\n')
-    
+    """
 
     for lang, val in language_specific_features.items():
         file_name = f'{lang}_description.json'
@@ -279,7 +287,7 @@ if __name__ == "__main__":
 
         description_dict = dict()
         for layer, feature_idx in val:
-            response = requests.get(f"https://www.neuronpedia.org/api/feature/gemma-2-2b/{layer}-gemmascope-transcoder-16k/{feature_idx}")
+            response = requests.get(neuronpedia_urls[model_name].format(layer=layer, feature_idx=feature_idx))
             explanations = response.json()['explanations']
             try:
                 description = explanations[0]['description']

@@ -1,3 +1,4 @@
+import argparse
 from datasets import load_dataset
 import glob
 import json
@@ -12,6 +13,7 @@ import torch
 from circuit_tracer_import import attribute, ReplacementModel
 from device_setup import device
 from template import lang_to_flores_key, identifiers, lang_dict
+from models import hf_model_names, hf_transcoder_names, neuronpedia_urls
 
 def get_activation(
         prompt: str, 
@@ -397,17 +399,22 @@ def plot_linguistic_activations_multiple(all_datasets, titles, filename, lang):
     plt.close()
     return
 
+def argsparse():
+    parser = argparse.ArgumentParser(description='Extract multilingual LLM features and perform analysis')
+    parser.add_argument('--model', type=str, default='gemma-2-2b', choices=hf_model_names.keys(), help='Model to use for feature extraction and analysis')
+    return parser.parse_args()
 
 if __name__ == "__main__":
+    args = argsparse()
     current_file_path = __file__
     current_directory = os.path.dirname(current_file_path)
     absolute_directory = os.path.abspath(current_directory)
-    data_directory = os.path.join(absolute_directory, "data/multilingual_llm_features")
+    data_directory = os.path.join(absolute_directory, "data/multilingual_llm_features", args.model)
     if not os.path.exists(data_directory):
         os.makedirs(data_directory)
 
-    model_name = 'google/gemma-2-2b'
-    transcoder_name = "gemma"
+    model_name = hf_model_names[args.model]
+    transcoder_name = hf_transcoder_names[model_name]
     model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16)
 
     lang_mean_activation_dict = dict()
@@ -473,7 +480,7 @@ if __name__ == "__main__":
             json_line = json.dumps(record, ensure_ascii=False)
             file.write(json_line + '\n')
     """
-    
+    """
     langs = ['en', 'es', 'fr', 'ja', 'ko', 'zh']
     for lang_A in langs:
         for lang_B in langs:
@@ -486,7 +493,7 @@ if __name__ == "__main__":
             result = code_switch_analysis(v_dict, lang_A, lang_B, prompt_list, model, topk)
             with open(full_path, 'w') as f:
                 json.dump(result, f)
-    
+    """
     for lang, val in v_dict.items():
         file_name = f'{lang}_description.json'
         file_path = os.path.join(data_directory, file_name)
@@ -497,7 +504,7 @@ if __name__ == "__main__":
         description_dict = dict()
         for key, _ in top_features:
             layer, feature_idx = key.split('.')
-            response = requests.get(f"https://www.neuronpedia.org/api/feature/gemma-2-2b/{layer}-gemmascope-transcoder-16k/{feature_idx}")
+            response = requests.get(neuronpedia_urls[model_name].format(layer=layer, feature_idx=feature_idx))
             explanations = response.json()['explanations']
             try:
                 description = explanations[0]['description']
@@ -538,6 +545,7 @@ if __name__ == "__main__":
             json.dump(language_name_in_description, f)
     
     # plots
+    """
     lang_names = lang_dict['en']
     for prompt_lang in langs:
         data_list = list()
@@ -552,3 +560,4 @@ if __name__ == "__main__":
             titles.append(f"{lang_names[prompt_lang]}-{lang_names[test_lang]}")
         filename = f"code_switch_activations_{prompt_lang}.png"
         plot_linguistic_activations_multiple(data_list, titles, os.path.join(data_directory, filename), lang_names[prompt_lang])
+    """

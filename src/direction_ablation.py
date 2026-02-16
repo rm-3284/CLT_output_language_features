@@ -69,6 +69,7 @@ from intervention import (
     get_top_outputs, get_best_base, logit_diff_single, get_best_rank
 )
 from template import lang_to_flores_key, base_strings
+from models import hf_model_names, hf_transcoder_names
 
 def extract_directions(transcoder_model, layer_feature_map):
     """
@@ -238,6 +239,14 @@ def parse_args():
         default=None,
         help='Prompt language',
     )
+    parser.add_argument(
+        '--model',
+        '-m',
+        type=str,
+        default='gemma-2-2b',
+        choices=hf_model_names.keys(),
+        help='Model to use for the experiment',
+    )
 
     return parser.parse_args()
 
@@ -245,11 +254,11 @@ if __name__ == "__main__":
     args = parse_args()
 
     # load the model
-    model_name = 'google/gemma-2-2b'
-    transcoder_name = "gemma"
-    model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16, attn_implementation="sdpa")
+    model_name = args.model
+    transcoder_name = hf_transcoder_names.get(args.model)
+    model = ReplacementModel.from_pretrained(hf_model_names[model_name], transcoder_name, device=device, dtype=torch.bfloat16, attn_implementation="sdpa")
 
-    nnsight_model = nnsight.LanguageModel(model_name, device_map=device)
+    nnsight_model = nnsight.LanguageModel(hf_model_names[model_name], device_map=device)
 
     # relevant directories
     current_file_path = __file__
@@ -257,9 +266,9 @@ if __name__ == "__main__":
     absolute_directory = os.path.abspath(current_directory)
     data_directory = os.path.join(absolute_directory, "data")
     flores_directory = os.path.join(data_directory, "flores_features")
-    lang_specific_directory = os.path.join(data_directory, "language_specific_features")
-    multilingual_features_directory = os.path.join(data_directory, "multilingual_llm_features")
-    amplification_values_directory = os.path.join(data_directory, "amplification_values")
+    lang_specific_directory = os.path.join(data_directory, "language_specific_features", model_name)
+    multilingual_features_directory = os.path.join(data_directory, "multilingual_llm_features", model_name)
+    amplification_values_directory = os.path.join(data_directory, "amplification_values", model_name)
 
     langs = list(lang_to_flores_key.keys())
 
@@ -284,7 +293,7 @@ if __name__ == "__main__":
         freq_ablations[lang] = interventions_to_dict_everything_ablation(freq_interventions, lang, model)
 
     # ablation + amplification experiments
-    output_dir = os.path.join(data_directory, "interventions")
+    output_dir = os.path.join(data_directory, "interventions", model_name)
     for prompt_lang in langs:
         if args.lang != None:
             if prompt_lang != args.lang:

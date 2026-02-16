@@ -12,6 +12,7 @@ from intervention import (
     get_top_outputs, logit_diff_single, check_valid_meaning,
     )
 from template import lang_to_flores_key, base_strings
+from models import hf_model_names, hf_transcoder_names, layer_num
 
 def direction_ablation_helper(model: ReplacementModel, layer_idx: int, target_features: list[int], prompt):
     # the projection can be calculated as follows. v = W_dec[feature, :]
@@ -63,10 +64,10 @@ def direction_ablation_helper(model: ReplacementModel, layer_idx: int, target_fe
         intervention_list.append((layer_idx, -1, feature_idx, val))
     return intervention_list
     
-def direction_ablation_layer_determine(features: dict[str, list[tuple[Feature, float]]], lang) -> tuple[int, list[int]]:
+def direction_ablation_layer_determine(features: dict[str, list[tuple[Feature, float]]], lang, num_layers: int) -> tuple[int, list[int]]:
     features_list = features[lang]
     features_set = dict()
-    for i in range(26):
+    for i in range(num_layers):
         features_set[i] = set()
     for f, _ in features_list:
         features_set[f.layer].add(f.feature_idx)
@@ -314,16 +315,23 @@ def parse_args():
         default=None,
         help='Prompt language',
     )
-
+    parser.add_argument(
+        '--model',
+        '-m',
+        type=str,
+        default='gemma-2-2b',
+        choices=hf_model_names.keys(),
+        help='Model to use for intervention',
+    )
     return parser.parse_args()
 
 if __name__ == "__main__":
     args = parse_args()
 
     # load the model
-    model_name = 'google/gemma-2-2b'
-    transcoder_name = "gemma"
-    model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16)
+    model_name = args.model
+    transcoder_name = hf_transcoder_names.get(args.model)
+    model = ReplacementModel.from_pretrained(hf_model_names[model_name], transcoder_name, device=device, dtype=torch.bfloat16)
 
     direction_ablation_helper(model, 25, [452, 24522], "Hello world.")
 
@@ -332,10 +340,10 @@ if __name__ == "__main__":
     current_directory = os.path.dirname(current_file_path)
     absolute_directory = os.path.abspath(current_directory)
     data_directory = os.path.join(absolute_directory, "data")
-    flores_directory = os.path.join(data_directory, "flores_features")
-    lang_specific_directory = os.path.join(data_directory, "language_specific_features")
-    multilingual_features_directory = os.path.join(data_directory, "multilingual_llm_features")
-    amplification_values_directory = os.path.join(data_directory, "amplification_values")
+    flores_directory = os.path.join(data_directory, "flores_features", model_name)
+    lang_specific_directory = os.path.join(data_directory, "language_specific_features", model_name)
+    multilingual_features_directory = os.path.join(data_directory, "multilingual_llm_features", model_name)
+    amplification_values_directory = os.path.join(data_directory, "amplification_values", model_name)
 
     langs = list(lang_to_flores_key.keys())
 
@@ -356,13 +364,13 @@ if __name__ == "__main__":
     freq_amplifications = dict()
     for lang in langs:
         #desc_ablations[lang] = ablation(desc_interventions, lang)
-        desc_ablations[lang] = direction_ablation_layer_determine(desc_interventions, lang)
+        desc_ablations[lang] = direction_ablation_layer_determine(desc_interventions, lang, model_name)
         desc_amplifications[lang] = amplification(desc_interventions, lang)
         #val_ablations[lang] = ablation(val_interventions, lang)
-        val_ablations[lang] = direction_ablation_layer_determine(val_interventions, lang)
+        val_ablations[lang] = direction_ablation_layer_determine(val_interventions, lang, model_name)
         val_amplifications[lang] = amplification(val_interventions, lang)
         #freq_ablations[lang] = ablation(freq_interventions, lang)
-        freq_ablations[lang] = direction_ablation_layer_determine(freq_interventions, lang)
+        freq_ablations[lang] = direction_ablation_layer_determine(freq_interventions, lang, model_name)
         freq_amplifications[lang] = amplification(freq_interventions, lang)
 
     print(desc_ablations)
@@ -370,7 +378,7 @@ if __name__ == "__main__":
     print(freq_ablations)
 
     # ablation + amplification experiments
-    output_dir = os.path.join(data_directory, "interventions")
+    output_dir = os.path.join(data_directory, "interventions", model_name)
     for prompt_lang in langs:
         if args.lang != None:
             if prompt_lang != args.lang:
