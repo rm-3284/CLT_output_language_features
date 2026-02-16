@@ -413,9 +413,9 @@ if __name__ == "__main__":
     if not os.path.exists(data_directory):
         os.makedirs(data_directory)
 
-    model_name = hf_model_names[args.model]
+    model_name = args.model
     transcoder_name = hf_transcoder_names[model_name]
-    model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16)
+    model = ReplacementModel.from_pretrained(hf_model_names[model_name], transcoder_name, device=device, dtype=torch.bfloat16)
 
     lang_mean_activation_dict = dict()
     for lang, ds_key in lang_to_flores_key.items():
