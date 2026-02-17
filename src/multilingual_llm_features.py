@@ -1,5 +1,6 @@
 import argparse
 from datasets import load_dataset
+import gc
 import glob
 import json
 import matplotlib.pyplot as plt
@@ -11,7 +12,7 @@ import seaborn as sns
 import torch
 
 from circuit_tracer_import import attribute, ReplacementModel
-from device_setup import device
+from device_setup import device, num_gpus
 from template import lang_to_flores_key, identifiers, lang_dict
 from models import hf_model_names, hf_transcoder_names, neuronpedia_urls
 
@@ -21,7 +22,7 @@ def get_activation(
         max_n_logits = 5,
         desired_logit_prob = 0.95,
         max_feature_nodes = None,
-        batch_size = 64,
+        batch_size = 4,
         offload = 'cpu',
         verbose = True,
         ) -> tuple[dict[str, float], int]:
@@ -55,16 +56,18 @@ def get_activation(
     for key, val in activation_values_sum.items():
         activation_values_sum[key] = val.item() if isinstance(val, torch.Tensor) else val
     del graph
+    torch.cuda.empty_cache()
     return activation_values_sum, n_pos
 
 def get_mean_activation(
         prompts: list[str],
         model: ReplacementModel,
+        max_feature_nodes = None,
 ) -> dict[str, float]:
     mean_activation_dict = dict()
     n_pos_total = 0
     for prompt in prompts:
-        activation_values_sum, n_pos = get_activation(prompt, model)
+        activation_values_sum, n_pos = get_activation(prompt, model, max_feature_nodes=max_feature_nodes)
         n_pos_total += n_pos
         for key, val in activation_values_sum.items():
             try:
@@ -73,7 +76,9 @@ def get_mean_activation(
                 mean_activation_dict[key] = current_val + val
             except KeyError:
                 mean_activation_dict[key] = val
+        del activation_values_sum
         torch.cuda.empty_cache()
+        gc.collect()
     
     for key, val in mean_activation_dict.items():
         mean_activation_dict[key] = val / n_pos_total
@@ -168,7 +173,7 @@ def steering_from_A_to_B(
         max_n_logits = 5,
         desired_logit_prob = 0.95,
         max_feature_nodes = None,
-        batch_size = 64,
+        batch_size = 16,
         offload = 'cpu',
         verbose = True,
         ) -> tuple[torch.Tensor, torch.Tensor]:
@@ -221,7 +226,7 @@ def code_switch_analysis(
         max_n_logits = 5,
         desired_logit_prob = 0.95,
         max_feature_nodes = None,
-        batch_size = 64,
+        batch_size = 16,
         offload = 'cpu',
         verbose = True,
         ) -> dict[str, tuple[float, float, float]]: 
@@ -415,6 +420,8 @@ if __name__ == "__main__":
 
     model_name = args.model
     transcoder_name = hf_transcoder_names[model_name]
+    print(f"Loading model {model_name}")
+    print("Using sparse dictionary approach - no feature limits needed!")
     model = ReplacementModel.from_pretrained(hf_model_names[model_name], transcoder_name, device=device, dtype=torch.bfloat16)
 
     lang_mean_activation_dict = dict()
@@ -426,14 +433,19 @@ if __name__ == "__main__":
                 mean_activation = json.load(f)
             lang_mean_activation_dict[lang] = mean_activation
         else:
+            # Use streaming to save memory
             ds = load_dataset("openlanguagedata/flores_plus", ds_key, split="dev")
             ds = ds.shuffle(seed=42)
-            df = ds.to_pandas()
-            batch = df.loc[:100, 'text'].tolist()
-            mean_activation = get_mean_activation(batch, model)
+            max_sentence_length = 100  # character limit
+            batch = [example['text'] for example in ds if len(example['text']) < max_sentence_length][:25]
+            print(batch)
+            mean_activation = get_mean_activation(batch, model, max_feature_nodes=None)  # No limits!
+            del batch
             with open(full_path, 'w') as f:
                 json.dump(mean_activation, f)
             lang_mean_activation_dict[lang] = mean_activation
+            torch.cuda.empty_cache()
+            gc.collect()
     
     full_path = os.path.join(data_directory, 'v_values.json')
     if os.path.exists(full_path):
@@ -451,6 +463,7 @@ if __name__ == "__main__":
            histogram_v_values(data, full_path)
     
     # steering experiments
+    """
     full_path = os.path.join(data_directory, 'forced_code_switch.jsonl')
     prompt_list = []
     with open(full_path, 'r', encoding='utf-8') as f:
@@ -458,7 +471,7 @@ if __name__ == "__main__":
             if line.strip():
                 json_object = json.loads(line.strip())
                 prompt_list.append(json_object)
-    
+    """
     data_list = list()
     topk = 50
     """

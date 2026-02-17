@@ -6,7 +6,7 @@ from typing import Literal
 
 from circuit_tracer_import import Feature, ReplacementModel
 from data.adjectives import big_data
-from device_setup import device
+from device_setup import device, num_gpus
 from intervention import (
     ablation, amplification, get_best_base, get_best_rank,
     get_top_outputs, logit_diff_single, check_valid_meaning,

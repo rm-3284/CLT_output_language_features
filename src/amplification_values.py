@@ -1,5 +1,6 @@
 import argparse
 from datasets import load_dataset
+import gc
 import json
 import math
 import matplotlib.pyplot as plt
@@ -13,6 +14,7 @@ from device_setup import device
 from circuit_tracer_import import Graph, Supernode, Feature, ReplacementModel, attribute
 from template import lang_to_flores_key
 from models import hf_model_names, hf_transcoder_names
+from device_setup import device, num_gpus
 
 def set_features_from_supernodes(*supernodes: Supernode) -> list[Feature]:
     feature_lst = []
@@ -56,7 +58,7 @@ def feature_find_for_every_pos(graph: Graph, feature: str) -> list[int]:
 def get_feature_activation_from_prompt(
         prompt: str, feature_list: list[str], model: ReplacementModel,
         max_n_logits = 5, desired_logit_prob = 0.95,
-        max_feature_nodes = None, batch_size = 64,
+        max_feature_nodes = None, batch_size = 8,
         offload = 'cpu', verbose = True,
         ) -> list[float]:
     graph = attribute(
@@ -79,12 +81,13 @@ def get_feature_activation_from_prompt(
             activation_value = activation_value.item() if isinstance(activation_value, torch.Tensor) else activation_value
             activation_list.append(activation_value)
     del graph
+    torch.cuda.empty_cache()
     return activation_list
 
 def get_feature_activation_for_every_pos(
     prompt: str, feature_list: list[str], model: ReplacementModel,
         max_n_logits = 5, desired_logit_prob = 0.95,
-        max_feature_nodes = None, batch_size = 64,
+        max_feature_nodes = None, batch_size = 4,
         offload = 'cpu', verbose = True,
         ) -> list[list[float]]:
     graph = attribute(
@@ -121,6 +124,8 @@ def iterate_over_sentences(prompts: list[str], feature_list: list[str], model: R
         activation_list = get_feature_activation_from_prompt(prompt, feature_list, model)
         for i, feature in enumerate(feature_list):
             activation_values_dict[feature].append(activation_list[i])
+        torch.cuda.empty_cache()
+        gc.collect()
     return activation_values_dict
 
 def iterate_every_pos_feature_activation(prompts: list[str], feature_list: list[str], model: ReplacementModel) -> dict[str, list[float]]:
@@ -131,6 +136,8 @@ def iterate_every_pos_feature_activation(prompts: list[str], feature_list: list[
         activation_list = get_feature_activation_for_every_pos(prompt, feature_list, model)
         for i, feature in enumerate(feature_list):
             activation_values_dict[feature].extend(activation_list[i])
+        torch.cuda.empty_cache()
+        gc.collect()
     return activation_values_dict
 
 def make_histogram_from_values_dict(data: list[float], bins: int = 30, title: str = "Histogram of Data (NaNs Excluded)", xlabel: str = "Value", ylabel: str = "Frequency") -> None:
@@ -204,6 +211,7 @@ def summarize(features: list[float]) -> tuple[int, int, float, float, float, flo
 def argsparse():
     parser = argparse.ArgumentParser(description='Calculate amplification values for features extracted from FLORES dataset')
     parser.add_argument('--model', type=str, default='gemma-2-2b', choices=hf_model_names.keys(), help='Model to use for calculating amplification values')
+    parser.add_argument('--lang', type=str, default=None, choices=lang_to_flores_key.keys(), help='Language to calculate amplification values for (if not specified, calculates for all languages)')
     return parser.parse_args()
 
 if __name__ == "__main__":
@@ -220,33 +228,45 @@ if __name__ == "__main__":
     lang_specific_directory = os.path.join(data_directory, "language_specific_features", args.model)
     multilingual_features_directory = os.path.join(data_directory, "multilingual_llm_features", args.model)
 
-    amplification_value_directory = os.path.join(data_directory, "amplification_values")
+    amplification_value_directory = os.path.join(data_directory, "amplification_values", args.model)
     os.makedirs(amplification_value_directory, exist_ok=True)
 
     for lang, ds_key in lang_to_flores_key.items():
+        if args.lang is not None and lang != args.lang:
+            continue
+
         file_name = f"{lang}.json"
         if os.path.exists(os.path.join(amplification_value_directory, file_name)):
             continue
 
         print(f"Loading {ds_key}")
+        # Use streaming to save memory
         ds = load_dataset("openlanguagedata/flores_plus", ds_key, split="dev")
         ds = ds.shuffle(seed=42)
-        df = ds.to_pandas()
-        batch = df.loc[:150, 'text'].tolist()
-        sentences = filter_sentences(batch, alphabet_char[lang], model) # only returns 100 sentences
+        batch = [example['text'] for i, example in enumerate(ds) if i < 150]
+        sentences = filter_sentences(batch, alphabet_char[lang], model, num_sentences=30) # only returns 100 sentences
+        del batch
 
         # features
-        file_name = f"{lang}.json"
+        # file_name = f"{lang}.json"
         feature_set = set()
-
-        with open(os.path.join(flores_directory, file_name), 'r') as f:
-            flores_features = json.load(f)
+        if os.path.exists(os.path.join(flores_directory, file_name)):
+            with open(os.path.join(flores_directory, file_name), 'r') as f:
+                flores_features = json.load(f)
+            print(f"Loaded features from {flores_directory} for {lang} in {file_name}")
+        else:
+            with open(os.path.join(flores_directory, f"{lang}_short.json"), 'r') as f:
+                flores_features = json.load(f)
+            print(f"Loaded features from {flores_directory} for {lang} in {lang}_short.json")
         for layer, feature_idx in flores_features:
             key = f"{layer}.{feature_idx}"
             feature_set.add(key)
         
-        with open(os.path.join(lang_specific_directory, file_name), 'r') as f:
-            lang_specific_features = json.load(f)
+        # Updated to read from sparse format
+        sparse_file_name = f"{lang}_sparse.json"
+        with open(os.path.join(lang_specific_directory, sparse_file_name), 'r') as f:
+            sparse_data = json.load(f)
+            lang_specific_features = sparse_data['max_values']
         for key in lang_specific_features.keys():
             feature_set.add(key)
         
@@ -259,8 +279,15 @@ if __name__ == "__main__":
         activation_dict = iterate_over_sentences(sentences, feature_list, model)
         with open(os.path.join(amplification_value_directory, file_name), 'w') as f:
             json.dump(activation_dict, f)
+        
+        del activation_dict, sentences, feature_list, feature_set
+        torch.cuda.empty_cache()
+        gc.collect()
 
     for lang in lang_to_flores_key.keys():
+        if args.lang is not None and lang != args.lang:
+            continue
+
         file_name = f"{lang}.json"
         summarized_file_name = f"{lang}_summary.json"
         if os.path.exists(os.path.join(amplification_value_directory, summarized_file_name)):
@@ -277,9 +304,19 @@ if __name__ == "__main__":
         with open(os.path.join(amplification_value_directory, summarized_file_name), 'w') as f:
             json.dump(feature_summarized, f)
         
+        del feature_dict, feature_summarized
+        torch.cuda.empty_cache()
+        gc.collect()
+    
+    # Cleanup after first two loops
+    torch.cuda.empty_cache()
+    gc.collect()
+    
+    # Reload model for next phase
+    #model = ReplacementModel.from_pretrained(hf_model_names[model_name], transcoder_name, device=device, dtype=torch.bfloat16)
 
     for lang, ds_key in lang_to_flores_key.items():
-        if lang != 'es':
+        if args.lang is not None and lang != args.lang:
             continue
 
         file_name = f"{lang}.json"
@@ -288,21 +325,31 @@ if __name__ == "__main__":
             continue
 
         print(f"Loading {ds_key}")
+        # Use streaming to save memory
         ds = load_dataset("openlanguagedata/flores_plus", ds_key, split="dev")
         ds = ds.shuffle(seed=42)
-        df = ds.to_pandas()
-        batch = df.loc[:100, 'text'].tolist()
-        
+        max_sentence_length = 100  # character limit
+        batch = [example['text'] for example in ds if len(example['text']) < max_sentence_length][:25]
+        print(batch)        
         feature_set = set()
 
-        with open(os.path.join(flores_directory, file_name), 'r') as f:
-            flores_features = json.load(f)
+        if os.path.exists(os.path.join(flores_directory, file_name)):
+            with open(os.path.join(flores_directory, file_name), 'r') as f:
+                flores_features = json.load(f)
+            print(f"Loaded features from {flores_directory} for {lang} in {file_name}")
+        else:
+            with open(os.path.join(flores_directory, f"{lang}_short.json"), 'r') as f:
+                flores_features = json.load(f)
+            print(f"Loaded features from {flores_directory} for {lang} in {lang}_short.json")
         for layer, feature_idx in flores_features:
             key = f"{layer}.{feature_idx}"
             feature_set.add(key)
         
-        with open(os.path.join(lang_specific_directory, file_name), 'r') as f:
-            lang_specific_features = json.load(f)
+        # Updated to read from sparse format
+        sparse_file_name = f"{lang}_sparse.json"
+        with open(os.path.join(lang_specific_directory, sparse_file_name), 'r') as f:
+            sparse_data = json.load(f)
+            lang_specific_features = sparse_data['max_values']
         for key in lang_specific_features.keys():
             feature_set.add(key)
         
@@ -315,8 +362,15 @@ if __name__ == "__main__":
         activation_dict = iterate_every_pos_feature_activation(batch, feature_list, model)
         with open(os.path.join(amplification_value_directory, destination_file_name), 'w') as f:
             json.dump(activation_dict, f)
+        
+        del activation_dict, batch, feature_list, feature_set
+        torch.cuda.empty_cache()
+        gc.collect()
 
     for lang in lang_to_flores_key.keys():
+        if args.lang is not None and lang != args.lang:
+            continue
+
         file_name = f"{lang}_every_pos.json"
         summarized_file_name = f"{lang}_pos_summary.json"
         if os.path.exists(os.path.join(amplification_value_directory, summarized_file_name)):
@@ -332,3 +386,12 @@ if __name__ == "__main__":
         
         with open(os.path.join(amplification_value_directory, summarized_file_name), 'w') as f:
             json.dump(feature_summarized, f)
+        
+        del feature_dict, feature_summarized
+        torch.cuda.empty_cache()
+        gc.collect()
+    
+    # Final cleanup
+    del model
+    torch.cuda.empty_cache()
+    gc.collect()

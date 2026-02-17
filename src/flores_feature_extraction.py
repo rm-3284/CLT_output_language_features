@@ -1,5 +1,6 @@
 import argparse
 from datasets import load_dataset
+import gc
 import json
 import pandas as pd
 import torch
@@ -21,7 +22,7 @@ def iterate_through_sentences(
         MAX_ITERATIONS: int = 75,
         threshold_first = 0.5, threshold_last = 0.25,
         max_n_logits = 5, desired_logit_prob = 0.95,
-        max_feature_nodes = None, batch_size = 256,
+        max_feature_nodes = None, batch_size = 4,
         offload = 'cpu', verbose = True,
         ) -> list[tuple[int, int]]:
     features = []
@@ -52,12 +53,16 @@ def iterate_through_sentences(
         pruned = prune_paths_by_first_last(graph, paths, threshold_first, threshold_last)
         last_pos_features = pick_last_pos_features(graph, pruned)
         features.extend(last_pos_features)
+        del graph, paths, pruned, last_pos_features
+        torch.cuda.empty_cache()
+        gc.collect()
     
     return features
 
 def argsparse():
     parser = argparse.ArgumentParser(description='Extract features from FLORES dataset')
     parser.add_argument('--model', type=str, default='gemma-2-2b', choices=hf_model_names.keys(), help='Model to use for feature extraction')
+    parser.add_argument('--lang', type=str, default=None, choices=lang_to_flores_key.keys(), help='Language to extract features for')
     return parser.parse_args()
 
 if __name__ == "__main__":
@@ -72,14 +77,21 @@ if __name__ == "__main__":
     model_name = args.model
     transcoder_name = hf_transcoder_names[model_name]
     model = ReplacementModel.from_pretrained(hf_model_names[model_name], transcoder_name, device=device, dtype=torch.bfloat16)
+    
     for lang, ds_key in lang_to_flores_key.items():
+        if args.lang and args.lang != lang:
+            continue
         print(f"Loading {ds_key}")
+        # Use streaming to save memory
         ds = load_dataset("openlanguagedata/flores_plus", ds_key, split="dev")
         ds = ds.shuffle(seed=42)
-        df = ds.to_pandas()
-        batch = df.loc[:150, 'text'].tolist()
-        sentences = filter_sentences(batch, alphabet_char[lang], model) # only returns 100 sentences
-        features = iterate_through_sentences(model, sentences)
-        file_name = f'{lang}.json'
+        batch = [example['text'] for i, example in enumerate(ds) if i < 150]
+        sentences = filter_sentences(batch, alphabet_char[lang], model, num_sentences=30) # only returns 100 sentences
+        del batch
+        features = iterate_through_sentences(model, sentences, max_feature_nodes=None)  # No limits!
+        file_name = f'{lang}_short.json'
         with open(os.path.join(data_directory, file_name), 'w') as f:
             json.dump(features, f)
+        del features, sentences
+        torch.cuda.empty_cache()
+        gc.collect()

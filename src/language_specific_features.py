@@ -1,30 +1,34 @@
 import argparse
 from datasets import load_dataset
+import gc
 import glob
 import json
 import os
 import requests
 import torch
 import torch.nn.functional as F
+from collections import defaultdict
 
 from circuit_tracer_import import attribute, ReplacementModel
 from device_setup import device
-from intervention import get_top_outputs
 from template import lang_to_flores_key, langs_big, identifiers
-from models import hf_model_names, hf_transcoder_names, neuronpedia_urls, layer_num
+from models import hf_model_names, hf_transcoder_names, neuronpedia_urls, layer_num, n_features
 
 def get_activation_vector(
         prompt: str, 
         model: ReplacementModel,
         n_layers = 26,
-        n_features = 16384,
         max_n_logits = 5,
         desired_logit_prob = 0.95,
         max_feature_nodes = None,
-        batch_size = 64,
+        batch_size = 4,
         offload = 'cpu',
         verbose = True,
-        ) -> tuple[torch.Tensor, int, dict[str, float]]:
+        ) -> tuple[dict[str, int], int, dict[str, float]]:
+    """
+    Sparse dictionary version - no memory limits needed!
+    Returns activation counts as dict instead of dense tensor.
+    """
     graph = attribute(
             prompt=prompt,
             model=model,
@@ -37,94 +41,141 @@ def get_activation_vector(
         )
     active_features = graph.active_features # (n_active_features, 3) containing (layer, pos, feature_idx)
     activation_values = graph.activation_values
-    activation_vector = torch.zeros((n_layers, n_features))
+    
+    # Use sparse dictionaries instead of dense tensors
+    activation_counts = defaultdict(int)
+    max_values_dict = dict()
     n_pos = graph.n_pos
-    values_dict = dict()
+    
     for i, (layer, pos, feature_idx) in enumerate(active_features):
         layer = int(layer) if isinstance(layer, torch.Tensor) else layer
         feature_idx = int(feature_idx) if isinstance(feature_idx, torch.Tensor) else feature_idx
-        activation_vector[layer, feature_idx] += 1
         
         key = f"{layer}.{feature_idx}"
-        cur = values_dict.get(key, 0)
+        activation_counts[key] += 1
+        
         activation_value = activation_values[i]
         activation_value = activation_value.item() if isinstance(activation_value, torch.Tensor) else activation_value
-        values_dict[key] = max(cur, activation_value)
-
-    return activation_vector, n_pos, values_dict
+        max_values_dict[key] = max(max_values_dict.get(key, 0), activation_value)
+    
+    del graph, active_features, activation_values
+    torch.cuda.empty_cache()
+    gc.collect()
+    
+    return dict(activation_counts), n_pos, max_values_dict
 
 def get_lang_activation_vector(
         prompts: list[str],
         model: ReplacementModel,
-        n_layers = 26, n_features=16384,
-) -> tuple[torch.Tensor, torch.Tensor, dict[str, float]]:
-    activation_vector = torch.zeros((n_layers, n_features))
-    active_examples = torch.zeros((n_layers, n_features))
+        n_layers = 26,
+        max_feature_nodes=None,
+) -> tuple[dict[str, float], dict[str, float], dict[str, float]]:
+    """
+    Sparse dictionary version - returns dicts instead of tensors.
+    Returns:
+        activation_per_pos: dict mapping feature to average activation per position
+        active_example_ratio: dict mapping feature to ratio of examples where active
+        max_values_dict: dict mapping feature to max activation value
+    """
+    activation_total = defaultdict(int)  # total count across all examples
+    active_in_examples = defaultdict(int)  # number of examples where feature is active
     n_pos_total = 0
     max_values_dict = dict()
+    
     for prompt in prompts:
-        vec, n_pos, values_dict = get_activation_vector(prompt, model, n_layers, n_features)
-        activation_vector += vec
+        counts, n_pos, values_dict = get_activation_vector(prompt, model, n_layers, max_feature_nodes=max_feature_nodes)
         n_pos_total += n_pos
-        bool_mask = (activation_vector > 0).float()
-        active_examples += bool_mask
-
+        
+        # Accumulate counts
+        for key, count in counts.items():
+            activation_total[key] += count
+            active_in_examples[key] += 1  # This example has this feature active
+        
+        # Track max values
         for key, val in values_dict.items():
-            cur = max_values_dict.get(key, 0)
-            max_values_dict[key] = max(cur, val)
+            max_values_dict[key] = max(max_values_dict.get(key, 0), val)
+        
+        del counts, values_dict
+        torch.cuda.empty_cache()
+        gc.collect()
+    
+    # Normalize
+    activation_per_pos = {key: count / n_pos_total for key, count in activation_total.items()}
+    active_example_ratio = {key: count / len(prompts) for key, count in active_in_examples.items()}
+    
+    return activation_per_pos, active_example_ratio, max_values_dict
 
-    activation_vector /= n_pos_total
-    active_examples /= len(prompts)
-    return activation_vector, active_examples, max_values_dict
-
-def normalize(lang_activation_vec: dict[str, torch.Tensor]) -> tuple[list[str], torch.Tensor]:
-    # the returned tensor is (n_layers, n_features, langs)
-    tensor_list = []
-    lang_list = []
-    for lang, tensor in lang_activation_vec.items():
-        tensor_list.append(tensor)
-        lang_list.append(lang)
-    stacked = torch.stack(tensor_list, dim=-1)
-    normalized = F.normalize(stacked, p=1, dim=-1)
-    return lang_list, normalized
+def normalize_sparse(lang_activation_vec: dict[str, dict[str, float]]) -> dict[str, dict[str, float]]:
+    """
+    Normalize sparse dictionaries - for each feature, normalize across languages.
+    Returns dict[lang][feature] = normalized_value
+    """
+    # Collect all features across all languages
+    all_features = set()
+    for lang_dict in lang_activation_vec.values():
+        all_features.update(lang_dict.keys())
+    
+    normalized = {lang: {} for lang in lang_activation_vec.keys()}
+    
+    for feature in all_features:
+        # Get values for this feature across all languages
+        values = [lang_activation_vec[lang].get(feature, 0) for lang in lang_activation_vec.keys()]
+        total = sum(values)
+        
+        if total > 0:
+            for lang, val in zip(lang_activation_vec.keys(), values):
+                normalized[lang][feature] = val / total
+    
+    return normalized
 
 def choose_language_specific_features(
         langs: list[str], 
-        active_tokens: dict[str, torch.Tensor], 
-        active_examples: dict[str, torch.Tensor],
+        active_tokens: dict[str, dict[str, float]], 
+        active_examples: dict[str, dict[str, float]],
         cross_lingual_thres: float,
         example_thres: float,
         token_thres: float = 0.1,
         ) -> dict[str, list[tuple[int, int]]]:
-    active_features = torch.zeros_like(active_tokens[langs[0]]).bool()
+    """
+    Sparse version - works with dictionaries instead of tensors.
+    No memory limits needed!
+    """
+    # Collect all features that appear in any language
+    all_features = set()
     for lang in langs:
-        tokens_mask = (active_tokens[lang] > token_thres)
-        examples_mask = (active_examples[lang] > example_thres)
-        result_mask = tokens_mask & examples_mask
-        active_features = active_features | result_mask
-    true_indices = torch.nonzero(active_features)
-
-    tensor_list = []
-    for lang in langs:
-        tensor_list.append(active_tokens[lang])
-    stacked = torch.stack(tensor_list, dim=-1)
+        all_features.update(active_tokens[lang].keys())
     
-    language_specific_features = dict()
-    for lang in langs:
-        language_specific_features[lang] = []
-
-    for (layer, feature_idx) in true_indices:
-        layer = layer.item() if isinstance(layer, torch.Tensor) else layer
-        feature_idx = feature_idx.item() if isinstance(feature_idx, torch.Tensor) else feature_idx
-        vals = stacked[layer, feature_idx, :]
+    language_specific_features = {lang: [] for lang in langs}
+    
+    for feature_key in all_features:
+        # Check if feature meets threshold in at least one language
+        passes_threshold = False
+        for lang in langs:
+            token_val = active_tokens[lang].get(feature_key, 0)
+            example_val = active_examples[lang].get(feature_key, 0)
+            if token_val > token_thres and example_val > example_thres:
+                passes_threshold = True
+                break
+        
+        if not passes_threshold:
+            continue
+        
+        # Get values for all languages
+        vals = [active_tokens[lang].get(feature_key, 0) for lang in langs]
         max_val = max(vals)
-        active = (vals >= max_val * cross_lingual_thres)
-        indices = torch.nonzero(active)
-        if len(indices) > 1:
-            continue # not specific
-        else:
-            lang = langs[indices[0]]
-            language_specific_features[lang].append((layer, feature_idx))
+        
+        if max_val == 0:
+            continue
+        
+        # Check which languages are active
+        active_langs = [i for i, val in enumerate(vals) if val >= max_val * cross_lingual_thres]
+        
+        # Only keep if specific to one language
+        if len(active_langs) == 1:
+            lang = langs[active_langs[0]]
+            layer, feature_idx = feature_key.split('.')
+            language_specific_features[lang].append((int(layer), int(feature_idx)))
+    
     return language_specific_features
 
 def scale_steer_to_A(
@@ -139,7 +190,7 @@ def scale_steer_to_A(
         max_n_logits = 5,
         desired_logit_prob = 0.95,
         max_feature_nodes = None,
-        batch_size = 64,
+        batch_size = 4,
         offload = 'cpu',
         verbose = True,
         ) -> str:
@@ -199,6 +250,9 @@ def scale_steer_to_A(
 
         generated += token
         print(generated)
+        
+        del graph, active_features, activation_values, interventions, new_logits, next_token_logits, probs
+        torch.cuda.empty_cache()
 
     return generated
 
@@ -218,34 +272,52 @@ if __name__ == "__main__":
     
     model_name = args.model
     transcoder_name = hf_transcoder_names[model_name]
+    print(f"Loading model {model_name} with {n_features[model_name]} features per layer")
+    print(f"Using sparse dictionary approach - no feature limits needed!")
     model = ReplacementModel.from_pretrained(hf_model_names[model_name], transcoder_name, device=device, dtype=torch.bfloat16)
 
     lang_activation_vec = dict()
     lang_active_examples = dict()
     lang_max_vals = dict()
     for lang, ds_key in lang_to_flores_key.items():
-        file_name = f"{lang}.pt"
-        json_name = f"{lang}.json" # for max activation values
-        pt_path = os.path.join(data_directory, file_name)
+        print(f"Processing {lang}...")
+        json_name = f"{lang}_sparse.json"
         json_path = os.path.join(data_directory, json_name)
-        if os.path.exists(pt_path) and os.path.exists(json_path):
-            activation_vector, active_examples = torch.load(pt_path)
-            lang_activation_vec[lang] = activation_vector
-            lang_active_examples[lang] = active_examples
+        
+        if os.path.exists(json_path):
+            print(f"  Loading cached data for {lang}")
             with open(json_path, 'r') as f:
-                lang_max_vals[lang] = json.load(f)
+                data = json.load(f)
+            lang_activation_vec[lang] = data['activation_per_pos']
+            lang_active_examples[lang] = data['active_example_ratio']
+            lang_max_vals[lang] = data['max_values']
         else:
+            print(f"  Computing activations for {lang}")
+            # Use streaming to save memory
             ds = load_dataset("openlanguagedata/flores_plus", ds_key, split="dev")
             ds = ds.shuffle(seed=42)
-            df = ds.to_pandas()
-            batch = df.loc[:100, 'text'].tolist()
-            activation_vector, active_examples, max_values_dict = get_lang_activation_vector(batch, model, n_layers=layer_num[model_name])
-            torch.save((activation_vector, active_examples), pt_path)
-            lang_activation_vec[lang] = activation_vector
-            lang_active_examples[lang] = active_examples
+            # Skip longer sentences to avoid OOM - longer sentences have more features
+            max_sentence_length = 100  # character limit
+            batch = [example['text'] for example in ds if len(example['text']) < max_sentence_length][:25]
+            print(batch)
+            activation_per_pos, active_example_ratio, max_values_dict = get_lang_activation_vector(batch, model, n_layers=layer_num[model_name], max_feature_nodes=None)
+            del batch
+            
+            # Save as JSON (sparse format)
+            data = {
+                'activation_per_pos': activation_per_pos,
+                'active_example_ratio': active_example_ratio,
+                'max_values': max_values_dict
+            }
             with open(json_path, 'w') as f:
-                json.dump(max_values_dict, f)
+                json.dump(data, f)
+            
+            lang_activation_vec[lang] = activation_per_pos
+            lang_active_examples[lang] = active_example_ratio
             lang_max_vals[lang] = max_values_dict
+            print(f"  {lang}: {len(lang_activation_vec[lang])} active features")
+            torch.cuda.empty_cache()
+            gc.collect()
     
     example_thres = 0.98
     file_name = f"features_{example_thres}.json"

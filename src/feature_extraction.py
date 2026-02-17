@@ -1,11 +1,16 @@
+import argparse
 import copy
 import heapq
 import json
+import logging
 import requests
 import torch
 from typing import Optional
 
+logger = logging.getLogger(__name__)
+
 from circuit_tracer_import import Graph, ReplacementModel, attribute, prune_graph
+from models import neuronpedia_urls, hf_model_names
 from template import base_strings, langs, langs_big, identifiers
 
 ## helper functions
@@ -242,12 +247,18 @@ def pick_last_pos_features(graph: Graph, paths: list[list[int]]) -> list[tuple[i
 
     return feature_list
 
-def choose_language_features(features: list[tuple[int, int]], language_identifiers: list[str], feature_dict: Optional[dict[str, str]] = None) -> tuple[dict[str, int], dict[str, str]]:
+def choose_language_features(features: list[tuple[int, int]], language_identifiers: list[str], feature_dict: Optional[dict[str, str]] = None, model: str = 'gemma-2-2b') -> tuple[dict[str, int], dict[str, str]]:
     lang_feature_dict = dict()
     feature_description_dict = feature_dict if feature_dict is not None else dict()
     headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     }
+    
+    # Get model-specific API URL template
+    if model not in neuronpedia_urls:
+        raise ValueError(f"Model '{model}' not found in available models. Available: {list(neuronpedia_urls.keys())}")
+    url_template = neuronpedia_urls[model]
+    
     for layer, feature_idx in features:
         key = f'{layer}.{feature_idx}'
         
@@ -255,13 +266,26 @@ def choose_language_features(features: list[tuple[int, int]], language_identifie
             description = feature_description_dict[key]
         except KeyError:
             try:
-                response = requests.get(f"https://www.neuronpedia.org/api/feature/gemma-2-2b/{layer}-gemmascope-transcoder-16k/{feature_idx}", headers=headers)
-                explanations = response.json()['explanations']
+                url = url_template.format(layer=layer, feature_idx=feature_idx)
+                logger.info(f"Fetching feature description from: {url}")
+                response = requests.get(url, headers=headers)
+                response.raise_for_status()
+                response_json = response.json()
+                logger.debug(f"API response for {key}: {response_json}")
+                explanations = response_json['explanations']
                 description = explanations[0]['description']
                 feature_description_dict[key] = description
+                logger.info(f"Successfully fetched description for {key}")
+            except requests.exceptions.RequestException as e:
+                logger.error(f"HTTP request failed for {key}: {e}")
+                raise
+            except KeyError as e:
+                logger.error(f"Missing key in API response for {key}: {e}. Response was: {response.text}")
+                raise
             except TypeError:
                 raise TypeError(f"Layer {layer}, feature {feature_idx} does not exist")
             except IndexError:
+                logger.warning(f"No descriptions found in API response for {key}")
                 description = ""
                 
         if find_substring(description, language_identifiers):
@@ -319,30 +343,66 @@ def iterate_through_data(
         features.extend(last_pos_features)
     return features
 
+def parse_args():
+    parser = argparse.ArgumentParser(description='Extract and process language features from FLORES dataset')
+    parser.add_argument('--model', type=str, default='gemma-2-2b', 
+                        choices=list(neuronpedia_urls.keys()),
+                        help='Model to use for feature extraction')
+    parser.add_argument('--lang', type=str, default=None, choices=langs_big, help='Language to extract features for')
+    return parser.parse_args()
+
 if __name__ == '__main__':
+    # Configure logging
+    logging.basicConfig(
+        level=logging.INFO,
+        format='[%(asctime)s] %(levelname)s: %(message)s',
+        datefmt='%Y-%m-%dT%H:%M:%S'
+    )
+    
+    args = parse_args()
+    model = args.model
+    lang = args.lang
     #from device_setup import device
 
-    #model_name = 'google/gemma-2-2b'
-    #transcoder_name = 'gemma'
-    #model = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16)
+    #model_name = hf_model_names[model]
+    #transcoder_name = hf_transcoder_names[model]
+    #model_obj = ReplacementModel.from_pretrained(model_name, transcoder_name, device=device, dtype=torch.bfloat16)
 
     #from data.adjectives import train_data
     import os
     current_file_path = __file__
     current_directory = os.path.dirname(current_file_path)
     absolute_directory = os.path.abspath(current_directory)
-    data_directory = os.path.join(absolute_directory, "data/flores_features")
+    data_directory = os.path.join(absolute_directory, f"data/flores_features/{model}")
     if not os.path.exists(data_directory):
         os.makedirs(data_directory)
 
     feature_descriptions = dict()
     for lang in langs_big:
-        print(f"{lang} start")
-        with open(os.path.join(data_directory, f'{lang}.json'), 'r') as f:
+        if args.lang and args.lang != lang:
+            continue
+        print(f"Processing {lang} with model {model}...")
+        
+        # Try to load {lang}.json first, fall back to {lang}_short.json
+        primary_file = os.path.join(data_directory, f'{lang}.json')
+        fallback_file = os.path.join(data_directory, f'{lang}_short.json')
+        
+        if os.path.exists(primary_file):
+            json_file = primary_file
+            print(f"  Loading from {lang}.json")
+        elif os.path.exists(fallback_file):
+            json_file = fallback_file
+            print(f"  Loading from {lang}_short.json (fallback)")
+        else:
+            print(f"  ERROR: Neither {lang}.json nor {lang}_short.json found. Skipping {lang}...")
+            continue
+        
+        with open(json_file, 'r') as f:
             features = json.load(f)
-        lang_features, feature_descriptions = choose_language_features(features, identifiers[lang], feature_descriptions)
+        lang_features, feature_descriptions = choose_language_features(features, identifiers[lang], feature_descriptions, model=model)
         file_name = lang + "_features.json"
         file_path = os.path.join(data_directory, file_name)
         with open(file_path, 'w') as f:
             json.dump(lang_features, f)
+        print(f"  Saved {file_name}")
         
