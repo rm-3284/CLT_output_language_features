@@ -41,13 +41,13 @@ distractor ablation,ValSel,es,-9.858023595328282,4.958431304067471
 distractor ablation,ValSel,zh,-10.176235006313131,5.195448731666718
 distractor ablation,ValSel,ja,-10.383892637310606,4.817281061472917
 distractor ablation,ValSel,ko,0.0,0.0
-ablation,AnnSel,en,,
-ablation,AnnSel,fr,,
-ablation,AnnSel,de,,
-ablation,AnnSel,es,,
-ablation,AnnSel,zh,,
-ablation,AnnSel,ja,,
-ablation,AnnSel,ko,,
+ablation,AnnSel,en,-5.395438762626263,4.9226928412111
+ablation,AnnSel,fr,-8.170454545454545,5.02797401565819
+ablation,AnnSel,de,-7.426595052083333,5.007344771423209
+ablation,AnnSel,es,-8.534978693181818,5.313464957249977
+ablation,AnnSel,zh,-8.098773378314394,4.71992307545372
+ablation,AnnSel,ja,-8.876425386679292,4.558303842562597
+ablation,AnnSel,ko,0.0,0.0
 ablation,FreqSel,en,-5.31088226010101,4.941412772809336
 ablation,FreqSel,fr,-8.278606376262626,5.012046124038384
 ablation,FreqSel,de,-7.831587357954546,4.798979908769592
@@ -146,13 +146,13 @@ multi-layer direction ablation,ValSel,es,-7.916516018636299,5.918609949999631
 multi-layer direction ablation,ValSel,zh,-2.8810452114452016,5.845531274319729
 multi-layer direction ablation,ValSel,ja,-5.117044470225922,5.6296591131853315
 multi-layer direction ablation,ValSel,ko,0.0,0.0
-amplification,AnnSel,en,,
-amplification,AnnSel,fr,,
-amplification,AnnSel,de,,
-amplification,AnnSel,es,,
-amplification,AnnSel,zh,,
-amplification,AnnSel,ja,,
-amplification,AnnSel,ko,,
+amplification,AnnSel,en,-3.351266571969697,5.0826271447830145
+amplification,AnnSel,fr,-1.8107638888888888,4.843987552235717
+amplification,AnnSel,de,-6.043471827651516,5.371943316397713
+amplification,AnnSel,es,-3.3378314393939394,5.370776931856152
+amplification,AnnSel,zh,-4.515792692550505,4.291799201570021
+amplification,AnnSel,ja,-5.185083254419192,4.0048210259585995
+amplification,AnnSel,ko,0.0,0.0
 amplification,FreqSel,en,-2.8699297664141414,4.339511826597305
 amplification,FreqSel,fr,-3.425998263888889,4.690864583561093
 amplification,FreqSel,de,-7.654770359848484,4.692271992871536

@@ -41,13 +41,13 @@ distractor ablation,ValSel,es,-10.773970170454545,5.117497168260947
 distractor ablation,ValSel,zh,-8.05728180239899,5.664644423633067
 distractor ablation,ValSel,ja,-9.140555950126263,4.786779106797684
 distractor ablation,ValSel,ko,0.0,0.0
-ablation,AnnSel,en,,
-ablation,AnnSel,fr,,
-ablation,AnnSel,de,,
-ablation,AnnSel,es,,
-ablation,AnnSel,zh,,
-ablation,AnnSel,ja,,
-ablation,AnnSel,ko,,
+ablation,AnnSel,en,-4.165877525252525,4.426174774443744
+ablation,AnnSel,fr,-8.172619752209595,4.735423063904722
+ablation,AnnSel,de,-10.036736998895202,4.858626724445105
+ablation,AnnSel,es,-8.589128590593434,5.369146966041152
+ablation,AnnSel,zh,-3.1102529198232323,5.1012098403376065
+ablation,AnnSel,ja,-5.519861702967172,5.04307080154921
+ablation,AnnSel,ko,0.0,0.0
 ablation,FreqSel,en,-3.9059343434343434,4.548345861379372
 ablation,FreqSel,fr,-8.182320642952968,4.961658087809499
 ablation,FreqSel,de,-9.903020685369318,5.002907946025354
@@ -146,13 +146,13 @@ multi-layer direction ablation,ValSel,es,-2.985295284878124,5.288479220947631
 multi-layer direction ablation,ValSel,zh,1.2019440862867568,5.670992446045822
 multi-layer direction ablation,ValSel,ja,-2.001507943326777,6.144534480529671
 multi-layer direction ablation,ValSel,ko,0.0,0.0
-amplification,AnnSel,en,,
-amplification,AnnSel,fr,,
-amplification,AnnSel,de,,
-amplification,AnnSel,es,,
-amplification,AnnSel,zh,,
-amplification,AnnSel,ja,,
-amplification,AnnSel,ko,,
+amplification,AnnSel,en,-2.68884154040404,4.34824250830817
+amplification,AnnSel,fr,-2.2836174242424243,4.458971789172394
+amplification,AnnSel,de,-3.401278409090909,4.5741019544381
+amplification,AnnSel,es,-3.6376151653251263,5.033390594460724
+amplification,AnnSel,zh,-2.52209595959596,3.888037948555843
+amplification,AnnSel,ja,-3.392568260732323,3.9614891205754184
+amplification,AnnSel,ko,0.0,0.0
 amplification,FreqSel,en,-2.3920454545454546,3.982335125151188
 amplification,FreqSel,fr,-3.6583609532828283,4.38532410166054
 amplification,FreqSel,de,-4.4302103061868685,4.152121568243378

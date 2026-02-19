@@ -41,13 +41,13 @@ distractor ablation,ValSel,es,-8.309151081123737,4.810183130420307
 distractor ablation,ValSel,zh,-8.324850063131313,5.601198240866767
 distractor ablation,ValSel,ja,-8.571920375631313,5.0054280834618075
 distractor ablation,ValSel,ko,0.0,0.0
-ablation,AnnSel,en,,
-ablation,AnnSel,fr,,
-ablation,AnnSel,de,,
-ablation,AnnSel,es,,
-ablation,AnnSel,zh,,
-ablation,AnnSel,ja,,
-ablation,AnnSel,ko,,
+ablation,AnnSel,en,-6.3159524936868685,4.539097950190718
+ablation,AnnSel,fr,-9.782601404671718,4.362325185495885
+ablation,AnnSel,de,-11.536765358664773,4.455863010902809
+ablation,AnnSel,es,-10.35113340435606,4.889481822351282
+ablation,AnnSel,zh,-8.879769373421718,4.711802756515759
+ablation,AnnSel,ja,-9.6220703125,4.36502562325355
+ablation,AnnSel,ko,0.0,0.0
 ablation,FreqSel,en,-6.212910353535354,4.545331249149386
 ablation,FreqSel,fr,-9.721541587752526,4.398531059569847
 ablation,FreqSel,de,-11.371880425347221,4.531071290735044
@@ -146,13 +146,13 @@ multi-layer direction ablation,ValSel,es,-6.487172505018687,5.048922767180639
 multi-layer direction ablation,ValSel,zh,-3.087171339025401,5.434837209656849
 multi-layer direction ablation,ValSel,ja,-5.3317823918780896,5.7155822327705605
 multi-layer direction ablation,ValSel,ko,0.0,0.0
-amplification,AnnSel,en,,
-amplification,AnnSel,fr,,
-amplification,AnnSel,de,,
-amplification,AnnSel,es,,
-amplification,AnnSel,zh,,
-amplification,AnnSel,ja,,
-amplification,AnnSel,ko,,
+amplification,AnnSel,en,-4.516966540404041,4.236339147931911
+amplification,AnnSel,fr,-4.274226641414141,4.24149011751285
+amplification,AnnSel,de,-5.1171283143939394,4.339971726562725
+amplification,AnnSel,es,-5.3595722853535355,4.856187123306069
+amplification,AnnSel,zh,-5.093434343434343,4.0365085009076465
+amplification,AnnSel,ja,-5.551649305555555,3.885284720468637
+amplification,AnnSel,ko,0.0,0.0
 amplification,FreqSel,en,3.3366871843434343,2.738257563048024
 amplification,FreqSel,fr,2.10318023989899,3.062026668201391
 amplification,FreqSel,de,1.6195154671717171,3.068588092572586

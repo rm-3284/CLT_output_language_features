@@ -41,13 +41,13 @@ distractor ablation,ValSel,es,0.0,0.0
 distractor ablation,ValSel,zh,-6.950573979591836,6.420015671091967
 distractor ablation,ValSel,ja,-6.81819993622449,6.643531734737793
 distractor ablation,ValSel,ko,-11.946037448182398,5.627692981756616
-ablation,AnnSel,en,,
-ablation,AnnSel,fr,,
-ablation,AnnSel,de,,
-ablation,AnnSel,es,,
-ablation,AnnSel,zh,,
-ablation,AnnSel,ja,,
-ablation,AnnSel,ko,,
+ablation,AnnSel,en,-1.1763392857142858,4.097335896031688
+ablation,AnnSel,fr,-1.9574298469387754,4.334351145682667
+ablation,AnnSel,de,-6.166583625637755,5.783438358435638
+ablation,AnnSel,es,0.0,0.0
+ablation,AnnSel,zh,-4.556441326530612,5.003934719845786
+ablation,AnnSel,ja,-3.4917091836734695,5.428699165167855
+ablation,AnnSel,ko,-10.937400350765307,4.765571017032808
 ablation,FreqSel,en,-2.253826530612245,4.3209177177084035
 ablation,FreqSel,fr,-2.7688137755102042,4.93149090284932
 ablation,FreqSel,de,-7.334701849489796,6.200495126081212
@@ -146,13 +146,13 @@ multi-layer direction ablation,ValSel,es,0.0,0.0
 multi-layer direction ablation,ValSel,zh,-1.0474118678545465,4.892445192223916
 multi-layer direction ablation,ValSel,ja,-3.657557441567888,5.074892985458928
 multi-layer direction ablation,ValSel,ko,-6.033195773557741,4.499903571291298
-amplification,AnnSel,en,,
-amplification,AnnSel,fr,,
-amplification,AnnSel,de,,
-amplification,AnnSel,es,,
-amplification,AnnSel,zh,,
-amplification,AnnSel,ja,,
-amplification,AnnSel,ko,,
+amplification,AnnSel,en,-1.839126275510204,3.8461315863193177
+amplification,AnnSel,fr,0.16246811224489796,3.0562613480547034
+amplification,AnnSel,de,-3.729591836734694,4.395619103275394
+amplification,AnnSel,es,0.0,0.0
+amplification,AnnSel,zh,-4.108179209183674,4.293640616109583
+amplification,AnnSel,ja,-4.502152423469388,4.822257926355774
+amplification,AnnSel,ko,-8.534090003188776,4.132106957171673
 amplification,FreqSel,en,-0.20519770408163265,2.6154130801600446
 amplification,FreqSel,fr,0.03842474489795918,2.4845124414578716
 amplification,FreqSel,de,-1.0214706732302297,3.109445889948595

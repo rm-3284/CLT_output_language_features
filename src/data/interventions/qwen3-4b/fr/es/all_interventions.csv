@@ -41,13 +41,13 @@ distractor ablation,ValSel,es,0.0,0.0
 distractor ablation,ValSel,zh,-13.254484215561224,4.916733785579321
 distractor ablation,ValSel,ja,-14.94366081393495,5.199940923326785
 distractor ablation,ValSel,ko,-17.675173389668366,4.731844883366078
-ablation,AnnSel,en,,
-ablation,AnnSel,fr,,
-ablation,AnnSel,de,,
-ablation,AnnSel,es,,
-ablation,AnnSel,zh,,
-ablation,AnnSel,ja,,
-ablation,AnnSel,ko,,
+ablation,AnnSel,en,-5.520089285714286,5.523650696628399
+ablation,AnnSel,fr,-2.46859056122449,5.064885096891167
+ablation,AnnSel,de,-9.98517219387755,6.468910058145205
+ablation,AnnSel,es,0.0,0.0
+ablation,AnnSel,zh,-12.61116868622449,4.969918412395583
+ablation,AnnSel,ja,-14.277348732461734,4.978078435227887
+ablation,AnnSel,ko,-17.706891741071427,4.725359089425122
 ablation,FreqSel,en,-5.582589285714286,5.266428200159532
 ablation,FreqSel,fr,-3.1589604591836733,5.140374569655892
 ablation,FreqSel,de,-10.081483179209183,6.417520385258428
@@ -146,13 +146,13 @@ multi-layer direction ablation,ValSel,es,0.0,0.0
 multi-layer direction ablation,ValSel,zh,-0.1825541890397364,5.34447137713314
 multi-layer direction ablation,ValSel,ja,-2.874246045338864,5.41695540514041
 multi-layer direction ablation,ValSel,ko,-6.9619893233995045,5.397690161520748
-amplification,AnnSel,en,,
-amplification,AnnSel,fr,,
-amplification,AnnSel,de,,
-amplification,AnnSel,es,,
-amplification,AnnSel,zh,,
-amplification,AnnSel,ja,,
-amplification,AnnSel,ko,,
+amplification,AnnSel,en,-4.833864795918367,5.066618053007581
+amplification,AnnSel,fr,-3.037627551020408,4.856149864926418
+amplification,AnnSel,de,-6.567283163265306,5.1907935801882354
+amplification,AnnSel,es,0.0,0.0
+amplification,AnnSel,zh,-10.432477678571429,4.625543383343498
+amplification,AnnSel,ja,-12.214963329081632,5.011430285865334
+amplification,AnnSel,ko,-14.718226841517858,4.442907588848176
 amplification,FreqSel,en,1.179538026147959,3.494303800910288
 amplification,FreqSel,fr,-1.199856505102041,3.4412571492102875
 amplification,FreqSel,de,-0.8439044563137755,3.529261008169175

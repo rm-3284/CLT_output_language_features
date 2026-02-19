@@ -41,13 +41,13 @@ distractor ablation,ValSel,es,-10.002564761513158,4.8482758192011275
 distractor ablation,ValSel,zh,-4.585814144736842,4.124046169270451
 distractor ablation,ValSel,ja,0.0,0.0
 distractor ablation,ValSel,ko,-5.241647820723684,5.495668604977224
-ablation,AnnSel,en,,
-ablation,AnnSel,fr,,
-ablation,AnnSel,de,,
-ablation,AnnSel,es,,
-ablation,AnnSel,zh,,
-ablation,AnnSel,ja,,
-ablation,AnnSel,ko,,
+ablation,AnnSel,en,-5.042804276315789,3.6550295334114504
+ablation,AnnSel,fr,-10.05419921875,5.3659110184808165
+ablation,AnnSel,de,-11.390352590460527,5.361996831482011
+ablation,AnnSel,es,-10.348416940789473,5.018359329510275
+ablation,AnnSel,zh,-4.183552631578947,4.006063187780203
+ablation,AnnSel,ja,0.0,0.0
+ablation,AnnSel,ko,-5.589720394736842,4.847003918301431
 ablation,FreqSel,en,-5.064987664473684,3.4988696866599605
 ablation,FreqSel,fr,-10.68353207236842,5.282334816362057
 ablation,FreqSel,de,-11.81455078125,5.2981388639167895
@@ -146,13 +146,13 @@ multi-layer direction ablation,ValSel,es,-2.1702375261407147,6.225155734877224
 multi-layer direction ablation,ValSel,zh,2.0410918091472827,3.91846772401047
 multi-layer direction ablation,ValSel,ja,0.0,0.0
 multi-layer direction ablation,ValSel,ko,-4.0668416569107455,4.63938746245485
-amplification,AnnSel,en,,
-amplification,AnnSel,fr,,
-amplification,AnnSel,de,,
-amplification,AnnSel,es,,
-amplification,AnnSel,zh,,
-amplification,AnnSel,ja,,
-amplification,AnnSel,ko,,
+amplification,AnnSel,en,-3.9534231085526317,3.6512485559928085
+amplification,AnnSel,fr,-4.55276521381579,4.697409989304164
+amplification,AnnSel,de,-5.905921052631579,4.432917112843337
+amplification,AnnSel,es,-5.7836040296052635,4.763450282289233
+amplification,AnnSel,zh,-3.3776315789473683,3.4474579628147954
+amplification,AnnSel,ja,0.0,0.0
+amplification,AnnSel,ko,-6.250287828947369,4.381187677714308
 amplification,FreqSel,en,-4.321875,2.6705802823011004
 amplification,FreqSel,fr,-5.8296052631578945,3.523389087513126
 amplification,FreqSel,de,-6.302713815789474,3.2958578017187743

@@ -41,13 +41,13 @@ distractor ablation,ValSel,es,0.0,0.0
 distractor ablation,ValSel,zh,-14.106440330038266,4.883756384534582
 distractor ablation,ValSel,ja,-16.197283063616073,4.980636776599163
 distractor ablation,ValSel,ko,-18.63570855588329,4.7550318790395005
-ablation,AnnSel,en,,
-ablation,AnnSel,fr,,
-ablation,AnnSel,de,,
-ablation,AnnSel,es,,
-ablation,AnnSel,zh,,
-ablation,AnnSel,ja,,
-ablation,AnnSel,ko,,
+ablation,AnnSel,en,-7.283482142857143,5.110750419793061
+ablation,AnnSel,fr,-5.509566326530612,5.814080139674327
+ablation,AnnSel,de,-12.257732780612244,6.766214664029975
+ablation,AnnSel,es,0.0,0.0
+ablation,AnnSel,zh,-13.87872688137755,4.743437002397029
+ablation,AnnSel,ja,-16.17412707270408,4.773322448488439
+ablation,AnnSel,ko,-19.668953700941437,4.715423513986174
 ablation,FreqSel,en,-7.319515306122449,5.046003993517877
 ablation,FreqSel,fr,-5.746014030612245,5.997855756453295
 ablation,FreqSel,de,-12.233498086734693,6.7995324461764515
@@ -146,13 +146,13 @@ multi-layer direction ablation,ValSel,es,0.0,0.0
 multi-layer direction ablation,ValSel,zh,-1.4125266586031233,4.795497274119182
 multi-layer direction ablation,ValSel,ja,-4.271936737152995,5.16408038431632
 multi-layer direction ablation,ValSel,ko,-8.664611405712002,5.250129988661566
-amplification,AnnSel,en,,
-amplification,AnnSel,fr,,
-amplification,AnnSel,de,,
-amplification,AnnSel,es,,
-amplification,AnnSel,zh,,
-amplification,AnnSel,ja,,
-amplification,AnnSel,ko,,
+amplification,AnnSel,en,-5.194703394052934,5.1804281183105605
+amplification,AnnSel,fr,-1.8329081632653061,3.904614611377963
+amplification,AnnSel,de,-8.06967474489796,5.529852031700883
+amplification,AnnSel,es,0.0,0.0
+amplification,AnnSel,zh,-10.703324298469388,4.949282313996358
+amplification,AnnSel,ja,-12.376594387755102,5.072843575830914
+amplification,AnnSel,ko,-15.509237484056122,4.422377616365051
 amplification,FreqSel,en,2.2187948421556123,3.633385767163486
 amplification,FreqSel,fr,1.0464614556760203,3.3426595761751323
 amplification,FreqSel,de,0.6884217554209183,3.8931805046950436

@@ -41,13 +41,13 @@ distractor ablation,ValSel,es,-9.091348453443878,5.696075985429931
 distractor ablation,ValSel,zh,0.0,0.0
 distractor ablation,ValSel,ja,-4.943558673469388,5.914617647842406
 distractor ablation,ValSel,ko,-12.190515946368782,5.148806991922362
-ablation,AnnSel,en,,
-ablation,AnnSel,fr,,
-ablation,AnnSel,de,,
-ablation,AnnSel,es,,
-ablation,AnnSel,zh,,
-ablation,AnnSel,ja,,
-ablation,AnnSel,ko,,
+ablation,AnnSel,en,-4.405612244897959,3.3808922040666456
+ablation,AnnSel,fr,-9.28061224489796,4.83848489532724
+ablation,AnnSel,de,-7.944355867346939,4.654113851705458
+ablation,AnnSel,es,-9.738520408163266,4.9765895203208546
+ablation,AnnSel,zh,0.0,0.0
+ablation,AnnSel,ja,-5.398836096938775,5.497161146598749
+ablation,AnnSel,ko,-13.39779974489796,3.9018720108051763
 ablation,FreqSel,en,-4.412946428571429,3.2579336958902356
 ablation,FreqSel,fr,-9.34295280612245,4.8043183044019235
 ablation,FreqSel,de,-8.401307397959183,4.341695768883257
@@ -146,13 +146,13 @@ multi-layer direction ablation,ValSel,es,-9.195723867538025,5.60544805712183
 multi-layer direction ablation,ValSel,zh,0.0,0.0
 multi-layer direction ablation,ValSel,ja,-5.891970986614422,6.051867522535438
 multi-layer direction ablation,ValSel,ko,-10.413366289771332,5.267626615578894
-amplification,AnnSel,en,,
-amplification,AnnSel,fr,,
-amplification,AnnSel,de,,
-amplification,AnnSel,es,,
-amplification,AnnSel,zh,,
-amplification,AnnSel,ja,,
-amplification,AnnSel,ko,,
+amplification,AnnSel,en,-3.1721938775510203,3.7531270384048323
+amplification,AnnSel,fr,-2.8402423469387754,4.349594596355735
+amplification,AnnSel,de,-7.003667091836735,4.920742716172769
+amplification,AnnSel,es,-4.900191326530612,4.74918319534417
+amplification,AnnSel,zh,0.0,0.0
+amplification,AnnSel,ja,-3.180564413265306,4.42067808667511
+amplification,AnnSel,ko,-8.392697704081632,4.267295763481771
 amplification,FreqSel,en,-5.040816326530612,3.478080150364966
 amplification,FreqSel,fr,-6.375637755102041,4.726223572115592
 amplification,FreqSel,de,-10.417181521045919,4.503467064062635

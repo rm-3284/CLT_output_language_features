@@ -41,13 +41,13 @@ distractor ablation,ValSel,es,-2.900345320554124,5.506082217049656
 distractor ablation,ValSel,zh,-8.581507731958762,5.8473139655047035
 distractor ablation,ValSel,ja,-11.36474609375,6.458790099747507
 distractor ablation,ValSel,ko,-14.15824732829615,5.9066395263078
-ablation,AnnSel,en,,
-ablation,AnnSel,fr,,
-ablation,AnnSel,de,,
-ablation,AnnSel,es,,
-ablation,AnnSel,zh,,
-ablation,AnnSel,ja,,
-ablation,AnnSel,ko,,
+ablation,AnnSel,en,-1.8216011597938144,6.021428802900954
+ablation,AnnSel,fr,0.0,0.0
+ablation,AnnSel,de,-6.77698131443299,6.837417438445051
+ablation,AnnSel,es,-2.8361388530927836,4.827190366190318
+ablation,AnnSel,zh,-7.170425257731959,5.268548150518336
+ablation,AnnSel,ja,-9.962890625,5.984727661524982
+ablation,AnnSel,ko,-13.15111675459085,5.6263747186774875
 ablation,FreqSel,en,-1.999708038015464,5.975404488674821
 ablation,FreqSel,fr,0.0,0.0
 ablation,FreqSel,de,-6.845954816365979,6.980498700081534
@@ -146,13 +146,13 @@ multi-layer direction ablation,ValSel,es,-0.9745550837713418,5.228052415873691
 multi-layer direction ablation,ValSel,zh,-1.5842061694135372,6.046848549732368
 multi-layer direction ablation,ValSel,ja,-4.203000754425206,6.34214191594475
 multi-layer direction ablation,ValSel,ko,-5.938556818464368,6.078825249630188
-amplification,AnnSel,en,,
-amplification,AnnSel,fr,,
-amplification,AnnSel,de,,
-amplification,AnnSel,es,,
-amplification,AnnSel,zh,,
-amplification,AnnSel,ja,,
-amplification,AnnSel,ko,,
+amplification,AnnSel,en,-2.905857361469072,4.480208976462467
+amplification,AnnSel,fr,0.0,0.0
+amplification,AnnSel,de,-4.643202319587629,5.033714903330232
+amplification,AnnSel,es,-1.8136275773195876,3.879953313738474
+amplification,AnnSel,zh,-7.046351481958763,4.107282277471129
+amplification,AnnSel,ja,-9.060969716494846,4.911565167104638
+amplification,AnnSel,ko,-11.093468105670103,4.767311473087496
 amplification,FreqSel,en,-0.044436110663659795,3.126316499066785
 amplification,FreqSel,fr,0.0,0.0
 amplification,FreqSel,de,-1.5971276981314433,3.1790489393426626

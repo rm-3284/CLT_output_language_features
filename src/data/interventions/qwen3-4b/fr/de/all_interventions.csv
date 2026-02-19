@@ -41,13 +41,13 @@ distractor ablation,ValSel,es,-5.696533203125,7.426831302865961
 distractor ablation,ValSel,zh,-11.543843587239584,5.146285437345476
 distractor ablation,ValSel,ja,-13.482376098632812,6.033246116025488
 distractor ablation,ValSel,ko,-15.215981165568033,6.392494355799056
-ablation,AnnSel,en,,
-ablation,AnnSel,fr,,
-ablation,AnnSel,de,,
-ablation,AnnSel,es,,
-ablation,AnnSel,zh,,
-ablation,AnnSel,ja,,
-ablation,AnnSel,ko,,
+ablation,AnnSel,en,-3.0724283854166665,5.700532314327528
+ablation,AnnSel,fr,-4.410481770833333,6.0817241657241965
+ablation,AnnSel,de,0.0,0.0
+ablation,AnnSel,es,-5.085611979166667,6.743239479346371
+ablation,AnnSel,zh,-10.131582895914713,5.235546993598988
+ablation,AnnSel,ja,-12.141066233317057,6.264044739628823
+ablation,AnnSel,ko,-14.426321665445963,6.6803258303504816
 ablation,FreqSel,en,-3.09423828125,5.690513251238916
 ablation,FreqSel,fr,-4.740397135416667,5.932850659674343
 ablation,FreqSel,de,0.0,0.0
@@ -146,13 +146,13 @@ multi-layer direction ablation,ValSel,es,-2.7099924329668283,5.756429574925356
 multi-layer direction ablation,ValSel,zh,-2.52825645233194,5.494707729262383
 multi-layer direction ablation,ValSel,ja,-4.889000883946816,6.195455061386057
 multi-layer direction ablation,ValSel,ko,-7.24116534118851,5.709281133208159
-amplification,AnnSel,en,,
-amplification,AnnSel,fr,,
-amplification,AnnSel,de,,
-amplification,AnnSel,es,,
-amplification,AnnSel,zh,,
-amplification,AnnSel,ja,,
-amplification,AnnSel,ko,,
+amplification,AnnSel,en,-3.1901041666666665,4.6863735854205215
+amplification,AnnSel,fr,-4.170247395833333,4.678629479161886
+amplification,AnnSel,de,0.0,0.0
+amplification,AnnSel,es,-3.2737630208333335,4.938898337948639
+amplification,AnnSel,zh,-8.377197265625,4.402183261640162
+amplification,AnnSel,ja,-10.496236165364584,5.6183964047905555
+amplification,AnnSel,ko,-11.861282348632812,5.3383001075428655
 amplification,FreqSel,en,0.9892018636067709,3.3795773256183144
 amplification,FreqSel,fr,-1.0516255696614583,3.1267687821012067
 amplification,FreqSel,de,0.0,0.0

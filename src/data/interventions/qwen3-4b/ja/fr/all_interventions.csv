@@ -41,13 +41,13 @@ distractor ablation,ValSel,es,-3.0310486469072164,5.101996219726759
 distractor ablation,ValSel,zh,-7.415366261275773,6.576073485483955
 distractor ablation,ValSel,ja,-7.74547962306701,6.8112186360145905
 distractor ablation,ValSel,ko,-12.492600273840207,6.454979710289023
-ablation,AnnSel,en,,
-ablation,AnnSel,fr,,
-ablation,AnnSel,de,,
-ablation,AnnSel,es,,
-ablation,AnnSel,zh,,
-ablation,AnnSel,ja,,
-ablation,AnnSel,ko,,
+ablation,AnnSel,en,-0.8860341494845361,4.862933198589817
+ablation,AnnSel,fr,0.0,0.0
+ablation,AnnSel,de,-5.690419619845361,6.156935239784513
+ablation,AnnSel,es,-2.4201836340206184,4.2567549077759015
+ablation,AnnSel,zh,-5.486730831185567,5.22488043204261
+ablation,AnnSel,ja,-4.958209165592783,5.409795436350769
+ablation,AnnSel,ko,-11.364418894974227,5.3238197128248705
 ablation,FreqSel,en,-1.7276095360824741,5.175588590762029
 ablation,FreqSel,fr,0.0,0.0
 ablation,FreqSel,de,-6.461622100515464,6.687306523368921
@@ -146,13 +146,13 @@ multi-layer direction ablation,ValSel,es,-1.2613725865010135,4.717446882066108
 multi-layer direction ablation,ValSel,zh,-2.1901354408755744,5.428088366409036
 multi-layer direction ablation,ValSel,ja,-4.669319169423015,5.793991148060483
 multi-layer direction ablation,ValSel,ko,-6.339119496572878,5.573993676414138
-amplification,AnnSel,en,,
-amplification,AnnSel,fr,,
-amplification,AnnSel,de,,
-amplification,AnnSel,es,,
-amplification,AnnSel,zh,,
-amplification,AnnSel,ja,,
-amplification,AnnSel,ko,,
+amplification,AnnSel,en,-2.1833923969072164,3.8396372875439218
+amplification,AnnSel,fr,0.0,0.0
+amplification,AnnSel,de,-3.6633376288659796,4.433296050841028
+amplification,AnnSel,es,-1.7615173969072164,3.481152074414033
+amplification,AnnSel,zh,-4.91906109052835,4.053340869409115
+amplification,AnnSel,ja,-5.746355509020619,4.784351810677905
+amplification,AnnSel,ko,-8.919911807345361,4.411355022648817
 amplification,FreqSel,en,-0.6399001288659794,2.4840341221308666
 amplification,FreqSel,fr,0.0,0.0
 amplification,FreqSel,de,-1.3646403833762886,2.757519939911582

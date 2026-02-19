@@ -41,13 +41,13 @@ distractor ablation,ValSel,es,-3.0055976159793816,5.428269335134084
 distractor ablation,ValSel,zh,-11.454524403994846,4.99005059111173
 distractor ablation,ValSel,ja,-13.160357603092784,5.726161722343236
 distractor ablation,ValSel,ko,-14.7066776236308,6.282656820808204
-ablation,AnnSel,en,,
-ablation,AnnSel,fr,,
-ablation,AnnSel,de,,
-ablation,AnnSel,es,,
-ablation,AnnSel,zh,,
-ablation,AnnSel,ja,,
-ablation,AnnSel,ko,,
+ablation,AnnSel,en,-2.711340206185567,5.843122900419629
+ablation,AnnSel,fr,0.0,0.0
+ablation,AnnSel,de,-5.084276336984536,7.061626366457819
+ablation,AnnSel,es,-2.886316043814433,5.100801902399614
+ablation,AnnSel,zh,-10.902031652706185,5.4048874439811385
+ablation,AnnSel,ja,-12.343820473582474,5.896694995845427
+ablation,AnnSel,ko,-14.568022265876692,6.419825568805777
 ablation,FreqSel,en,-2.9293653350515463,5.852683887607472
 ablation,FreqSel,fr,0.0,0.0
 ablation,FreqSel,de,-5.65991462628866,6.995925348976681
@@ -146,13 +146,13 @@ multi-layer direction ablation,ValSel,es,-0.9158734009437954,5.556938361030316
 multi-layer direction ablation,ValSel,zh,-2.188483451445078,5.774921336117009
 multi-layer direction ablation,ValSel,ja,-4.805281159189558,5.980203124460813
 multi-layer direction ablation,ValSel,ko,-6.669886858192916,5.575000132872709
-amplification,AnnSel,en,,
-amplification,AnnSel,fr,,
-amplification,AnnSel,de,,
-amplification,AnnSel,es,,
-amplification,AnnSel,zh,,
-amplification,AnnSel,ja,,
-amplification,AnnSel,ko,,
+amplification,AnnSel,en,-4.060204574742268,4.803921265828578
+amplification,AnnSel,fr,0.0,0.0
+amplification,AnnSel,de,-7.127479159954897,6.699581917069335
+amplification,AnnSel,es,-2.096327319587629,4.032465902161781
+amplification,AnnSel,zh,-10.04090488079897,4.544885752719835
+amplification,AnnSel,ja,-11.565503621838756,4.9992343790762925
+amplification,AnnSel,ko,-13.019632241160599,5.250774371326092
 amplification,FreqSel,en,-0.3284119281572165,3.027297290529655
 amplification,FreqSel,fr,0.0,0.0
 amplification,FreqSel,de,-4.361463409109214,4.231984954731405
