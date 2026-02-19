@@ -146,7 +146,7 @@ options = {
     "en": ["morning", "afternoon", "evening", "night"],
     "de": ["Morgen", "Nachmittag", "Abend", "Nacht"],
     "fr": ["matin", "après-midi", "soir", "nuit"],
-    "es": ["mañana", "tarde", "tarde/noche", "noche"],
+    "es": ["mañana", "tarde", "tarde", "noche"],
     "zh": ["早上", "下午", "晚上", "夜里"],
     "ja": ["朝", "午後", "晩", "夜"],
     "ko": ["아침", "오후", "저녁", "밤"]
@@ -234,9 +234,8 @@ def get_logprob_with_intervention(prompt: str, target: str, model: ReplacementMo
 # For each language, compute the log-prob of each candidate string as a continuation
 def get_logprobs_for_candidates(prompt: str, candidates: dict[str, list[str]], model: ReplacementModel) -> dict[str, dict[str, float]]:
     result = dict()
-    for lang, candidate_list in candidates.items():
+    for lang, candidate_str in candidates.items():
         result[lang] = dict()
-        candidate_str = ", ".join(candidate_list)
         logprob = get_logprob_of_string(prompt, candidate_str, model)
         result[lang][candidate_str] = logprob
     return result
@@ -250,9 +249,9 @@ def feature_interventions_logprob(prompt: str, model: ReplacementModel, ans: dic
         # Get ablated logits for the prompt using feature_intervention
         for lang in langs:
           results[intervened_lang][lang] = dict()
-          for candidate in ans[lang]:
-            total_logprob = get_logprob_with_intervention(prompt, candidate, model, intervention[intervened_lang])
-            results[intervened_lang][lang][candidate] = total_logprob
+          candidate = ans[lang]
+          total_logprob = get_logprob_with_intervention(prompt, candidate, model, intervention[intervened_lang])
+          results[intervened_lang][lang][candidate] = total_logprob
     return results
 
 # direction_ablation helper
@@ -317,16 +316,19 @@ def direction_ablate_logprob(prompt: str, model: ReplacementModel, ans, interven
       # Use nnsight_model to apply the ablation intervention for this language
       intervention = interventions[intervention_lang]
       for lang in langs:
-        results[intervention_lang][lang] = dict()
-        for candidate in ans[lang]:
-          candidate_str = ", ".join(candidate) if isinstance(candidate, list) else candidate
-          target_ids = model.tokenizer.encode(candidate_str, add_special_tokens=False)
-          logits = run_ablation_experiment(nnsight_model, prompt, candidate_str, intervention)
-          log_probs = F.log_softmax(logits, dim=-1)
-          total_logprob = 0.0
-          for i, tid in enumerate(target_ids):
-            total_logprob += log_probs[i, tid].item()
-          results[intervention_lang][lang][candidate_str] = total_logprob
+            results[intervention_lang][lang] = dict()
+            candidate = ans[lang]
+            candidate_str = ", ".join(candidate) if isinstance(candidate, list) else candidate
+            target_ids = model.tokenizer.encode(candidate_str, add_special_tokens=False)
+            logits = run_ablation_experiment(nnsight_model, prompt, candidate_str, intervention)
+            log_probs = F.log_softmax(logits, dim=-1)
+            if len(target_ids) != log_probs.shape[0]:
+                print(f"[WARNING] target_ids length ({len(target_ids)}) != log_probs rows ({log_probs.shape[0]}) for candidate '{candidate_str}' with prompt '{prompt}'. Skipping.")
+                continue
+            total_logprob = 0.0
+            for i, tid in enumerate(target_ids):
+                total_logprob += log_probs[i, tid].item()
+            results[intervention_lang][lang][candidate_str] = total_logprob
     return results
 
 
@@ -340,9 +342,9 @@ def feature_ablation_and_amplification_logprob(prompt: str, model: ReplacementMo
       interventions = ablation_and_amplification(ablation[ablation_lang], amplification[amplification_lang])
       for lang in langs:
         results[ablation_lang][amplification_lang][lang] = dict()
-        for candidate in ans[lang]:
-          total_logprob = get_logprob_with_intervention(prompt, candidate, model, interventions)
-          results[ablation_lang][amplification_lang][lang][candidate] = total_logprob
+        candidate = ans[lang]
+        total_logprob = get_logprob_with_intervention(prompt, candidate, model, interventions)
+        results[ablation_lang][amplification_lang][lang][candidate] = total_logprob
   return results
 
 def parse_args():
@@ -357,6 +359,12 @@ def parse_args():
     type=str,
     default=None,
     help='Prompt language',
+  )
+  parser.add_argument(
+    '--list_lang',
+    type=str,
+    default=None,
+    help='Languages to list features for, separated by comma. If provided, --lang is ignored.',
   )
   parser.add_argument(
     '--model',
@@ -446,6 +454,8 @@ if __name__ == "__main__":
     base = base_prompts[prompt_lang]
 
     for list_lang in langs:
+      if args.list_lang is not None and list_lang not in args.list_lang.split(","):
+        continue
       list_lang_out_dir = os.path.join(lang_out_dir, list_lang)
       os.makedirs(list_lang_out_dir, exist_ok=True)
 
@@ -472,12 +482,20 @@ if __name__ == "__main__":
         n_display = number_of_choices_to_display[category_key]
         display_choices = options[options_key][list_lang][:n_display]
         predict_choices = options[options_key][list_lang][n_display:]
-        prompt = base.format(category=category_text, choices=", ".join(display_choices))
+        if list_lang != "ja" and list_lang != 'zh':
+          fill_in = ", ".join(display_choices) + ","
+        else:
+          fill_in = ",".join(display_choices) + ","
+        prompt = base.format(category=category_text, choices=fill_in)
         # For each language, get the remaining options to predict
         ans = {lang: options[options_key][lang][n_display:] for lang in langs}
         # turn this into a str
         for lang in langs:
-          ans[lang] = ", ".join(ans[lang])
+          if lang != "ja" and lang != 'zh':
+             expected = " " + ", ".join(ans[lang])
+          else:
+             expected = ",".join(ans[lang])
+          ans[lang] = expected
 
         print(f"Prompt: {prompt}")
         print(f"Answers: {ans}")
@@ -538,16 +556,16 @@ if __name__ == "__main__":
         freq_based['one-layer direction ablation'][prompt] = feature_interventions_logprob(prompt, model, ans, freq_ablations['one-layer-direction_everything'], langs)
 
         # distractor multi-layer direction ablation
-        #print("Calculating distractor multi-layer direction ablation log-probs...")
-        #desc_based['distractor multi-layer direction ablation'][prompt] = direction_ablate_logprob(prompt, model, ans, desc_ablations['direction-ablation'], langs, nnsight_model)
-        #val_based['distractor multi-layer direction ablation'][prompt] = direction_ablate_logprob(prompt, model, ans, val_ablations['direction-ablation'], langs, nnsight_model)
-        #freq_based['distractor multi-layer direction ablation'][prompt] = direction_ablate_logprob(prompt, model, ans, freq_ablations['direction-ablation'], langs, nnsight_model)
+        print("Calculating distractor multi-layer direction ablation log-probs...")
+        desc_based['distractor multi-layer direction ablation'][prompt] = direction_ablate_logprob(prompt, model, ans, desc_ablations['direction-ablation'], langs, nnsight_model)
+        val_based['distractor multi-layer direction ablation'][prompt] = direction_ablate_logprob(prompt, model, ans, val_ablations['direction-ablation'], langs, nnsight_model)
+        freq_based['distractor multi-layer direction ablation'][prompt] = direction_ablate_logprob(prompt, model, ans, freq_ablations['direction-ablation'], langs, nnsight_model)
 
         # multi-layer direction ablation
-        #print("Calculating multi-layer direction ablation log-probs...")
-        #desc_based['multi-layer direction ablation'][prompt] = direction_ablate_logprob(prompt, model, ans, desc_ablations['direction-ablation-everything'], langs, nnsight_model)
-        #val_based['multi-layer direction ablation'][prompt] = direction_ablate_logprob(prompt, model, ans, val_ablations['direction-ablation-everything'], langs, nnsight_model)
-        #freq_based['multi-layer direction ablation'][prompt] = direction_ablate_logprob(prompt, model, ans, freq_ablations['direction-ablation-everything'], langs, nnsight_model)
+        print("Calculating multi-layer direction ablation log-probs...")
+        desc_based['multi-layer direction ablation'][prompt] = direction_ablate_logprob(prompt, model, ans, desc_ablations['direction-ablation-everything'], langs, nnsight_model)
+        val_based['multi-layer direction ablation'][prompt] = direction_ablate_logprob(prompt, model, ans, val_ablations['direction-ablation-everything'], langs, nnsight_model)
+        freq_based['multi-layer direction ablation'][prompt] = direction_ablate_logprob(prompt, model, ans, freq_ablations['direction-ablation-everything'], langs, nnsight_model)
 
         # amplification
         print("Calculating amplification log-probs...")
