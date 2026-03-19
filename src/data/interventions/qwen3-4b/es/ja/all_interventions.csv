@@ -27,13 +27,13 @@ distractor ablation,AnnSel,es,-9.017084703947368,5.016976531744441
 distractor ablation,AnnSel,zh,-4.007730263157895,4.237177098540984
 distractor ablation,AnnSel,ja,0.0,0.0
 distractor ablation,AnnSel,ko,-12.364884868421052,4.258644698294515
-distractor ablation,FreqSel,en,-5.3930921052631575,3.4002013533643933
-distractor ablation,FreqSel,fr,-9.856733141447368,5.359149589738993
-distractor ablation,FreqSel,de,-11.933943256578948,5.448378899461851
-distractor ablation,FreqSel,es,-9.455453330592105,4.905419567704578
-distractor ablation,FreqSel,zh,-4.067434210526316,4.292773830503352
+distractor ablation,FreqSel,en,-5.3930921052631575,3.4003602302621867
+distractor ablation,FreqSel,fr,-9.855417351973685,5.359579111154915
+distractor ablation,FreqSel,de,-11.932791940789473,5.448063624353487
+distractor ablation,FreqSel,es,-9.45380859375,4.907914275740636
+distractor ablation,FreqSel,zh,-4.06875,4.292883421641975
 distractor ablation,FreqSel,ja,0.0,0.0
-distractor ablation,FreqSel,ko,-12.524239309210527,4.225413014223794
+distractor ablation,FreqSel,ko,-12.523170230263158,4.223607483633451
 distractor ablation,ValSel,en,-6.319294819078947,3.6937844929196557
 distractor ablation,ValSel,fr,-9.842828690378289,4.995539678198492
 distractor ablation,ValSel,de,-11.494759971217105,5.1501894337550835
@@ -41,20 +41,20 @@ distractor ablation,ValSel,es,-9.545723041735197,4.682044877353739
 distractor ablation,ValSel,zh,-5.022286184210526,4.4966272244864
 distractor ablation,ValSel,ja,0.0,0.0
 distractor ablation,ValSel,ko,-10.922902960526315,4.353125132025827
-ablation,AnnSel,en,-5.288815789473684,3.402797866964515
-ablation,AnnSel,fr,-9.530201480263157,5.453174450126178
-ablation,AnnSel,de,-11.708244243421053,5.48016869053958
-ablation,AnnSel,es,-8.84609375,4.936804594079942
-ablation,AnnSel,zh,-4.203782894736842,4.445911428184792
-ablation,AnnSel,ja,0.0,0.0
-ablation,AnnSel,ko,-12.41487458881579,4.207840092512011
-ablation,FreqSel,en,-5.047039473684211,3.3526330903810226
-ablation,FreqSel,fr,-9.730281147203947,5.468551506040707
-ablation,FreqSel,de,-11.751706414473684,5.513499694884252
-ablation,FreqSel,es,-9.315645559210527,4.9507444156433245
-ablation,FreqSel,zh,-3.9376644736842104,4.303373648746502
+ablation,AnnSel,en,,
+ablation,AnnSel,fr,,
+ablation,AnnSel,de,,
+ablation,AnnSel,es,,
+ablation,AnnSel,zh,,
+ablation,AnnSel,ja,,
+ablation,AnnSel,ko,,
+ablation,FreqSel,en,-5.0444078947368425,3.352210720826677
+ablation,FreqSel,fr,-9.726004831414473,5.473963931982832
+ablation,FreqSel,de,-11.745127467105263,5.517905234771083
+ablation,FreqSel,es,-9.309395559210527,4.955821172873132
+ablation,FreqSel,zh,-3.9294407894736842,4.29951252655902
 ablation,FreqSel,ja,0.0,0.0
-ablation,FreqSel,ko,-12.649383223684211,4.255239213754439
+ablation,FreqSel,ko,-12.64514802631579,4.251063143593479
 ablation,ValSel,en,-4.3286184210526315,3.466047032337435
 ablation,ValSel,fr,-8.734580592105264,5.557633337548581
 ablation,ValSel,de,-10.933555201480264,5.563842817379102
@@ -90,20 +90,20 @@ one-layer direction ablation,AnnSel,es,-8.704893092105262,5.12999651687442
 one-layer direction ablation,AnnSel,zh,-3.90625,4.206782177614336
 one-layer direction ablation,AnnSel,ja,0.0,0.0
 one-layer direction ablation,AnnSel,ko,-13.180408999794407,4.365303723453641
-one-layer direction ablation,FreqSel,en,-4.64313322368421,3.7066505243704473
-one-layer direction ablation,FreqSel,fr,-9.636506090666119,5.391123756503791
-one-layer direction ablation,FreqSel,de,-11.738190018503289,4.862718459069719
-one-layer direction ablation,FreqSel,es,-9.21993472450658,4.890926101836855
-one-layer direction ablation,FreqSel,zh,-2.949671052631579,3.66957274117077
+one-layer direction ablation,FreqSel,en,-4.643009868421053,3.6984053285182634
+one-layer direction ablation,FreqSel,fr,-9.636197702508223,5.392512138059057
+one-layer direction ablation,FreqSel,de,-11.74099948280736,4.866704448778014
+one-layer direction ablation,FreqSel,es,-9.221615439967104,4.892139736907987
+one-layer direction ablation,FreqSel,zh,-2.9379934210526315,3.6715223437426068
 one-layer direction ablation,FreqSel,ja,0.0,0.0
-one-layer direction ablation,FreqSel,ko,-10.738589638157896,4.016500402744269
-one-layer direction ablation,ValSel,en,-5.21578947368421,3.9420568281449455
-one-layer direction ablation,ValSel,fr,-10.121340460526316,6.0231530920079965
-one-layer direction ablation,ValSel,de,-12.37298519736842,5.70129863710656
-one-layer direction ablation,ValSel,es,-9.427138157894737,5.516572632399136
-one-layer direction ablation,ValSel,zh,-2.1125,4.370812490654049
+one-layer direction ablation,FreqSel,ko,-10.737746710526316,4.0129666394914
+one-layer direction ablation,ValSel,en,-5.2212171052631575,3.935677265516238
+one-layer direction ablation,ValSel,fr,-10.123643092105263,6.024351329771048
+one-layer direction ablation,ValSel,de,-12.372281044407895,5.703508737252911
+one-layer direction ablation,ValSel,es,-9.428495065789473,5.524164358456048
+one-layer direction ablation,ValSel,zh,-2.1067434210526317,4.375257432485706
 one-layer direction ablation,ValSel,ja,0.0,0.0
-one-layer direction ablation,ValSel,ko,-12.271175986842104,4.658275775872643
+one-layer direction ablation,ValSel,ko,-12.269037828947368,4.665244020627607
 distractor multi-layer direction ablation,AnnSel,en,-4.982222466719778,3.708420550328341
 distractor multi-layer direction ablation,AnnSel,fr,-8.628799743401377,5.118906240587249
 distractor multi-layer direction ablation,AnnSel,de,-11.194108799884194,5.2805495755446294
@@ -146,87 +146,87 @@ multi-layer direction ablation,ValSel,es,-5.71954469351392,6.364245329932473
 multi-layer direction ablation,ValSel,zh,0.932877590781764,5.963097464671695
 multi-layer direction ablation,ValSel,ja,0.0,0.0
 multi-layer direction ablation,ValSel,ko,-6.036046784488779,5.864814925787259
-amplification,AnnSel,en,-4.032072368421052,3.6523127671921247
-amplification,AnnSel,fr,-4.875822368421052,4.705740423960131
-amplification,AnnSel,de,-6.472933799342106,4.4935546887263325
-amplification,AnnSel,es,-6.511842105263158,4.792509359806539
-amplification,AnnSel,zh,-3.5450657894736843,3.862272298934621
-amplification,AnnSel,ja,0.0,0.0
-amplification,AnnSel,ko,-7.72483552631579,4.025337997962838
-amplification,FreqSel,en,-5.347859272203947,3.5687530121790094
-amplification,FreqSel,fr,-7.287129934210526,4.509704582071841
-amplification,FreqSel,de,-7.400186317845395,3.7588866535913374
-amplification,FreqSel,es,-8.348673930921052,4.672162340048991
-amplification,FreqSel,zh,-2.6418996710526317,3.4005146311320082
+amplification,AnnSel,en,,
+amplification,AnnSel,fr,,
+amplification,AnnSel,de,,
+amplification,AnnSel,es,,
+amplification,AnnSel,zh,,
+amplification,AnnSel,ja,,
+amplification,AnnSel,ko,,
+amplification,FreqSel,en,-5.260534025493421,3.567626561924761
+amplification,FreqSel,fr,-7.210485197368421,4.497805585230051
+amplification,FreqSel,de,-7.2143503289473685,3.7647718980537594
+amplification,FreqSel,es,-8.229070723684211,4.672937677528937
+amplification,FreqSel,zh,-2.673560855263158,3.40962148721133
 amplification,FreqSel,ja,0.0,0.0
-amplification,FreqSel,ko,-5.994736842105263,3.9799626568066806
-amplification,ValSel,en,-4.878453947368421,3.386565170239329
-amplification,ValSel,fr,-5.488404605263158,4.415374861271168
-amplification,ValSel,de,-6.710855263157895,3.904284162046513
-amplification,ValSel,es,-7.181496710526316,4.477722788088694
-amplification,ValSel,zh,-1.9210526315789473,3.13933825691807
+amplification,FreqSel,ko,-5.886759868421053,3.9891461567129043
+amplification,ValSel,en,-4.888404605263158,3.3776117487783504
+amplification,ValSel,fr,-5.521052631578947,4.418321659156291
+amplification,ValSel,de,-6.6899671052631575,3.881525018916779
+amplification,ValSel,es,-7.2084703947368425,4.46475424051295
+amplification,ValSel,zh,-1.8957236842105263,3.1351749595876854
 amplification,ValSel,ja,0.0,0.0
-amplification,ValSel,ko,-4.600328947368421,3.764303656936637
-non-distractor amplification,AnnSel,en,-5.699835526315789,3.373375001836146
-non-distractor amplification,AnnSel,fr,-10.284950657894736,5.224269355311369
-non-distractor amplification,AnnSel,de,-12.355296566611843,5.310499531847401
-non-distractor amplification,AnnSel,es,-9.8,4.824507095246133
-non-distractor amplification,AnnSel,zh,-4.231990131578947,4.30144161253954
+amplification,ValSel,ko,-4.511513157894737,3.748548873241176
+non-distractor amplification,AnnSel,en,-5.699342105263158,3.3625755688440684
+non-distractor amplification,AnnSel,fr,-10.278495065789473,5.230254538195146
+non-distractor amplification,AnnSel,de,-12.347982627467106,5.303091389780834
+non-distractor amplification,AnnSel,es,-9.79398129111842,4.825842301253583
+non-distractor amplification,AnnSel,zh,-4.214555921052631,4.28526096196879
 non-distractor amplification,AnnSel,ja,0.0,0.0
-non-distractor amplification,AnnSel,ko,-12.723201069078947,4.253335762567426
-non-distractor amplification,FreqSel,en,-5.955756578947368,3.2739784967117593
-non-distractor amplification,FreqSel,fr,-10.83421052631579,5.004677024612334
-non-distractor amplification,FreqSel,de,-12.917321134868422,5.011002005281721
-non-distractor amplification,FreqSel,es,-10.350966282894737,4.519014664310565
-non-distractor amplification,FreqSel,zh,-3.814720394736842,4.245723808539338
+non-distractor amplification,AnnSel,ko,-12.718570106907896,4.248634232351319
+non-distractor amplification,FreqSel,en,-5.968421052631579,3.2512991430151765
+non-distractor amplification,FreqSel,fr,-10.83421052631579,4.987301702127074
+non-distractor amplification,FreqSel,de,-12.914699835526315,5.008653312968392
+non-distractor amplification,FreqSel,es,-10.333429276315789,4.503689632332606
+non-distractor amplification,FreqSel,zh,-3.816282894736842,4.2542168754239365
 non-distractor amplification,FreqSel,ja,0.0,0.0
-non-distractor amplification,FreqSel,ko,-13.673095703125,4.148850234236751
-non-distractor amplification,ValSel,en,-4.5697368421052635,3.0093440081739535
-non-distractor amplification,ValSel,fr,-8.216879111842106,4.645849534265634
-non-distractor amplification,ValSel,de,-10.161101973684211,4.652995303113537
-non-distractor amplification,ValSel,es,-7.65452302631579,4.301551218008992
-non-distractor amplification,ValSel,zh,-3.2720394736842104,3.612108731721906
+non-distractor amplification,FreqSel,ko,-13.664651007401316,4.149889980709236
+non-distractor amplification,ValSel,en,-4.591776315789474,3.017095883865544
+non-distractor amplification,ValSel,fr,-8.243174342105263,4.674500688133059
+non-distractor amplification,ValSel,de,-10.206085526315789,4.66873427000567
+non-distractor amplification,ValSel,es,-7.685361842105263,4.33205788344982
+non-distractor amplification,ValSel,zh,-3.2768092105263156,3.6139196536787286
 non-distractor amplification,ValSel,ja,0.0,0.0
-non-distractor amplification,ValSel,ko,-10.901572779605264,3.642261253130428
-feature-intervention,AnnSel,en,-5.694572368421053,3.3752314492437026
-feature-intervention,AnnSel,fr,-10.291200657894738,5.2242337593161405
-feature-intervention,AnnSel,de,-12.341398540296053,5.307071827588568
-feature-intervention,AnnSel,es,-9.84095394736842,4.798575059368734
-feature-intervention,AnnSel,zh,-4.2553453947368425,4.304669288265547
+non-distractor amplification,ValSel,ko,-10.947902960526315,3.6462121867274577
+feature-intervention,AnnSel,en,-5.689144736842105,3.3734031647098055
+feature-intervention,AnnSel,fr,-10.279481907894738,5.237292237960369
+feature-intervention,AnnSel,de,-12.33093904194079,5.31171271632096
+feature-intervention,AnnSel,es,-9.828356291118421,4.808350667573217
+feature-intervention,AnnSel,zh,-4.238240131578947,4.295659413657922
 feature-intervention,AnnSel,ja,0.0,0.0
-feature-intervention,AnnSel,ko,-12.733634868421053,4.234692818731481
-feature-intervention,FreqSel,en,-5.988651315789474,3.251479245135582
-feature-intervention,FreqSel,fr,-10.929440789473684,4.983980458167379
-feature-intervention,FreqSel,de,-12.96910978618421,4.993442732204038
-feature-intervention,FreqSel,es,-10.544058388157895,4.477519213222529
-feature-intervention,FreqSel,zh,-3.836348684210526,4.266076057825097
+feature-intervention,AnnSel,ko,-12.729744037828947,4.236726937659961
+feature-intervention,FreqSel,en,-5.980427631578947,3.240487344558787
+feature-intervention,FreqSel,fr,-10.922245065789474,4.98318152919094
+feature-intervention,FreqSel,de,-12.957473273026316,4.989282300964609
+feature-intervention,FreqSel,es,-10.515810032894738,4.464910065026194
+feature-intervention,FreqSel,zh,-3.8228618421052634,4.2644464231638715
 feature-intervention,FreqSel,ja,0.0,0.0
-feature-intervention,FreqSel,ko,-13.746846731085526,4.14085881009349
-feature-intervention,ValSel,en,-5.650822368421053,3.3179266446995723
-feature-intervention,ValSel,fr,-9.87454769736842,5.1623349041378646
-feature-intervention,ValSel,de,-11.995533511513157,5.189735738522715
-feature-intervention,ValSel,es,-9.429399671052632,4.689475226641238
-feature-intervention,ValSel,zh,-3.5904605263157894,4.132657990878131
+feature-intervention,FreqSel,ko,-13.728731496710527,4.132031879787722
+feature-intervention,ValSel,en,-5.654934210526315,3.3162454856796404
+feature-intervention,ValSel,fr,-9.854605263157895,5.131373282320182
+feature-intervention,ValSel,de,-11.975709292763158,5.163089394412164
+feature-intervention,ValSel,es,-9.415912828947368,4.66517128442343
+feature-intervention,ValSel,zh,-3.592434210526316,4.131666004775071
 feature-intervention,ValSel,ja,0.0,0.0
-feature-intervention,ValSel,ko,-12.390049342105263,4.058662981234265
-one-layer direction intervention,AnnSel,en,-5.688815789473685,3.379226556471289
-one-layer direction intervention,AnnSel,fr,-10.27298519736842,5.258182070522995
-one-layer direction intervention,AnnSel,de,-12.34141909950658,5.327367167189039
-one-layer direction intervention,AnnSel,es,-9.78160978618421,4.839236989104174
-one-layer direction intervention,AnnSel,zh,-4.236595394736842,4.305949174460695
+feature-intervention,ValSel,ko,-12.3609375,4.042779050115797
+one-layer direction intervention,AnnSel,en,-5.678453947368421,3.367205108795475
+one-layer direction intervention,AnnSel,fr,-10.26178042763158,5.257237034609053
+one-layer direction intervention,AnnSel,de,-12.33076171875,5.321522132888898
+one-layer direction intervention,AnnSel,es,-9.772203947368421,4.8456592244415795
+one-layer direction intervention,AnnSel,zh,-4.221875,4.29039017426235
 one-layer direction intervention,AnnSel,ja,0.0,0.0
-one-layer direction intervention,AnnSel,ko,-12.709416118421053,4.262173099388586
-one-layer direction intervention,FreqSel,en,-5.75953947368421,3.2608983649749845
-one-layer direction intervention,FreqSel,fr,-10.824229029605263,4.8839012676069
-one-layer direction intervention,FreqSel,de,-12.928776469983553,4.968249245814902
-one-layer direction intervention,FreqSel,es,-10.34983552631579,4.461611247617994
-one-layer direction intervention,FreqSel,zh,-3.9394736842105265,4.256948350787004
+one-layer direction intervention,AnnSel,ko,-12.70409449527138,4.261886272264506
+one-layer direction intervention,FreqSel,en,-5.752138157894737,3.244895498579273
+one-layer direction intervention,FreqSel,fr,-10.81060855263158,4.866070361963013
+one-layer direction intervention,FreqSel,de,-12.912547543174343,4.961057505144159
+one-layer direction intervention,FreqSel,es,-10.32076480263158,4.439865194871764
+one-layer direction intervention,FreqSel,zh,-3.932730263157895,4.250315368904392
 one-layer direction intervention,FreqSel,ja,0.0,0.0
-one-layer direction intervention,FreqSel,ko,-13.488980263157895,4.155193318202002
-one-layer direction intervention,ValSel,en,-5.524177631578947,3.253115809334563
-one-layer direction intervention,ValSel,fr,-9.905730879934211,5.238661902761086
-one-layer direction intervention,ValSel,de,-12.135408100328947,5.20622439951119
-one-layer direction intervention,ValSel,es,-9.350904605263159,4.871350598131937
-one-layer direction intervention,ValSel,zh,-3.4113486842105263,3.9106381217877177
+one-layer direction intervention,FreqSel,ko,-13.471178556743421,4.155153770180907
+one-layer direction intervention,ValSel,en,-5.507894736842105,3.23505979498056
+one-layer direction intervention,ValSel,fr,-9.871422697368422,5.209946627800005
+one-layer direction intervention,ValSel,de,-12.10332545230263,5.177343830350412
+one-layer direction intervention,ValSel,es,-9.316652960526316,4.858027415134666
+one-layer direction intervention,ValSel,zh,-3.4009868421052634,3.89401982388223
 one-layer direction intervention,ValSel,ja,0.0,0.0
-one-layer direction intervention,ValSel,ko,-12.3046875,4.068535659360261
+one-layer direction intervention,ValSel,ko,-12.272779605263159,4.0427120853938066
