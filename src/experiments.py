@@ -220,6 +220,11 @@ for adj_d, ans_d in dicts:
             rest = 1
             tmp = []
             for ans in ans_d[l]:
+                # NOTE: This assumes tokenizer.encode(ans) returns at least 2 tokens (e.g., [BOS, tok]).
+                # Some tokenizers/configs may not prepend BOS, or the encoding may be a single token,
+                # which would make [1] raise IndexError.
+                # Also, if 'ans' encodes to multiple tokens, taking only one token here may not reflect
+                # the probability of the full string.
                 token_idx = tokenizer.encode(ans)[1]
                 tmp.append(probability[token_idx])
             result_dict[l][l2]['wlca'].append(sum(tmp))
@@ -227,6 +232,7 @@ for adj_d, ans_d in dicts:
 
             tmp = []
             for ans in ans_d[l2]:
+                # NOTE: Same indexing/multi-token caveats as above.
                 token_idx = tokenizer.encode(ans)[1]
                 tmp.append(probability[token_idx])
             result_dict[l][l2]['clca'].append(sum(tmp))
@@ -235,21 +241,25 @@ for adj_d, ans_d in dicts:
 
             tmp = []
             for ans in ans_d['en']:
+                # NOTE: Same indexing/multi-token caveats as above.
                 token_idx = tokenizer.encode(ans)[1]
                 tmp.append(probability[token_idx])
             result_dict[l][l2]['enca'].append(sum(tmp))
             if l != 'en' and l2 != 'en':
                 rest -= sum(tmp)
 
+            # NOTE: Same indexing/multi-token caveats as above.
             token_idx = tokenizer.encode(adj_d[l])[1]
             result_dict[l][l2]['wlsa'].append(probability[token_idx])
             rest -= probability[token_idx]
 
+            # NOTE: Same indexing/multi-token caveats as above.
             token_idx = tokenizer.encode(adj_d[l2])[1]
             result_dict[l][l2]['clsa'].append(probability[token_idx])
             if l != l2:
                 rest -= probability[token_idx]
 
+            # NOTE: Same indexing/multi-token caveats as above.
             token_idx = tokenizer.encode(adj_d['en'])[1]
             result_dict[l][l2]['ensa'].append(probability[token_idx])
             if l != 'en' and l2 != 'en':
@@ -1065,21 +1075,23 @@ def choose_lang_node(lang_features: dict[str, int], threshold: int = 10) -> list
             feature_idx = int(feature_idx) if isinstance(feature_idx, str) else feature_idx
             feature_lst.append(Feature(layer=layer, pos=-1, feature_idx=feature_idx))
 
-    return feature_lst
-
 
 ## metrics
 def prob_diff(old_logits: torch.Tensor, new_logits: torch.Tensor, targets: list[str], verbose=True) -> list[float]:
-    old_probs = old_logits.squeeze(0)[-1].softmax(-1)
-    new_probs = new_logits.squeeze(0)[-1].softmax(-1)
+    old_probs = torch.softmax(old_logits.squeeze(0)[-1], dim=-1)
+    new_probs = torch.softmax(new_logits.squeeze(0)[-1], dim=-1)
 
     diffs = []
     for target in targets:
+        # NOTE: Assumes encode(target) has length >= 2 and token at index 1 is the intended token.
+        # This can be invalid if the tokenizer doesn't prepend BOS or if target is multi-token.
+        # WARNING: Potential IndexError if encode returns length < 2.
+        # WARNING: Potential probability/semantic mismatch if target is multi-token (issue 4).
         token = model.tokenizer.encode(target)[1]
         old_prob = old_probs[token].item()
         new_prob = new_probs[token].item()
         if verbose:
-            print(f'Probability of "{target}": old {old_prob}, new {new_prob}, diff {new_prob - old_prob}')
+            print(f"Old prob: {old_prob}, New prob: {new_prob}")
         diffs.append(new_prob - old_prob)
     return diffs
 
@@ -1091,31 +1103,38 @@ def rank_diff(old_logits: torch.Tensor, new_logits: torch.Tensor, targets: list[
 
     diffs = []
     for target in targets:
+        # NOTE: Same encode()[1] caveats as above.
+        # WARNING: Potential IndexError if encode returns length < 2.
+        # WARNING: Potential probability/semantic mismatch if target is multi-token (issue 4).
         token = model.tokenizer.encode(target)[1]
-
         o_mask = (o_indices == token)
         o_rank = torch.argmax(o_mask.int(), dim=-1)
 
         n_mask = (n_indices == token)
         n_rank = torch.argmax(n_mask.int(), dim=-1)
         if verbose:
-            print(f'Rank of "{target}": old {o_rank}, new {n_rank}, diff {n_rank - o_rank}')
-            
+            print(f"Rank of '{target}': old {o_rank}, new {n_rank}, diff {n_rank - o_rank}")
         diffs.append(n_rank - o_rank)
     return diffs
 
 def logit_diff(old_logits: torch.Tensor, new_logits: torch.Tensor, targets: list[str], base: str, verbose=True) -> list[float]:
     o_logits = old_logits.squeeze(0)[-1]
     n_logits = new_logits.squeeze(0)[-1]
+    # NOTE: Assumes encode(base) has length >= 2 and base is single-token after BOS.
+    # WARNING: Potential IndexError if encode returns length < 2.
+    # WARNING: Potential probability/semantic mismatch if base is multi-token (issue 4).
     s = model.tokenizer.encode(base)[1]
 
     diffs = []
     for target in targets:
+        # NOTE: Same encode()[1] caveats as above.
+        # WARNING: Potential IndexError if encode returns length < 2.
+        # WARNING: Potential probability/semantic mismatch if target is multi-token (issue 4).
         t = model.tokenizer.encode(target)[1]
         o_diff = o_logits[t] - o_logits[s]
         n_diff = n_logits[t] - n_logits[s]
         if verbose:
-            print(f'Logit difference of "{target}" to "{base}": old {o_diff}, new {n_diff}, diff {n_diff - o_diff}')
+            print(f"Logit difference of '{target}' to '{base}': old {o_diff}, new {n_diff}, diff {n_diff - o_diff}")
         diffs.append(n_diff - o_diff)
     return diffs
 
@@ -1166,6 +1185,9 @@ def get_best_rank(logits: torch.Tensor, targets: list[str]) -> int:
     _, indices = torch.sort(last_logits, dim=-1, descending=True)
     ranks = []
     for target in targets:
+        # NOTE: Assumes encode(target) has length >= 2 and target is single-token after BOS.
+        # WARNING: Potential IndexError if encode returns length < 2.
+        # WARNING: Potential probability/semantic mismatch if target is multi-token (issue 4).
         token = model.tokenizer.encode(target)[1]
         mask = (indices == token)
         rank = torch.argmax(mask.int(), dim=-1)

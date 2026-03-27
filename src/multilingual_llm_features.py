@@ -99,6 +99,7 @@ def calculate_v(per_lang_mean_activation_dict: dict[str, dict[str, float]]) -> d
                     gamma += v
                 except KeyError:
                     gamma += 0
+            # NOTE: This assumes len(keys) > 1; if only one language is provided, this will divide by zero.
             gamma /= len(keys) - 1
             v = val - gamma
             v_dict[lang][feature] = v
@@ -198,6 +199,10 @@ def steering_from_A_to_B(
 
     interventions = list()
     for key, _ in combined_intervening_features:
+        layer_str, feature_idx_str = key.split('.')
+        layer = int(layer_str)
+        pos = n_pos - 1
+        feature_idx = int(feature_idx_str)
         index = last_pos_feature_find(key, n_pos, active_features)
         if index == -1:
             original_activation = 0
@@ -309,6 +314,9 @@ def code_switch_analysis(
     result = dict()
     for key, val in activation_diff.items():
         list1, list2, list3 = val
+        # NOTE: list1/list2/list3 can be empty if prompt_list contains no matching samples for
+        # (ori_lan == lang_A) and (target_lan in {lang_A, lang_B}). In that case, len(listX) == 0
+        # and the divisions below will raise ZeroDivisionError.
         mean1 = sum(list1) / len(list1)
         mean2 = sum(list2) / len(list2)
         mean3 = sum(list3) / len(list3)
